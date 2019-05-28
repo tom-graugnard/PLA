@@ -12,4 +12,4 @@ Le jeu se joue à 1 joueur. Clink est contrôlable grâce aux touches du clavier
 On utilise un arbre pour stocker notre terrain de jeu qui est composé d'un ensemble de matrices de cases, ainsi qu'une liste chaînée pour stocker les virus.
 Chaque entitée comporte de différents actions (Egg, Hit, Pop et Wizz) qui peut interagir avec l'environnement.
 
-Pour plus d'information sur le jeu et son fonctionnement [Cliquez-ici](https://docs.google.com/document/d/1mjZNye_7PBJDbEon7VTnQUHm0hPmgZH5E2vAEqCFRjU/edit?usp=sharing)
+Pour plus d'information sur le jeu et son fonctionnement [cliquez-ici](https://docs.google.com/document/d/1mjZNye_7PBJDbEon7VTnQUHm0hPmgZH5E2vAEqCFRjU/edit?usp=sharing).
