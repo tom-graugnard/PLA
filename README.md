@@ -6,4 +6,6 @@ Notre héros commence son aventure à la racine de notre arborescence. Clink pou
 
 La corbeille est une zone spécial de notre jeu, dans celle-ci tous les éléments infecté par les virus sont envoyé. Si Clink veut désinfecter certain éléments alors il devra aller dans la corbeille. Dans celle-ci, notre héros, pourra tirer sur les fichiers pour les désinfecter. Lorsqu’un fichier est désinfecté alors celui-ci est renvoyé à sa position précédant son infection par un virus.
 
-Le jeu se joue à 1 joueur. Clink est contrôlable grâce aux touches du clavier.
+Le jeu se joue à 1 joueur. Clink est contrôlable grâce aux touches du clavier. 
+On utilise un arbre pour stocker notre terrain de jeu qui est composé d'un ensemble de matrices de cases, ainsi qu'une liste chaînée pour stocker les virus.
+Chaque entitée comporte de différents actions (Egg, Hit, Pop et Wizz) qui peut interagir avec l'environnement.
