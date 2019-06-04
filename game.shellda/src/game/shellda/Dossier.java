@@ -3,7 +3,7 @@ package game.shellda;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class Dossier extends Element {
+public class Dossier extends Fichier {
 
 	Noeud m_enfant;
 
