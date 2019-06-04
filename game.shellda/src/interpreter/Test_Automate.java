@@ -3,6 +3,7 @@ package interpreter;
 import java.util.LinkedList;
 import java.util.List;
 
+import game.shellda.Element;
 import interpreter.IAction.Hit;
 import interpreter.IAction.Move;
 
@@ -10,7 +11,7 @@ public class Test_Automate {
 	
 	public static void main(String args[]) throws Exception{
 		
-		Entity e= new Entity();
+		Element e= new Element(null, null, 0, null, 0, 0, 0, 0, 0);
 		
 		IState s1= new IState("un"); s1.id=1;
 		IState s2 = new IState("deux"); s2.id=2;

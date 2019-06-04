@@ -1,16 +1,18 @@
 package interpreter;
 
+import game.shellda.Element;
+
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAction {
 	
 	IAction(){}
-	void exec(Entity e){}
+	void exec(Element e){}
 	
 	public class Egg extends IAction{
 		Egg(){
 		}
-		void exec(Entity e) {
+		void exec(Element e) {
 			e.egg();
 		}
 	}
@@ -22,7 +24,7 @@ public class IAction {
 			this.direction = direction ;
 		}
 		
-		void exec(Entity e){
+		void exec(Element e){
 			e.hit(this.direction);
 		}
 	}
@@ -31,7 +33,7 @@ public class IAction {
 		Pop(){
 			
 		}
-		void exec(Entity e) {
+		void exec(Element e) {
 			e.pop();
 		}
 	}
@@ -40,7 +42,7 @@ public class IAction {
 		Wizz(){
 			
 		}
-		void exec(Entity e) {
+		void exec(Element e) {
 			e.wizz();
 		}
 	}
@@ -54,7 +56,7 @@ public class IAction {
 			this.direction = direction ;
 		}
 		
-		void exec(Entity e){
+		void exec(Element e){
 			e.move(this.direction) ;
 		}
 	}

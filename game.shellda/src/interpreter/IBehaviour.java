@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import game.shellda.Element;
+
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IBehaviour {
@@ -15,7 +17,7 @@ public class IBehaviour {
 		this.transitions = transitions;
 	}
 
-	IState step(Entity e) {
+	IState step(Element e) {
 		// - selectionne la première transition faisable
 		// - lève une exception si aucune transition possible
 		// return l'état cible de la transition choisie

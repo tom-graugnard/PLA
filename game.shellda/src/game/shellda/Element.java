@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+import interpreter.Direction;
+
 public class Element {
 
 	Color c;
@@ -60,6 +62,31 @@ public class Element {
 
 	public void step(long now) {
 
+	}
+
+	public void wizz() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void pop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void hit(Direction direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void egg() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void move(Direction direction) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
