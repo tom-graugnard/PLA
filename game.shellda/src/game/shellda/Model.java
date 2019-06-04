@@ -25,12 +25,15 @@ public class Model extends GameModel {
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
 	boolean gameStart = false;
+	BufferedImage m_clinkSprite;
+	BufferedImage m_dossierSprite;
+	BufferedImage m_corbeilleSprite;
 
 	public Model() {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
-		m_corbeille = new Noeud(null);
-		m_tree = new Tree(m_corbeille, m_virus);
+		m_corbeille = new Noeud(this);
+		m_tree = new Tree(this,m_corbeille, m_virus);
 		m_courant = m_tree.m_root;
 		
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1, Options.WIDTH / 2 - (int)(m_boutonplaySprite.getWidth()*Options.BoutonPlayScale)/2, Options.HEIGHT / 2 - (int)(m_boutonplaySprite.getHeight()*Options.BoutonPlayScale)/2, Options.BoutonPlayScale);

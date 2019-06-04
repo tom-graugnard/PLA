@@ -7,16 +7,17 @@ public class Tree {
 	Noeud m_root;
 
 	Noeud corbeille;
+	Model m_model;
 
 	LinkedList<Virus> vir;
 
 	LinkedList<Noeud> tous;
 
-	public Tree(Noeud corb, LinkedList<Virus> virus) {
+	public Tree(Model m, Noeud corb, LinkedList<Virus> virus) {
 		corbeille = corb;
-		m_root = new Noeud(corbeille);
-
-		m_root.m_carte[1][1] = new Clink(m_root, 1, 1);
+		m_root = new Noeud(m);
+		m_model = m;
+		m_root.m_carte[1][1] = new Clink(m_root, m, 1, m.m_clinkSprite, 1, 1, 1, 1, 1);
 		tous = new LinkedList<Noeud>();
 		vir = virus;
 		tous.add(m_root);
@@ -25,7 +26,8 @@ public class Tree {
 
 	private void generate_tree(Noeud root) {
 
-		root.m_carte[0][Options.LARGEUR_CARTE - 1] = new Virus(root, 0, Options.LARGEUR_CARTE - 1, vir);
+		root.m_carte[0][Options.LARGEUR_CARTE - 1] = new Virus(root, m_model, 1, m_model.m_virusSprite, 2, 4, 0,
+				Options.LARGEUR_CARTE - 1, 1, vir);
 		vir.add((Virus) root.m_carte[0][Options.LARGEUR_CARTE - 1]);
 		m_root.ajouter_enfant(root, 1, this);
 		tous.add(m_root.m_enfants[0]);
@@ -38,14 +40,14 @@ public class Tree {
 	}
 
 	public void print() {
-		for(int i = 0; i < tous.size(); i++) {
+		for (int i = 0; i < tous.size(); i++) {
 			tous.get(i).print();
 			System.out.println();
 		}
 	}
-	
+
 	public void paint() {
-		
+
 	}
-	
+
 }
