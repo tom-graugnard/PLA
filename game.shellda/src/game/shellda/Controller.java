@@ -31,7 +31,8 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
-
+		m_model.step(now);
+		m_view.step(now);
 	}
 
 	@Override

@@ -5,10 +5,13 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+import interpreter.Direction;
+import interpreter.IAutomaton;
+
 public class Element {
 
 	Color c;
-
+	IAutomaton auto;
 	BufferedImage m_sprite;
 	BufferedImage[] m_sprites;
 	Model m_model;
@@ -58,8 +61,43 @@ public class Element {
 
 	}
 
-	public void step(long now) {
+	public void step(long now) throws Exception {
+		//if(auto!=null)
+		//auto.step(this);
+	}
+	public Noeud noeud() {
+		return m_courant;
+	}
+	public int getx() {
+		return m_x;
+	}
+	public int gety() {
+		return m_y;
+	}
 
+	public void wizz() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void pop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void hit(Direction direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void egg() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void move(Direction direction) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

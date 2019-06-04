@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import game.shellda.Element;
+
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
@@ -11,12 +13,12 @@ public class IAutomaton {
 	IState current;
 	List<IBehaviour> behaviours;
 
-	IAutomaton(IState initial, List<IBehaviour> behaviours) {
+	public IAutomaton(IState initial, List<IBehaviour> behaviours) {
 		this.current = initial;
 		this.behaviours = behaviours;
 	}
 
-	boolean step(Entity e) throws Exception {
+	public boolean step(Element e) throws Exception {
 		// - selectionne le comportement en fonction de l'état courant
 		// - effectue une transition
 		// - met à jour l'état courant

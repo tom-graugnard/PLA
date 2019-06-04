@@ -63,4 +63,8 @@ public class View extends GameView {
 		//m_model.m_boutonexit.paint(g);
 	}
 
+	public void step(long now) {
+		// TODO Auto-generated method stub
+	}
+
 }
