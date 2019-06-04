@@ -40,9 +40,27 @@ public class View extends GameView {
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
 		
-		
-		m_model.m_courant.paint(g);
+		if (!m_model.gameStart)
+			_menuPrincipal(g);
+		else
+			_FenetreJeu(g);
 
+	}
+	protected void _menuPrincipal(Graphics g) {
+		g.setColor(Color.BLACK);
+		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
+		String s = "The Legend of Shellda";
+		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 100);
+
+		m_model.m_boutonplay.paint(g);
+		m_model.m_boutonexit.paint(g);
+	}
+
+	protected void _FenetreJeu(Graphics g) {
+		g.setColor(Color.BLACK);
+		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
+		m_model.m_courant.paint(g);
+		//m_model.m_boutonexit.paint(g);
 	}
 
 }
