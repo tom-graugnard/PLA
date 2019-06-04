@@ -67,7 +67,18 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
-
+		for(int i=0;i<Options.LARGEUR_CARTE;i++) {
+			for(int j=0;j<Options.HAUTEUR_CARTE;j++) {
+				try {
+					if(m_courant.m_carte[i][j]!=null)
+					m_courant.m_carte[i][j].step(now);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 
 	@Override

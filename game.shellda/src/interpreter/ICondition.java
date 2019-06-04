@@ -6,7 +6,7 @@ import game.shellda.Element;
 
 public class ICondition {
 
-	ICondition() {
+	public ICondition() {
 	}
 
 	boolean eval(Element e) {
@@ -15,27 +15,28 @@ public class ICondition {
 	
 	public class CanMove extends IAction{
 		boolean Canmove(Element e, Direction direction){
+			Element[][] carte= e.noeud().carte();
 			switch(direction) {
 			case NORTH:
-				if(1==0) {
+				if(carte[e.getx()][e.gety()-1]==null) {
 					return true;
 				}
 				else
 					return false;
 			case SOUTH:
-				if(1==0) {
+				if(carte[e.getx()][e.gety()+1]==null) {
 					return true;
 				}
 				else
 					return false;
 			case EAST:
-				if(1==0) {
+				if(carte[e.getx()+1][e.gety()]==null) {
 					return true;
 				}
 				else
 					return false;
 			case WEST:
-				if(1==0) {
+				if(carte[e.getx()-1][e.gety()]==null) {
 					return true;
 				}
 				else

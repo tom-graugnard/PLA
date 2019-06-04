@@ -102,4 +102,8 @@ public class Noeud {
 		}
 
 	}
+	
+	public Element[][] carte() {
+		return m_carte;
+	}
 }

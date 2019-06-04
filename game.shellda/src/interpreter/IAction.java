@@ -20,7 +20,7 @@ public class IAction {
 	public static class Hit extends IAction {
 		Direction direction ;
 		
-		Hit(Direction direction){
+		public Hit(Direction direction){
 			this.direction = direction ;
 		}
 		
@@ -52,7 +52,7 @@ public class IAction {
 	public static class Move extends IAction {
 		Direction direction ;
 		
-		Move(Direction direction){
+		public Move(Direction direction){
 			this.direction = direction ;
 		}
 		

@@ -9,7 +9,7 @@ public class ITransition {
 	IAction action ;
 	IState target ;
 	
-	ITransition(ICondition condition, IAction action, IState target){
+	public ITransition(ICondition condition, IAction action, IState target){
 		this.condition = condition ;
 		this.action = action ;
 		this.target = target ;
