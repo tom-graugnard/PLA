@@ -13,7 +13,7 @@ public class GameMain {
 		View view = new View(model);
 		Controller controller = new Controller(model, view);
 
-		Dimension d = new Dimension(1024, 768);
+		Dimension d = new Dimension(Options.WIDTH, Options.HEIGHT);
 		new GameUI(model, view, controller, d);
 
 		// notice that the main thread will exit here,

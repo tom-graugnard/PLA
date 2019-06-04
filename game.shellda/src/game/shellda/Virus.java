@@ -1,5 +1,6 @@
 package game.shellda;
 
+import java.awt.Color;
 import java.util.LinkedList;
 
 public class Virus extends Element {
@@ -10,6 +11,7 @@ public class Virus extends Element {
 		super(n, x, y);
 		display = 0;
 		virus.add(this);
+		c = Color.magenta;
 	}
 
 	void actualiser() {
