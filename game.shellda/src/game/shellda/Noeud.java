@@ -1,5 +1,8 @@
 package game.shellda;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Noeud {
 
 	Element m_carte[][];
@@ -74,6 +77,22 @@ public class Noeud {
 
 			}
 			System.out.println("|");
+		}
+
+	}
+
+	public void paint(Graphics g) {
+		int case_width = Options.WIDTH / Options.LARGEUR_CARTE;
+		int case_height = Options.HEIGHT / Options.HAUTEUR_CARTE;
+		for (int i = 0; i < Options.HAUTEUR_CARTE; i++) {
+			for (int j = 0; j < Options.LARGEUR_CARTE; j++) {
+				if (m_carte[i][j] == null) {
+					g.setColor(Color.cyan);
+				} else {
+					g.setColor(m_carte[i][j].c);
+				}
+				g.fillRect(j * case_width, i * case_height, case_width - 4, case_height - 4);
+			}
 		}
 
 	}

@@ -6,13 +6,10 @@ public class Test {
 
 	public static void main(String args[]) {
 		Model m = new Model();
-		
-		while(true) {
-			for (int i = 0; i < m.m_tree.tous.size(); i++) {
-				m.m_tree.tous.get(i).print();
-				System.out.println();
-			}
-			for(int i = 0; i < m.m_virus.size(); i++) {
+
+		while (true) {
+			m.m_tree.print();
+			for (int i = 0; i < m.m_virus.size(); i++) {
 				m.m_virus.get(i).actualiser();
 			}
 			try {
