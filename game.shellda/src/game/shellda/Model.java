@@ -18,12 +18,15 @@ public class Model extends GameModel {
 	Noeud m_courant;
 	
 	BufferedImage m_virusSprite;
+	BufferedImage m_clinkSprite;
+	BufferedImage m_dossierSprite;
+	BufferedImage m_corbeilleSprite;
 
 	public Model() {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
-		m_corbeille = new Noeud(null);
-		m_tree = new Tree(m_corbeille, m_virus);
+		m_corbeille = new Noeud(this);
+		m_tree = new Tree(this,m_corbeille, m_virus);
 		m_courant = m_tree.m_root;
 	}
 	
