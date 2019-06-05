@@ -13,5 +13,9 @@ public class Fichier extends Element{
 		m_name = name;
 		c = Color.cyan;
 	}
+	
+	public void paint(Graphics g) {
+		
+	}
 
 }
