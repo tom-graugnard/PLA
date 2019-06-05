@@ -40,6 +40,7 @@ public class Noeud {
 		}
 		m_carte[0][0] = new Corbeille(m.m_corbeille, this, m, 0, m.m_corbeilleSprite, 1, 1, 0, 0, 1);
 		m_carte[1][0] = new Dossier(m_parent, this, "Retour", m, 0, m.m_corbeilleSprite, 1, 1, 0, 1, 1);
+		m_carte[5][0] = new Dossier(m_parent, this, "Retour", m, 0, m.m_corbeilleSprite, 1, 1, 5, 0, 1);
 	}
 
 	public void ajouter_enfant(Noeud parent, int nb, Tree root) {
@@ -48,9 +49,9 @@ public class Noeud {
 		for (int i = 0; i < nb; i++) {
 			Noeud n = new Noeud(m_model, parent);
 			m_enfants[i] = n;
-			n.m_carte[0][Options.LARGEUR_CARTE - 1] = new Virus(this, m_model, 1, m_model.m_virusSprite, 2, 4, 0,
-					Options.LARGEUR_CARTE - 1, 1, m_model.m_virus);
-			root.vir.add((Virus) n.m_carte[0][Options.LARGEUR_CARTE - 1]);
+			n.m_carte[5][6] = new Virus(this, m_model, 1, m_model.m_virusSprite, 2, 4, 5,
+					6, 1, m_model.m_virus);
+			root.vir.add((Virus) n.m_carte[5][6]);
 
 			m_carte[Options.HAUTEUR_CARTE - 1][i] = new Dossier(n, this, "" + i, m_model, 0, m_model.m_corbeilleSprite,
 					1, 1, Options.HAUTEUR_CARTE - 1, i, 1);

@@ -20,7 +20,7 @@ public class Element {
 	int m_x, m_y, m_w, m_h;
 	float m_scale;
 	int m_scaled_w, m_scaled_h;
-
+	int nbpas;
 	Noeud m_courant;
 
 	String m_name;
@@ -74,7 +74,6 @@ public class Element {
 	public int gety() {
 		return m_y;
 	}
-
 	public void wizz() {
 		// TODO Auto-generated method stub
 		
@@ -98,6 +97,16 @@ public class Element {
 	public void move(Direction direction) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public boolean canmove(Direction direction) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean cinqpas(int nbpas2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

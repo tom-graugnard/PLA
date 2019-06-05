@@ -13,40 +13,27 @@ public class ICondition {
 		return true;
 	} // à redéfinir dans chaque sous-classe
 	
-	public class CanMove extends IAction{
-		boolean Canmove(Element e, Direction direction){
-			Element[][] carte= e.noeud().carte();
-			switch(direction) {
-			case NORTH:
-				if(carte[e.getx()][e.gety()-1]==null) {
-					return true;
-				}
-				else
-					return false;
-			case SOUTH:
-				if(carte[e.getx()][e.gety()+1]==null) {
-					return true;
-				}
-				else
-					return false;
-			case EAST:
-				if(carte[e.getx()+1][e.gety()]==null) {
-					return true;
-				}
-				else
-					return false;
-			case WEST:
-				if(carte[e.getx()-1][e.gety()]==null) {
-					return true;
-				}
-				else
-					return false;
-				
-			default:
-				return false;
-			}
+	public static class CanMove extends ICondition{
+		Direction direction;
+		
+		public CanMove(Direction direction) {
+			// TODO Auto-generated constructor stub
+			this.direction=direction;
+		}
+
+		boolean eval(Element e){
+			return e.canmove(this.direction);
 			
-			
+		}
+	}
+	
+	public static class CinqPas extends ICondition{
+		int nbpas;
+		public CinqPas(int nbpas) {
+			this.nbpas=nbpas;			
+		}
+		boolean eval(Element e) {
+			return e.cinqpas(this.nbpas);
 		}
 	}
 

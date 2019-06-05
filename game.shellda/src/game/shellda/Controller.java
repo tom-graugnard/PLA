@@ -13,8 +13,6 @@ import edu.ricm3.game.GameController;
 public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
-	
-
 
 	public Controller(Model model, View view) {
 		// TODO Auto-generated constructor stub
@@ -31,8 +29,10 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
-		m_model.step(now);
-		m_view.step(now);
+		if (m_model.gameStart) {
+			m_model.step(now);
+			m_view.step(now);
+		}
 	}
 
 	@Override
@@ -52,15 +52,14 @@ public class Controller extends GameController implements ActionListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart==false)
-			m_model.gameStart=true;
-		if(m_model.m_boutonexit.inside(e.getX(), e.getY()))
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
+			m_model.gameStart = true;
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()))
 			m_model.shutdown();
 	}
 
@@ -73,7 +72,7 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

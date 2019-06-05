@@ -26,8 +26,8 @@ public class Tree {
 
 	private void generate_tree(Noeud root) {
 
-		root.m_carte[0][Options.LARGEUR_CARTE - 1] = new Virus(root, m_model, 1, m_model.m_virusSprite, 2, 4, 0,
-				Options.LARGEUR_CARTE - 1, 1, vir);
+		root.m_carte[5][6] = new Virus(root, m_model, 1, m_model.m_virusSprite, 2, 4, 5,
+				6, 1, vir);
 		vir.add((Virus) root.m_carte[0][Options.LARGEUR_CARTE - 1]);
 		m_root.ajouter_enfant(root, 1, this);
 		tous.add(m_root.m_enfants[0]);
