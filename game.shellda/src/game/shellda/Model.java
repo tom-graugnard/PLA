@@ -34,9 +34,9 @@ public class Model extends GameModel {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this);
-		m_tree = new Tree(this, m_corbeille, m_virus);
+		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
-		m_joueur = new Clink(m_courant, this, 1, m_clinkSprite, 1, 1, 1, 1, 1);
+		m_joueur = new Clink(m_courant, this, 1, 1);
 		m_courant.m_carte[1][1] = m_joueur;
 
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
@@ -71,6 +71,23 @@ public class Model extends GameModel {
 		}
 	}
 
+	/*
+	private void splitSprite() {
+		int width = m_sprite.getWidth(null);
+		int height = m_sprite.getHeight(null);
+		m_sprites = new BufferedImage[m_nrows * m_ncols];
+		m_w = width / m_ncols;
+		m_h = height / m_nrows;
+		for (int i = 0; i < m_nrows; i++) {
+			for (int j = 0; j < m_ncols; j++) {
+				int x = j * m_w;
+				int y = i * m_h;
+				m_sprites[(i * m_ncols) + j] = m_sprite.getSubimage(x, y, m_w, m_h);
+			}
+		}
+	}
+	*/
+	
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub

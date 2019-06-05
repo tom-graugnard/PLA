@@ -3,14 +3,15 @@ package game.shellda;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class Dossier extends Fichier {
+public class Dossier extends Element {
 
-	Noeud m_enfant;
+	String m_name;
+	
+	Noeud m_contenu;
 
-	public Dossier(Noeud enfant, Noeud courant, String name, Model model, int no, BufferedImage sprite, int rows,
-			int columns, int x, int y, float scale) {
-		super(courant, model, no, sprite, rows, columns, x, y, scale);
-		m_enfant = enfant;
+	public Dossier(Noeud courant, Model model, int x, int y, String name, Noeud contenu) {
+		super(courant, model, x, y);
+		m_contenu = contenu;
 		m_name = name;
 		c = Color.orange;
 	}
