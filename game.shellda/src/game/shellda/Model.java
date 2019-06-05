@@ -37,7 +37,6 @@ public class Model extends GameModel {
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur = new Clink(m_courant, this, 3, 3);
-		m_courant.m_carte[3][3] = m_joueur;
 
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
@@ -91,8 +90,8 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < Options.HAUTEUR_CARTE; i++) {
-			for (int j = 0; j < Options.LARGEUR_CARTE; j++) {
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
 					if (m_courant.m_carte[i][j] != null)
 						m_courant.m_carte[i][j].step(now);
@@ -102,6 +101,24 @@ public class Model extends GameModel {
 				}
 			}
 		}
+		
+		try {
+			m_joueur.step(now);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+					if (m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j] instanceof Dossier && i == m_joueur.m_x && j == m_joueur.m_y) {
+						m_joueur.m_x = 3;
+						m_joueur.m_y = 3;
+						m_courant = ((Dossier)m_courant.m_carte[i][j]).m_contenu;
+						
+					}
+			}
+		}
+		
 
 	}
 

@@ -64,70 +64,54 @@ public class Clink extends Element {
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-
 			if (i < 150) {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				if (m_x - 1 >= 0) {
-					m_x--;
+				if (m_y - 1 >= 0) {
+					m_y--;
 				} else {
-					m_x = Options.HAUTEUR_CARTE - 1;
+					m_y = Options.HAUTEUR_CARTE - 1;
 				}
-				m_model.m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("North");
 			}
 			break;
 		case SOUTH:
-
 			if (i < 150) {
 				i++;
 			} else {
-
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				if (m_x + 1 < Options.HAUTEUR_CARTE) {
-					m_x++;
-				} else {
-					m_x = 0;
-				}
-				m_model.m_courant.m_carte[m_x][m_y] = this;
-				System.out.println("South");
-
-			}
-			break;
-		case EAST:
-
-			if (i < 150) {
-				i++;
-			} else {
-
-				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				if (m_y + 1 < Options.LARGEUR_CARTE) {
+				if (m_y + 1 < Options.HAUTEUR_CARTE) {
 					m_y++;
 				} else {
 					m_y = 0;
 				}
-				m_model.m_courant.m_carte[m_x][m_y] = this;
-				System.out.println("East");
-
+				System.out.println("South");
 			}
 			break;
-		case WEST:
-
+		case EAST:
 			if (i < 150) {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				if (m_y - 1 >= 0) {
-					m_y--;
+				if (m_x + 1 < Options.LARGEUR_CARTE) {
+					m_x++;
 				} else {
-					m_y = Options.LARGEUR_CARTE - 1;
+					m_x = 0;
 				}
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("East");
+			}
+			break;
+		case WEST:
+			if (i < 150) {
+				i++;
+			} else {
+				i = 0;
+				if (m_x - 1 >= 0) {
+					m_x--;
+				} else {
+					m_x = Options.LARGEUR_CARTE - 1;
+				}
 				System.out.println("West");
 			}
 			break;
@@ -139,52 +123,16 @@ public class Clink extends Element {
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (m_x - 1 >= 0) {
-				if (canNorth && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
-					return true;
-				}
-			} else {
-				if (canNorth && m_model.m_courant.m_carte[Options.HAUTEUR_CARTE - 1][m_y] == null) {
-					return true;
-				}
-			}
-
-			break;
+			return canNorth;
 		case SOUTH:
-			if (canSouth && m_x + 1 < Options.HAUTEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
-					return true;
-				}
-			} else {
-				if (canSouth && m_model.m_courant.m_carte[0][m_y] == null) {
-					return true;
-				}
-			}
-			break;
+			return canSouth;
 		case EAST:
-			if (canEast && m_y + 1 < Options.LARGEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
-					return true;
-				}
-			} else {
-				if (canEast && m_model.m_courant.m_carte[m_x][0] == null) {
-					return true;
-				}
-			}
-			break;
+			return canEast;
 		case WEST:
-			if (canWest && m_y - 1 >= 0) {
-				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
-					return true;
-				}
-			} else {
-				if (canWest && m_model.m_courant.m_carte[m_x][Options.LARGEUR_CARTE - 1] == null) {
-					return true;
-				}
-			}
-			break;
+			return canWest;
+		default:
+			return false;
 		}
-		return false;
 	}
 
 }

@@ -22,7 +22,7 @@ public class Noeud {
 		m_name = name;
 		m_model = m;
 		m_enfants = new LinkedList<Noeud>();
-		m_carte = new Element[Options.HAUTEUR_CARTE][Options.LARGEUR_CARTE];
+		m_carte = new Element[Options.LARGEUR_CARTE][Options.HAUTEUR_CARTE];
 		m_carte[0][0] = new Corbeille(this, m_model, 0, 0, m_model.m_corbeille);
 	}
 
@@ -30,7 +30,7 @@ public class Noeud {
 		m_name = name;
 		m_model = m;
 		m_parent = parent;
-		m_carte = new Element[Options.HAUTEUR_CARTE][Options.LARGEUR_CARTE];
+		m_carte = new Element[Options.LARGEUR_CARTE][Options.HAUTEUR_CARTE];
 		m_carte[0][0] = new Dossier(this, m_model, 0, 0, "..", m_parent);
 		m_enfants = new LinkedList<Noeud>();
 
@@ -39,12 +39,12 @@ public class Noeud {
 	public boolean ajouter_element(Element e) {
 		// Si il y a déjà un élement à cette emplacement alors l'element ne peut être
 		// placé
-		if (m_carte[e.m_y][e.m_x] != null) {
+		if (m_carte[e.m_x][e.m_y] != null) {
 			return false;
 		}
 		// Sinon l'élément peut être placé
 		else {
-			m_carte[e.m_y][e.m_x] = e;
+			m_carte[e.m_x][e.m_y] = e;
 			return true;
 		}
 	}
@@ -76,7 +76,7 @@ public class Noeud {
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < Options.PROFONDEUR_ARBORESCENCE - profondeur + 1; i++) {
+		for (i = 0; i < Options.PROFONDEUR_ARBORESCENCE - profondeur + 19; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			ajouter_element(new Virus(this, m_model, x, y));
@@ -115,16 +115,18 @@ public class Noeud {
 	public void paint(Graphics g) {
 		int case_width = 48;// Options.WIDTH / Options.LARGEUR_CARTE;
 		int case_height = 48;// Options.HEIGHT / Options.HAUTEUR_CARTE;
-		for (int i = 0; i < Options.HAUTEUR_CARTE; i++) {
-			for (int j = 0; j < Options.LARGEUR_CARTE; j++) {
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				if (m_carte[i][j] == null) {
 					g.setColor(Color.white);
 				} else {
 					g.setColor(m_carte[i][j].c);
 				}
-				g.fillRect(j * (case_width + 4), i * (case_height + 4), case_width, case_height);
+				g.fillRect(i * (case_width + 4), j * (case_height + 4), case_width, case_height);
 			}
 		}
+		g.setColor(m_model.m_joueur.c);
+		g.fillRect(m_model.m_joueur.m_x * (case_width + 4), m_model.m_joueur.m_y * (case_height + 4), case_width, case_height);
 
 	}
 
