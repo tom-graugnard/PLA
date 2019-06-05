@@ -10,6 +10,7 @@ public class Tree {
 		m_root = new Noeud(m, "root");
 		m_model = m;
 		m_root.generer_noeud(Options.PROFONDEUR_ARBORESCENCE);
+
 	}
 
 	public void paint() {

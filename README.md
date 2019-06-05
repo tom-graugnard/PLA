@@ -13,3 +13,16 @@ On utilise un arbre pour stocker notre terrain de jeu qui est composé d'un ense
 Chaque entitée comporte de différents actions (Egg, Hit, Pop et Wizz) qui peut interagir avec l'environnement.
 
 Pour plus d'information sur le jeu et son fonctionnement [cliquez-ici](https://docs.google.com/document/d/1mjZNye_7PBJDbEon7VTnQUHm0hPmgZH5E2vAEqCFRjU/edit?usp=sharing).
+
+
+## MERCREDI 5/06
+
+Tâches réalisées :
+
+  - Affichage graphique simplifié
+  - Automate de mouvement du joueur contrôlable au clavier
+  - Automate des virus qui suivent des entitées
+  - Restructuration/Simplification du code
+  - Génération aléatoire de l'arborescence
+  - Génération aléatoire des fichiers, virus, dossier
+  - Menu au début du jeu
