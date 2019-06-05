@@ -1,2 +1,5 @@
-/.metadata/
-/.recommenders/
+.metadata/
+.recommenders/
+
+setenv.sh
+launch.sh
