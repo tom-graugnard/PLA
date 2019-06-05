@@ -33,11 +33,11 @@ public class Model extends GameModel {
 	public Model() {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
-		m_corbeille = new Noeud(this);
+		m_corbeille = new Noeud(this, "Corbeille");
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
-		m_joueur = new Clink(m_courant, this, 1, 1);
-		m_courant.m_carte[1][1] = m_joueur;
+		m_joueur = new Clink(m_courant, this, 3, 3);
+		m_courant.m_carte[3][3] = m_joueur;
 
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
