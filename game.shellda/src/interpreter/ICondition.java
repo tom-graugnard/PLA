@@ -28,6 +28,7 @@ public class ICondition {
 		}
 
 	}
+	
 
 	/*
 	 * public class True extends Condition { True(){} boolean eval(Entity e) {
