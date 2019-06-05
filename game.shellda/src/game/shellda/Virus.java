@@ -25,94 +25,94 @@ public class Virus extends Element {
 		display = 0;
 		model.m_virus.add(this);
 		c = Color.magenta;
-		
-		
+
 		IState s1 = new IState("un");
 		s1.id = 1;
 		IState s2 = new IState("deux");
 		s2.id = 2;
 		IState s3 = new IState("trois");
-		s3.id=3;
+		s3.id = 3;
 		IState s4 = new IState("quatre");
-		s4.id=4;
+		s4.id = 4;
 
 		List<IBehaviour> b = new LinkedList<IBehaviour>();
 
 		Move move1 = new Move(Direction.EAST);
 		Move move2 = new Move(Direction.WEST);
-		CanMove conwest=new CanMove(Direction.WEST);
-		CanMove coneast=new CanMove(Direction.EAST);
+		CanMove conwest = new CanMove(Direction.WEST);
+		CanMove coneast = new CanMove(Direction.EAST);
 		ICondition con = new ICondition();
 
-		
 		List<ITransition> t1 = new LinkedList<ITransition>();
 		ITransition t_tmp1 = new ITransition(conwest, move2, s2);
 		t1.add(t_tmp1);
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
-		
+
 		List<ITransition> t2 = new LinkedList<ITransition>();
 		ITransition t_tmp2 = new ITransition(conwest, move2, s3);
 		t2.add(t_tmp2);
 		IBehaviour b_tmp2 = new IBehaviour(s2, t2);
 		b.add(b_tmp2);
-		
+
 		List<ITransition> t3 = new LinkedList<ITransition>();
 		ITransition t_tmp3 = new ITransition(coneast, move1, s4);
 		t3.add(t_tmp3);
 		IBehaviour b_tmp3 = new IBehaviour(s3, t3);
 		b.add(b_tmp3);
-		
+
 		List<ITransition> t4 = new LinkedList<ITransition>();
 		ITransition t_tmp4 = new ITransition(coneast, move1, s1);
 		t4.add(t_tmp4);
 		IBehaviour b_tmp4 = new IBehaviour(s4, t4);
 		b.add(b_tmp4);
 
-		auto = new IAutomaton(s1, b);
+		m_auto = new IAutomaton(s1, b);
 	}
 
 	public void step(long now) throws Exception {
-		if (auto != null)
-			auto.step(this);
-		//System.out.print(this.nbpas);
-		
+		if (m_auto != null)
+			m_auto.step(this);
+		// System.out.print(this.nbpas);
+
 	}
-	
+
 	public boolean canmove(Direction direction) {
-		switch(direction) {
+		switch (direction) {
 		case NORTH:
-			if(m_model.m_courant.m_carte[m_x-1][m_y]==null) {
-				return true;
+			if (m_x - 1 >= 0) {
+				if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
+					return true;
+				}
 			}
-			else
-				return false;
+			break;
 		case SOUTH:
-			if(m_model.m_courant.m_carte[m_x+1][m_y]==null) {
-				return true;
+			if (m_x + 1 < Options.HAUTEUR_CARTE) {
+				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+					return true;
+				}
 			}
-			else
-				return false;
+			break;
 		case EAST:
-			if(m_model.m_courant.m_carte[m_x][m_y+1]==null) {
-				return true;
+			if (m_y + 1 < Options.LARGEUR_CARTE) {
+				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
+					return true;
+				}
 			}
-			else
-				return false;
+			break;
 		case WEST:
-			if(m_model.m_courant.m_carte[m_x][m_y-1]==null) {
-				return true;
+			if (m_y - 1 >= 0) {
+				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+					return true;
+				}
 			}
-			else
-				return false;
-			
-		default:
-			return false;
+			break;
 		}
+		return false;
 	}
-	
+
 	int i = 0;
-	
+
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
@@ -164,25 +164,23 @@ public class Virus extends Element {
 			break;
 		}
 	}
-	
-	
-	
+
 	public void hit() {
-		
+
 	}
+
 	public void egg() {
-		
+
 	}
-	
+
 	public void pop() {
-		
+
 	}
-	
+
 	public void wizz() {
-		
+
 	}
-	
-	
+
 	void actualiser() {
 		display++;
 	}
