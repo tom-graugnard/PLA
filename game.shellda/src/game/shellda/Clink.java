@@ -19,7 +19,7 @@ public class Clink extends Element {
 	boolean canEast, canNorth, canSouth, canWest;
 
 	public Clink(Noeud courant, Model model, int x, int y) {
-		super(courant , model, x, y);
+		super(courant, model, x, y);
 		c = Color.black;
 		IState s1 = new IState("depart");
 		s1.id = 1;
@@ -70,7 +70,11 @@ public class Clink extends Element {
 			} else {
 				i = 0;
 				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_x--;
+				if (m_x - 1 >= 0) {
+					m_x--;
+				} else {
+					m_x = Options.HAUTEUR_CARTE - 1;
+				}
 				m_model.m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("North");
 			}
@@ -83,7 +87,11 @@ public class Clink extends Element {
 
 				i = 0;
 				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_x++;
+				if (m_x + 1 < Options.HAUTEUR_CARTE) {
+					m_x++;
+				} else {
+					m_x = 0;
+				}
 				m_model.m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("South");
 
@@ -97,7 +105,11 @@ public class Clink extends Element {
 
 				i = 0;
 				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_y++;
+				if (m_y + 1 < Options.LARGEUR_CARTE) {
+					m_y++;
+				} else {
+					m_y = 0;
+				}
 				m_model.m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("East");
 
@@ -110,7 +122,11 @@ public class Clink extends Element {
 			} else {
 				i = 0;
 				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_y--;
+				if (m_y - 1 >= 0) {
+					m_y--;
+				} else {
+					m_y = Options.LARGEUR_CARTE - 1;
+				}
 				m_model.m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("West");
 			}
@@ -120,7 +136,6 @@ public class Clink extends Element {
 		}
 	}
 
-
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
@@ -128,11 +143,20 @@ public class Clink extends Element {
 				if (canNorth && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
 					return true;
 				}
+			} else {
+				if (canNorth && m_model.m_courant.m_carte[Options.HAUTEUR_CARTE - 1][m_y] == null) {
+					return true;
+				}
 			}
+
 			break;
 		case SOUTH:
 			if (canSouth && m_x + 1 < Options.HAUTEUR_CARTE) {
 				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+					return true;
+				}
+			} else {
+				if (canSouth && m_model.m_courant.m_carte[0][m_y] == null) {
 					return true;
 				}
 			}
@@ -142,11 +166,19 @@ public class Clink extends Element {
 				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
 					return true;
 				}
+			} else {
+				if (canEast && m_model.m_courant.m_carte[m_x][0] == null) {
+					return true;
+				}
 			}
 			break;
 		case WEST:
 			if (canWest && m_y - 1 >= 0) {
 				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+					return true;
+				}
+			} else {
+				if (canWest && m_model.m_courant.m_carte[m_x][Options.LARGEUR_CARTE - 1] == null) {
 					return true;
 				}
 			}
