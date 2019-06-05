@@ -28,6 +28,16 @@ public class ICondition {
 		}
 
 	}
+	
+	public static class CinqPas extends ICondition{
+		int nbpas;
+		public CinqPas(int nbpas) {
+			this.nbpas=nbpas;			
+		}
+		boolean eval(Element e) {
+			return e.cinqpas(this.nbpas);
+		}
+	}
 
 	/*
 	 * public class True extends Condition { True(){} boolean eval(Entity e) {
