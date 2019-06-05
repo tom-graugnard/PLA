@@ -14,12 +14,13 @@ public class Model extends GameModel {
 	Tree m_tree;
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
-	
-	
+
 	Noeud m_courant;
 	
+	Clink m_joueur;
+
 	BufferedImage m_virusSprite;
-	
+
 	BufferedImage m_boutonplaySprite;
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
@@ -33,13 +34,19 @@ public class Model extends GameModel {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this);
-		m_tree = new Tree(this,m_corbeille, m_virus);
+		m_tree = new Tree(this, m_corbeille, m_virus);
 		m_courant = m_tree.m_root;
-		
-		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1, Options.WIDTH / 2 - (int)(m_boutonplaySprite.getWidth()*Options.BoutonPlayScale)/2, Options.HEIGHT / 2 - (int)(m_boutonplaySprite.getHeight()*Options.BoutonPlayScale)/2, Options.BoutonPlayScale);
-		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH-40, 0, Options.BoutonExitScale);
+		m_joueur = new Clink(m_courant, this, 1, m_clinkSprite, 1, 1, 1, 1, 1);
+		m_courant.m_carte[1][1] = m_joueur;
+
+		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
+				Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2,
+				Options.BoutonPlayScale);
+		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
+				Options.BoutonExitScale);
 	}
-	
+
 	private void loadSprites() {
 		File imageFile = new File("ressources/Virus.png");
 		try {
@@ -67,18 +74,18 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
-		for(int i=0;i<Options.LARGEUR_CARTE;i++) {
-			for(int j=0;j<Options.HAUTEUR_CARTE;j++) {
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
-					if(m_courant.m_carte[i][j]!=null)
-					m_courant.m_carte[i][j].step(now);
+					if (m_courant.m_carte[i][j] != null)
+						m_courant.m_carte[i][j].step(now);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
-		
+
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import edu.ricm3.game.GameController;
+import interpreter.Direction;
 
 public class Controller extends GameController implements ActionListener {
 	Model m_model;
@@ -43,14 +44,44 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// touche gauche pour aller vers la gauche
-		// touche droite pour aller vers la droite
-		// touche ctrl pour sauter
+		int c = e.getKeyCode();
+		switch (c) {
+		case KeyEvent.VK_RIGHT:
+			m_model.m_joueur.canEast = true;
+			break;
+		case KeyEvent.VK_LEFT:
+			m_model.m_joueur.canWest = true;
+			break;
+		case KeyEvent.VK_UP:
+			m_model.m_joueur.canNorth = true;
+			break;
+		case KeyEvent.VK_DOWN:
+			m_model.m_joueur.canSouth = true;
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		int c = e.getKeyCode();
+		switch (c) {
+		case KeyEvent.VK_RIGHT:
+			m_model.m_joueur.canEast = false;
+			break;
+		case KeyEvent.VK_LEFT:
+			m_model.m_joueur.canWest = false;
+			break;
+		case KeyEvent.VK_UP:
+			m_model.m_joueur.canNorth = false;
+			break;
+		case KeyEvent.VK_DOWN:
+			m_model.m_joueur.canSouth = false;
+			break;
+		default:
+			break;
+		}
 
 	}
 

@@ -1,10 +1,13 @@
 package interpreter;
 
+import game.shellda.Clink;
 import game.shellda.Element;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class ICondition {
+
+	boolean m_cond;
 
 	public ICondition() {
 	}
@@ -12,19 +15,18 @@ public class ICondition {
 	boolean eval(Element e) {
 		return true;
 	} // à redéfinir dans chaque sous-classe
-	
-	public static class CanMove extends ICondition{
+
+	public static class CanMove extends ICondition {
 		Direction direction;
 		
 		public CanMove(Direction direction) {
-			// TODO Auto-generated constructor stub
-			this.direction=direction;
+			this.direction = direction;
 		}
 
-		boolean eval(Element e){
-			return e.canmove(this.direction);
-			
+		boolean eval(Element e) {
+			return e.canmove(direction);
 		}
+
 	}
 	
 	public static class CinqPas extends ICondition{
