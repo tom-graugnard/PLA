@@ -1,5 +1,6 @@
 package interpreter;
 
+import game.shellda.Clink;
 import game.shellda.Element;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
