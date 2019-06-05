@@ -16,7 +16,7 @@ public class Tree {
 
 	private void generate_tree() {
 		m_root.m_carte[0][0] = new Corbeille(m_root, m_model, 0, 0, m_model.m_corbeille);
-		m_root.m_carte[0][Options.LARGEUR_CARTE - 1] = new Virus(m_root, m_model, 0, Options.LARGEUR_CARTE - 1);
+		m_root.m_carte[6][6] = new Virus(m_root, m_model, 6, 6);
 		m_root.ajouter_enfant(m_root, 1, this);
 
 		m_root.m_enfants.get(0).ajouter_enfant(m_root.m_enfants.get(0), 3, this);
