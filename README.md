@@ -21,8 +21,11 @@ Tâches réalisées :
 
   - Affichage graphique simplifié
   - Automate de mouvement du joueur contrôlable au clavier
-  - Automate des virus qui suivent des entitées
   - Restructuration/Simplification du code
   - Génération aléatoire de l'arborescence
   - Génération aléatoire des fichiers, virus, dossier
   - Menu au début du jeu
+  - Carte en tore
+  
+ Tâches en cours :
+  - Automate des virus qui suivent des entitées
