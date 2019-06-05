@@ -1,7 +1,6 @@
 package game.shellda;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,8 +18,8 @@ public class Clink extends Element {
 
 	boolean canEast, canNorth, canSouth, canWest;
 
-	public Clink(Noeud n, Model model, int no, BufferedImage sprite, int rows, int columns, int x, int y, float scale) {
-		super(n, model, no, sprite, rows, columns, x, y, scale);
+	public Clink(Noeud courant, Model model, int x, int y) {
+		super(courant , model, x, y);
 		c = Color.black;
 		IState s1 = new IState("depart");
 		s1.id = 1;
@@ -52,12 +51,12 @@ public class Clink extends Element {
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
 
-		auto = new IAutomaton(s1, b);
+		m_auto = new IAutomaton(s1, b);
 	}
 
 	public void step(long now) throws Exception {
-		if (auto != null)
-			auto.step(this);
+		if (m_auto != null)
+			m_auto.step(this);
 	}
 
 	int i = 0;
@@ -69,7 +68,7 @@ public class Clink extends Element {
 			if (i < 150) {
 				i++;
 			} else {
-				 i = 0;
+				i = 0;
 				m_model.m_courant.m_carte[m_x][m_y] = null;
 				m_x--;
 				m_model.m_courant.m_carte[m_x][m_y] = this;
@@ -121,26 +120,35 @@ public class Clink extends Element {
 		}
 	}
 
+
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (canNorth && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
-				return true;
+			if (m_x - 1 >= 0) {
+				if (canNorth && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
+					return true;
+				}
 			}
 			break;
 		case SOUTH:
-			if (canSouth && m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
-				return true;
+			if (canSouth && m_x + 1 < Options.HAUTEUR_CARTE) {
+				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+					return true;
+				}
 			}
 			break;
 		case EAST:
-			if (canEast && m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
-				return true;
+			if (canEast && m_y + 1 < Options.LARGEUR_CARTE) {
+				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
+					return true;
+				}
 			}
 			break;
 		case WEST:
-			if (canWest && m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
-				return true;
+			if (canWest && m_y - 1 >= 0) {
+				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+					return true;
+				}
 			}
 			break;
 		}

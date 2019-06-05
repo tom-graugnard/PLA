@@ -1,13 +1,12 @@
 package game.shellda;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 public class Corbeille extends Dossier {
 
-	public Corbeille(Noeud enfant, Noeud courant, Model model, int no, BufferedImage sprite, int rows, int columns,
-			int x, int y, float scale) {
-		super(enfant, courant, "corbeille", model, no, sprite, rows, columns, x, y, scale);
+	public Corbeille(Noeud courant, Model model, int x, int y, Noeud contenu)  {
+		super(courant, model, x, y, "corbeille", contenu);
+		
 		c = Color.darkGray;
 	}
 

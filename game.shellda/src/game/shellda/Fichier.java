@@ -1,13 +1,14 @@
 package game.shellda;
 
-import java.awt.image.BufferedImage;
-
 public class Fichier extends Element{
 
-	public Fichier(Noeud n, Model model, int no, BufferedImage sprite, int rows, int columns, int x, int y,
-			float scale) {
-		super(n, model, no, sprite, rows, columns, x, y, scale);
-		// TODO Auto-generated constructor stub
+	String m_name;
+	
+	int m_infection;
+	
+	public Fichier(Noeud courant, Model model, int x, int y, String name) {
+		super(courant, model, x, y);
+		m_name = name;
 	}
 
 }

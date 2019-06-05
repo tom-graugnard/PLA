@@ -2,22 +2,28 @@ package game.shellda;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.LinkedList;
 
 public class Noeud {
 
 	Element m_carte[][];
+	
 	Noeud m_parent;
-	Noeud m_enfants[];
-	int m_nb_enfant;
+	
+	LinkedList<Noeud> m_enfants;
 
 	Model m_model;
+	
+	String m_name;
 
 	public Noeud(Model m) {
+		m_enfants = new LinkedList<Noeud>();
 		m_model = m;
 		initialiser_carte(m);
 	}
 
 	public Noeud(Model m, Noeud parent) {
+		m_enfants = new LinkedList<Noeud>();
 		m_model = m;
 		m_parent = parent;
 		initialiser_carte(m);
@@ -27,34 +33,25 @@ public class Noeud {
 		return m_parent;
 	}
 
-	public int nb_enfant() {
-		return m_nb_enfant;
-	}
-
-	private void initialiser_carte(Model m) {
+	private void initialiser_carte(Model model) {
 		m_carte = new Element[Options.HAUTEUR_CARTE][Options.LARGEUR_CARTE];
 		for (int i = 0; i < Options.HAUTEUR_CARTE; i++) {
 			for (int j = 0; j < Options.LARGEUR_CARTE; j++) {
 				m_carte[i][j] = null;
 			}
 		}
-		m_carte[0][0] = new Corbeille(m.m_corbeille, this, m, 0, m.m_corbeilleSprite, 1, 1, 0, 0, 1);
-		m_carte[1][0] = new Dossier(m_parent, this, "Retour", m, 0, m.m_corbeilleSprite, 1, 1, 0, 1, 1);
-		m_carte[5][0] = new Dossier(m_parent, this, "Retour", m, 0, m.m_corbeilleSprite, 1, 1, 5, 0, 1);
+		
+		m_carte[1][0] = new Dossier(this, model, 0, 1,"Retour", m_parent);
 	}
 
 	public void ajouter_enfant(Noeud parent, int nb, Tree root) {
-		m_nb_enfant = nb;
-		m_enfants = new Noeud[nb];
 		for (int i = 0; i < nb; i++) {
 			Noeud n = new Noeud(m_model, parent);
-			m_enfants[i] = n;
-			n.m_carte[5][6] = new Virus(this, m_model, 1, m_model.m_virusSprite, 2, 4, 5,
-					6, 1, m_model.m_virus);
-			root.vir.add((Virus) n.m_carte[5][6]);
+			m_enfants.add(n);
+			n.m_carte[0][Options.LARGEUR_CARTE - 1] = new Virus(this, m_model, 0,
+					Options.LARGEUR_CARTE - 1);
 
-			m_carte[Options.HAUTEUR_CARTE - 1][i] = new Dossier(n, this, "" + i, m_model, 0, m_model.m_corbeilleSprite,
-					1, 1, Options.HAUTEUR_CARTE - 1, i, 1);
+			m_carte[Options.HAUTEUR_CARTE - 1][i] = new Dossier(this, m_model, Options.HAUTEUR_CARTE - 1, i,"" + i, n);
 		}
 
 	}
