@@ -104,19 +104,11 @@ public class Element {
 
 	}
 
-	public boolean canmove(Direction direction) {
-
-		return false;
-	}
 
 	public boolean canmove(Direction direction) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean cinqpas(int nbpas2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

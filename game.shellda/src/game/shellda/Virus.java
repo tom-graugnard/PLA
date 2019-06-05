@@ -10,10 +10,10 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.ICondition.CanMove;
-import interpreter.ICondition.CinqPas;
+
 import interpreter.IState;
 import interpreter.ITransition;
-import interpreter.IAction.IncCinq;
+
 import interpreter.IAction.Move;
 
 public class Virus extends Element {
@@ -32,38 +32,43 @@ public class Virus extends Element {
 		s1.id = 1;
 		IState s2 = new IState("deux");
 		s2.id = 2;
-		IState s3 = new IState("troi");
+		IState s3 = new IState("trois");
 		s3.id=3;
+		IState s4 = new IState("quatre");
+		s4.id=4;
 
 		List<IBehaviour> b = new LinkedList<IBehaviour>();
 
 		Move move1 = new Move(Direction.EAST);
 		Move move2 = new Move(Direction.WEST);
-		IncCinq incpas = new IncCinq(this.nbpas);
 		CanMove conwest=new CanMove(Direction.WEST);
 		CanMove coneast=new CanMove(Direction.EAST);
 		ICondition con = new ICondition();
-		CinqPas conpas= new CinqPas(this.nbpas);
+
 		
 		List<ITransition> t1 = new LinkedList<ITransition>();
-		ITransition t_tmp1 = new ITransition(con, incpas, s2);
+		ITransition t_tmp1 = new ITransition(conwest, move2, s2);
 		t1.add(t_tmp1);
-		ITransition t_tmp1s = new ITransition(con, incpas, s3);
-		t1.add(t_tmp1s);
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
 		
 		List<ITransition> t2 = new LinkedList<ITransition>();
-		ITransition t_tmp2 = new ITransition(conwest, move2, s1);
+		ITransition t_tmp2 = new ITransition(conwest, move2, s3);
 		t2.add(t_tmp2);
 		IBehaviour b_tmp2 = new IBehaviour(s2, t2);
 		b.add(b_tmp2);
 		
 		List<ITransition> t3 = new LinkedList<ITransition>();
-		ITransition t_tmp3 = new ITransition(coneast, move1, s1);
-		t2.add(t_tmp3);
+		ITransition t_tmp3 = new ITransition(coneast, move1, s4);
+		t3.add(t_tmp3);
 		IBehaviour b_tmp3 = new IBehaviour(s3, t3);
 		b.add(b_tmp3);
+		
+		List<ITransition> t4 = new LinkedList<ITransition>();
+		ITransition t_tmp4 = new ITransition(coneast, move1, s1);
+		t4.add(t_tmp4);
+		IBehaviour b_tmp4 = new IBehaviour(s4, t4);
+		b.add(b_tmp4);
 
 		auto = new IAutomaton(s1, b);
 	}
@@ -71,6 +76,8 @@ public class Virus extends Element {
 	public void step(long now) throws Exception {
 		if (auto != null)
 			auto.step(this);
+		//System.out.print(this.nbpas);
+		
 	}
 	
 	public boolean canmove(Direction direction) {
@@ -158,13 +165,8 @@ public class Virus extends Element {
 			break;
 		}
 	}
-	public boolean cinqpas(int nbpas2) {
-		if(nbpas2<5)
-			return false;
-		else
-			return true;
-		
-	}
+	
+	
 	
 	public void hit() {
 		

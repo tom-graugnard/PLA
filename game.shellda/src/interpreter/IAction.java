@@ -65,19 +65,6 @@ public class IAction {
 		}
 	}
 
-	public static class IncCinq extends IAction {
-		int nbpas;
 
-		public IncCinq(int nbpas) {
-			this.nbpas = nbpas;
-		}
-
-		void exec(Element e) {
-			if (nbpas >= 5)
-				nbpas = 0;
-			else
-				nbpas++;
-		}
-	}
 
 }
