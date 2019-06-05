@@ -44,6 +44,7 @@ public class Element {
 		return m_y;
 	}
 
+	//Action possible de l'automates
 	public void wizz() {
 	}
 
@@ -59,6 +60,7 @@ public class Element {
 	public void move(Direction direction) {
 	}
 
+	//Condition possible de l'automates
 	public boolean canmove(Direction direction) {
 		return false;
 	}
