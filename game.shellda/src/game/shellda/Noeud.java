@@ -86,8 +86,8 @@ public class Noeud {
 	}
 
 	public void paint(Graphics g) {
-		int case_width = Options.WIDTH / Options.LARGEUR_CARTE;
-		int case_height = Options.HEIGHT / Options.HAUTEUR_CARTE;
+		int case_width = 48;//Options.WIDTH / Options.LARGEUR_CARTE;
+		int case_height = 48;//Options.HEIGHT / Options.HAUTEUR_CARTE;
 		for (int i = 0; i < Options.HAUTEUR_CARTE; i++) {
 			for (int j = 0; j < Options.LARGEUR_CARTE; j++) {
 				if (m_carte[i][j] == null) {
@@ -95,7 +95,7 @@ public class Noeud {
 				} else {
 					g.setColor(m_carte[i][j].c);
 				}
-				g.fillRect(j * case_width, i * case_height, case_width - 4, case_height - 4);
+				g.fillRect(j * (case_width + 4), i * (case_height + 4), case_width, case_height );
 			}
 		}
 
