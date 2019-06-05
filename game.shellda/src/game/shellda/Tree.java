@@ -17,7 +17,6 @@ public class Tree {
 		corbeille = corb;
 		m_root = new Noeud(m);
 		m_model = m;
-		m_root.m_carte[1][1] = new Clink(m_root, m, 1, m.m_clinkSprite, 1, 1, 1, 1, 1);
 		tous = new LinkedList<Noeud>();
 		vir = virus;
 		tous.add(m_root);

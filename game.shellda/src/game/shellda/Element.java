@@ -24,8 +24,10 @@ public class Element {
 	Noeud m_courant;
 
 	String m_name;
+	
 
-	public Element(Noeud n, Model model, int no, BufferedImage sprite, int rows, int columns, int x, int y, float scale) {
+	public Element(Noeud n, Model model, int no, BufferedImage sprite, int rows, int columns, int x, int y,
+			float scale) {
 		m_model = model;
 		m_sprite = sprite;
 		m_ncols = columns;
@@ -34,7 +36,7 @@ public class Element {
 		m_x = x;
 		m_y = y;
 		m_scale = scale;
-		//splitSprite();
+		// splitSprite();
 		m_scaled_w = (int) (m_scale * m_w);
 		m_scaled_h = (int) (m_scale * m_h);
 	}
@@ -62,42 +64,50 @@ public class Element {
 	}
 
 	public void step(long now) throws Exception {
-		//if(auto!=null)
-		//auto.step(this);
+		// if(auto!=null)
+		// auto.step(this);
 	}
+
 	public Noeud noeud() {
 		return m_courant;
 	}
+
 	public int getx() {
 		return m_x;
 	}
+
 	public int gety() {
 		return m_y;
 	}
 
 	public void wizz() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void pop() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void hit(Direction direction) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void egg() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void move(Direction direction) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public boolean canmove(Direction direction) {
+
+		return false;
 	}
 
 }
