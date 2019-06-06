@@ -119,5 +119,9 @@ public class Element {
 	public boolean canhit(Direction direction) {
 		return false;
 	}
+	
+	public boolean canwizz() {
+		return false;
+	}
 
 }

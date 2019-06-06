@@ -10,22 +10,28 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.ICondition.CanMove;
+import interpreter.ICondition.CanWizz;
 import interpreter.ICondition.CanHit;
 import interpreter.IState;
 import interpreter.ITransition;
 import interpreter.IAction.Hit;
 import interpreter.IAction.Move;
+import interpreter.IAction.Wizz;
 
 public class Clink extends Element {
 
-	boolean canEast, canNorth, canSouth, canWest, canHit;
-
+	Direction mouvement = null;
+	boolean isHitting = false;
+	boolean isWizzing = false;
+	
+	Element inventaire = null;
+	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		c = Color.black;
 		IState s1 = new IState("depart");
 		s1.id = 1;
-
+		
 		List<IBehaviour> b = new LinkedList<IBehaviour>();
 
 		List<ITransition> t1 = new LinkedList<ITransition>();
@@ -54,10 +60,15 @@ public class Clink extends Element {
 		CanHit con2 = new CanHit(null);
 		ITransition t_tmp5 = new ITransition(con2, hit, s1);
 		t1.add(t_tmp5);
+		
+		Wizz wizz = new Wizz();
+		CanWizz con3 = new CanWizz();
+		ITransition t_tmp6 = new ITransition(con3, wizz, s1);
+		t1.add(t_tmp6);
 
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
-
+		
 		m_auto = new IAutomaton(s1, b);
 	}
 
@@ -66,97 +77,142 @@ public class Clink extends Element {
 			m_auto.step(this);
 	}
 
-	int i = 0;
-
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (i < 150) {
-				i++;
+			if (m_y - 1 >= 0) {
+				m_y--;
 			} else {
-				i = 0;
-				if (m_y - 1 >= 0) {
-					m_y--;
-				} else {
-					m_y = Options.HAUTEUR_CARTE - 1;
-				}
-				System.out.println("North");
+				m_y = Options.HAUTEUR_CARTE - 1;
 			}
 			break;
 		case SOUTH:
-			if (i < 150) {
-				i++;
+			if (m_y + 1 < Options.HAUTEUR_CARTE) {
+				m_y++;
 			} else {
-				i = 0;
-				if (m_y + 1 < Options.HAUTEUR_CARTE) {
-					m_y++;
-				} else {
-					m_y = 0;
-				}
-				System.out.println("South");
+				m_y = 0;
 			}
 			break;
 		case EAST:
-			if (i < 150) {
-				i++;
+			if (m_x + 1 < Options.LARGEUR_CARTE) {
+				m_x++;
 			} else {
-				i = 0;
-				if (m_x + 1 < Options.LARGEUR_CARTE) {
-					m_x++;
-				} else {
-					m_x = 0;
-				}
-				System.out.println("East");
+				m_x = 0;
 			}
 			break;
 		case WEST:
-			if (i < 150) {
-				i++;
+			if (m_x - 1 >= 0) {
+				m_x--;
 			} else {
-				i = 0;
-				if (m_x - 1 >= 0) {
-					m_x--;
-				} else {
-					m_x = Options.LARGEUR_CARTE - 1;
-				}
-				System.out.println("West");
+				m_x = Options.LARGEUR_CARTE - 1;
 			}
 			break;
 		default:
 			break;
 		}
+		mouvement = null;
+		isHitting = false;
 	}
 
 	public boolean canmove(Direction direction) {
-		switch (direction) {
-		case NORTH:
-			return canNorth;
-		case SOUTH:
-			return canSouth;
-		case EAST:
-			return canEast;
-		case WEST:
-			return canWest;
-		default:
+		if(mouvement == null)
 			return false;
+		boolean movementPossible = true;
+		switch (mouvement) {
+		case NORTH:
+			if (m_y - 1 >= 0) {
+				if(m_courant.m_carte[m_x][m_y-1] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[m_x][Options.HAUTEUR_CARTE - 1] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		case SOUTH:
+			if (m_y + 1 < Options.HAUTEUR_CARTE) {
+				if(m_courant.m_carte[m_x][m_y+1] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[m_x][0] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		case EAST:
+			if (m_x + 1 < Options.LARGEUR_CARTE) {
+				if(m_courant.m_carte[m_x + 1][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[0][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		case WEST:
+			if (m_x - 1 >= 0) {
+				if(m_courant.m_carte[m_x - 1][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[Options.LARGEUR_CARTE - 1][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		default:
+			movementPossible = false;
+			break;
 		}
+		return mouvement == direction && movementPossible;
 	}
-	
+
 	public void hit(Direction direction) {
 		Element e = m_model.m_courant.m_carte[m_x][m_y];
-		if(e instanceof Dossier) {
+		if (e instanceof Dossier) {
 			Dossier d = (Dossier) e;
-			m_x = 3;
-			m_y = 3;
+			m_x = 0;
+			m_y = 0;
 			m_model.m_courant = d.m_contenu;
 			m_courant = d.m_contenu;
 		}
+		isHitting = false;
 	}
-
-	public boolean canhit(Direction direction) {
-		if (canHit && m_model.m_courant.m_carte[m_x][m_y] != null) {
-			return true;
+	
+	public void wizz() {
+		if(inventaire == null) {
+			inventaire = m_courant.m_carte[m_x][m_y];
+			m_courant.m_carte[m_x][m_y] = null;
 		}
+		else {
+			inventaire.m_courant = m_courant;
+			inventaire.m_x = m_x;
+			inventaire.m_y = m_y;
+			m_courant.m_carte[m_x][m_y] = inventaire;
+			inventaire = null;
+		}
+		isWizzing = false;
+	}
+	
+	public boolean canhit(Direction direction) {
+		return isHitting;
+	}
+	
+	public boolean canwizz() {
+		if(inventaire == null) {
+			if(m_courant.m_carte[m_x][m_y] != null && m_courant.m_carte[m_x][m_y] instanceof Fichier) {
+				return isWizzing;
+			}
+		}
+		else {
+			if(m_courant.m_carte[m_x][m_y] == null) {
+				return isWizzing;
+			}
+		}
+		
 		return false;
 	}
 

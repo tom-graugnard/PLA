@@ -1,7 +1,6 @@
 package game.shellda;
 
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
