@@ -105,7 +105,59 @@ public class Clink extends Element {
 	}
 
 	public boolean canmove(Direction direction) {
-		return mouvement == direction;
+		if(mouvement == null)
+			return false;
+		boolean movementPossible = true;
+		switch (mouvement) {
+		case NORTH:
+			if (m_y - 1 >= 0) {
+				if(m_courant.m_carte[m_x][m_y-1] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[m_x][Options.HAUTEUR_CARTE - 1] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		case SOUTH:
+			if (m_y + 1 < Options.HAUTEUR_CARTE) {
+				if(m_courant.m_carte[m_x][m_y+1] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[m_x][0] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		case EAST:
+			if (m_x + 1 < Options.LARGEUR_CARTE) {
+				if(m_courant.m_carte[m_x + 1][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[0][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		case WEST:
+			if (m_x - 1 >= 0) {
+				if(m_courant.m_carte[m_x - 1][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			} else {
+				if(m_courant.m_carte[Options.LARGEUR_CARTE - 1][m_y] instanceof Archive) {
+					movementPossible = false;
+				}
+			}
+			break;
+		default:
+			movementPossible = false;
+			break;
+		}
+		return mouvement == direction && movementPossible;
 	}
 
 	public void hit(Direction direction) {
