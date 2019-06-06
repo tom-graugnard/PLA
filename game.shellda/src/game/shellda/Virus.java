@@ -63,7 +63,7 @@ public class Virus extends Element {
 
 	}
 
-	/*
+	
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
@@ -151,7 +151,7 @@ public class Virus extends Element {
 			break;
 		}
 	}
-	*/
+	
 
 	public void hit() {
 
