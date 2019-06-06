@@ -179,6 +179,9 @@ public class Clink extends Element {
 			m_model.m_courant = d.m_contenu;
 			m_courant = d.m_contenu;
 		}
+		else if (e instanceof Executable) {
+			((Executable) e).interaction();
+		}
 		isHitting = false;
 	}
 	

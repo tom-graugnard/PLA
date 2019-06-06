@@ -29,6 +29,8 @@ public class Model extends GameModel {
 	
 	Font m_font;
 	
+	BufferedImage m_executableSprite;
+	
 	BufferedImage m_clinkSprite;
 	BufferedImage m_dossierSprite;
 	BufferedImage m_dossierRetourSprite;
@@ -36,8 +38,12 @@ public class Model extends GameModel {
 	BufferedImage m_fichierSprite;
 	BufferedImage m_backgroundSprite;
 	BufferedImage m_backgroundSelectedSprite;
-	BufferedImage m_virusSprite;
 	BufferedImage m_archiveSprite;
+	
+	BufferedImage m_virus1Sprite;
+	BufferedImage m_virus2Sprite;
+	BufferedImage m_virus3Sprite;
+	BufferedImage m_virus4Sprite;
 	
 
 	public Model() {
@@ -62,9 +68,30 @@ public class Model extends GameModel {
 	private void loadSprites() {
 		m_font = new Font ("Arial", 0 , 9);
 		File imageFile;
-		imageFile = new File("ressources/virus.png");
+		imageFile = new File("ressources/virus_1.png");
 		try {
-			m_virusSprite = ImageIO.read(imageFile);
+			m_virus1Sprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/virus_2.png");
+		try {
+			m_virus2Sprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/virus_3.png");
+		try {
+			m_virus3Sprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/virus_4.png");
+		try {
+			m_virus4Sprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -121,6 +148,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/archive.png");
 		try {
 			m_archiveSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/executable.png");
+		try {
+			m_executableSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

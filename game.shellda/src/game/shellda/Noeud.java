@@ -53,6 +53,9 @@ public class Noeud {
 		int i = 0, j;
 		int x, y;
 		Random rand = new Random();
+		if(profondeur == 0) {
+			ajouter_element(new Executable(this, m_model, Options.LARGEUR_CARTE*3/4, Options.HAUTEUR_CARTE*3/4, "Shellda"));
+		}
 		if (profondeur > 0) {
 			int nombre_dossier = rand.nextInt(profondeur) * 2 + 1;
 			Noeud tmp;
