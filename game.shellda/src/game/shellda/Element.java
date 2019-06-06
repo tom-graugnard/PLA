@@ -27,6 +27,8 @@ public class Element {
 	}
 
 	public void paint(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(m_x * 48 + 8, m_y * 48, 32, 32);
 	}
 
 	public void step(long now) throws Exception {
@@ -44,7 +46,7 @@ public class Element {
 		return m_y;
 	}
 
-	//Action possible de l'automates
+	// Action possible de l'automates
 	public void wizz() {
 	}
 
@@ -60,10 +62,61 @@ public class Element {
 	public void move(Direction direction) {
 	}
 
-	//Condition possible de l'automates
+	// Condition possible de l'automates
 	public boolean canmove(Direction direction) {
+		switch (direction) {
+		case NORTH:
+			if (m_y - 1 >= 0) {
+				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+					return true;
+				}
+			} else {
+				if (m_model.m_courant.m_carte[m_x][Options.HAUTEUR_CARTE - 1] == null) {
+					return true;
+				}
+			}
+
+			break;
+		case SOUTH:
+			if (m_y + 1 < Options.HAUTEUR_CARTE) {
+				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
+					return true;
+				}
+			} else {
+				if (m_model.m_courant.m_carte[m_x][0] == null) {
+					return true;
+				}
+			}
+			break;
+		case EAST:
+			if (m_y + 1 < Options.LARGEUR_CARTE) {
+				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+					return true;
+				}
+			} else {
+				if (m_model.m_courant.m_carte[0][m_y] == null) {
+					return true;
+				}
+			}
+			break;
+		case WEST:
+			if (m_y - 1 >= 0) {
+				if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
+					return true;
+				}
+			} else {
+				if (m_model.m_courant.m_carte[Options.LARGEUR_CARTE - 1][m_y] == null) {
+					return true;
+				}
+			}
+			break;
+		}
+
 		return false;
 	}
 
+	public boolean canhit(Direction direction) {
+		return false;
+	}
 
 }

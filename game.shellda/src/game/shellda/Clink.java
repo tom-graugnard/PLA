@@ -1,6 +1,7 @@
 package game.shellda;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.ICondition.CanMove;
+import interpreter.ICondition.CanHit;
 import interpreter.IState;
 import interpreter.ITransition;
 import interpreter.IAction.Hit;
@@ -16,10 +18,10 @@ import interpreter.IAction.Move;
 
 public class Clink extends Element {
 
-	boolean canEast, canNorth, canSouth, canWest;
+	boolean canEast, canNorth, canSouth, canWest, canHit;
 
 	public Clink(Noeud courant, Model model, int x, int y) {
-		super(courant , model, x, y);
+		super(courant, model, x, y);
 		c = Color.black;
 		IState s1 = new IState("depart");
 		s1.id = 1;
@@ -48,6 +50,11 @@ public class Clink extends Element {
 		ITransition t_tmp3 = new ITransition(con, move3, s1);
 		t1.add(t_tmp3);
 
+		Hit hit = new Hit(null);
+		CanHit con2 = new CanHit(null);
+		ITransition t_tmp5 = new ITransition(con2, hit, s1);
+		t1.add(t_tmp5);
+
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
 
@@ -64,54 +71,54 @@ public class Clink extends Element {
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-
 			if (i < 150) {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_x--;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				if (m_y - 1 >= 0) {
+					m_y--;
+				} else {
+					m_y = Options.HAUTEUR_CARTE - 1;
+				}
 				System.out.println("North");
 			}
 			break;
 		case SOUTH:
-
 			if (i < 150) {
 				i++;
 			} else {
-
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_x++;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				if (m_y + 1 < Options.HAUTEUR_CARTE) {
+					m_y++;
+				} else {
+					m_y = 0;
+				}
 				System.out.println("South");
-
 			}
 			break;
 		case EAST:
-
 			if (i < 150) {
 				i++;
 			} else {
-
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_y++;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				if (m_x + 1 < Options.LARGEUR_CARTE) {
+					m_x++;
+				} else {
+					m_x = 0;
+				}
 				System.out.println("East");
-
 			}
 			break;
 		case WEST:
-
 			if (i < 150) {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_y--;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				if (m_x - 1 >= 0) {
+					m_x--;
+				} else {
+					m_x = Options.LARGEUR_CARTE - 1;
+				}
 				System.out.println("West");
 			}
 			break;
@@ -120,39 +127,41 @@ public class Clink extends Element {
 		}
 	}
 
-
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (m_x - 1 >= 0) {
-				if (canNorth && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
-					return true;
-				}
-			}
-			break;
+			return canNorth;
 		case SOUTH:
-			if (canSouth && m_x + 1 < Options.HAUTEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
-					return true;
-				}
-			}
-			break;
+			return canSouth;
 		case EAST:
-			if (canEast && m_y + 1 < Options.LARGEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
-					return true;
-				}
-			}
-			break;
+			return canEast;
 		case WEST:
-			if (canWest && m_y - 1 >= 0) {
-				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
-					return true;
-				}
-			}
-			break;
+			return canWest;
+		default:
+			return false;
+		}
+	}
+	
+	public void hit(Direction direction) {
+		Element e = m_model.m_courant.m_carte[m_x][m_y];
+		if(e instanceof Dossier) {
+			Dossier d = (Dossier) e;
+			m_x = 3;
+			m_y = 3;
+			m_model.m_courant = d.m_contenu;
+			m_courant = d.m_contenu;
+		}
+	}
+
+	public boolean canhit(Direction direction) {
+		if (canHit && m_model.m_courant.m_carte[m_x][m_y] != null) {
+			return true;
 		}
 		return false;
+	}
+
+	public void paint(Graphics g) {
+		g.drawImage(m_model.m_clinkSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 	}
 
 }
