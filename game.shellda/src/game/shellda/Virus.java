@@ -63,29 +63,29 @@ public class Virus extends Element {
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (m_x - 1 >= 0) {
-				if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
+			if (m_y - 1 >= 0) {
+				if (m_courant.m_carte[m_x][m_y - 1] == null) {
 					return true;
 				}
 			}
 			break;
 		case SOUTH:
-			if (m_x + 1 < Options.HAUTEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+			if (m_y + 1 < Options.HAUTEUR_CARTE) {
+				if (m_courant.m_carte[m_x][m_y + 1] == null) {
 					return true;
 				}
 			}
 			break;
 		case EAST:
-			if (m_y + 1 < Options.LARGEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
+			if (m_x + 1 < Options.LARGEUR_CARTE) {
+				if (m_courant.m_carte[m_x + 1][m_y] == null) {
 					return true;
 				}
 			}
 			break;
 		case WEST:
-			if (m_y - 1 >= 0) {
-				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+			if (m_x - 1 >= 0) {
+				if (m_courant.m_carte[m_x - 1][m_y] == null) {
 					return true;
 				}
 			}
@@ -103,9 +103,9 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_x--;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				m_courant.m_carte[m_x][m_y] = null;
+				m_y--;
+				m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("0");
 			}
 			break;
@@ -114,9 +114,9 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_x++;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				m_courant.m_carte[m_x][m_y] = null;
+				m_y++;
+				m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("0");
 			}
 			break;
@@ -125,9 +125,9 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_y++;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				m_courant.m_carte[m_x][m_y] = null;
+				m_x++;
+				m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("0");
 			}
 
@@ -137,9 +137,9 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				m_model.m_courant.m_carte[m_x][m_y] = null;
-				m_y--;
-				m_model.m_courant.m_carte[m_x][m_y] = this;
+				m_courant.m_carte[m_x][m_y] = null;
+				m_x--;
+				m_courant.m_carte[m_x][m_y] = this;
 				System.out.println("1");
 			}
 			break;
@@ -163,11 +163,11 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_x + 1 < Options.LARGEUR_CARTE && m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
-						m_model.m_courant.m_carte[m_x][m_y] = null;
+					if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
+						m_courant.m_carte[m_x][m_y] = null;
 						m_x++;
-						m_model.m_courant.m_carte[m_x][m_y] = this;
-						System.out.println("WEST");
+						m_courant.m_carte[m_x][m_y] = this;
+						System.out.println("EAST");
 					}
 				}
 			} else {
@@ -175,11 +175,11 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_x - 1 >= 0 && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
-						m_model.m_courant.m_carte[m_x][m_y] = null;
+					if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
+						m_courant.m_carte[m_x][m_y] = null;
 						m_x--;
-						m_model.m_courant.m_carte[m_x][m_y] = this;
-						System.out.println("EAST");
+						m_courant.m_carte[m_x][m_y] = this;
+						System.out.println("WEST");
 					}
 				}
 			}
@@ -189,10 +189,10 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_y + 1 < Options.HAUTEUR_CARTE && m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
-						m_model.m_courant.m_carte[m_x][m_y] = null;
+					if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
+						m_courant.m_carte[m_x][m_y] = null;
 						m_y++;
-						m_model.m_courant.m_carte[m_x][m_y] = this;
+						m_courant.m_carte[m_x][m_y] = this;
 						System.out.println("SOUTH");
 					}
 				}
@@ -201,10 +201,10 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_y - 1 <= 0 && m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
-						m_model.m_courant.m_carte[m_x][m_y] = null;
+					if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
+						m_courant.m_carte[m_x][m_y] = null;
 						m_y--;
-						m_model.m_courant.m_carte[m_x][m_y] = this;
+						m_courant.m_carte[m_x][m_y] = this;
 						System.out.println("NORTH");
 					}
 				}
