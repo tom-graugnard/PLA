@@ -18,12 +18,13 @@ import interpreter.ITransition;
 
 import interpreter.IAction.Move;
 import interpreter.IAction.Pop;
+import interpreter.IAction.Egg;
 
 public class Virus extends Element {
 
 	int display;
 	boolean m_decouvert;
-	
+
 	int type;
 	boolean m_worked;
 	Direction m_last_moved;
@@ -45,8 +46,10 @@ public class Virus extends Element {
 		Pop suit = new Pop(m_model.m_joueur);
 		ICondition con = new ICondition();
 
+		Egg egg = new Egg();
+
 		List<ITransition> t1 = new LinkedList<ITransition>();
-		ITransition t_tmp1 = new ITransition(con, suit, s1);
+		ITransition t_tmp1 = new ITransition(con, egg, s1);
 		t1.add(t_tmp1);
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
@@ -172,7 +175,29 @@ public class Virus extends Element {
 	}
 
 	public void egg() {
-
+		if (i < 300) {
+			i++;
+		} else {
+			i = 0;
+			if (canmove(Direction.WEST)) {
+				Virus v = new Virus(m_courant, m_model, m_x - 1, m_y);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x - 1][m_y] = v;
+				
+			} else if (canmove(Direction.EAST)) {
+				Virus v = new Virus(m_courant, m_model, m_x + 1, m_y);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x + 1][m_y] = v;
+			} else if (canmove(Direction.NORTH)) {
+				Virus v = new Virus(m_courant, m_model, m_x, m_y - 1);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x][m_y - 1] = v;
+			} else if (canmove(Direction.SOUTH)) {
+				Virus v = new Virus(m_courant, m_model, m_x, m_y + 1);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x][m_y + 1] = v;
+			}
+		}
 	}
 
 	public void pop(Element e) {
@@ -232,7 +257,7 @@ public class Virus extends Element {
 
 	public void paint(Graphics g) {
 		if (m_courant == m_model.m_courant) {
-			switch(type) {
+			switch (type) {
 			case 0:
 				g.drawImage(m_model.m_virus1Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 				break;

@@ -12,8 +12,8 @@ public class IAction {
 	void exec(Element e) {
 	}
 
-	public class Egg extends IAction {
-		Egg() {
+	public static class Egg extends IAction {
+		public Egg() {
 		}
 
 		void exec(Element e) {
