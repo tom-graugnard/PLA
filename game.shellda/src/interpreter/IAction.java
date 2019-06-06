@@ -12,8 +12,8 @@ public class IAction {
 	void exec(Element e) {
 	}
 
-	public class Egg extends IAction {
-		Egg() {
+	public static class Egg extends IAction {
+		public Egg() {
 		}
 
 		void exec(Element e) {
@@ -34,13 +34,13 @@ public class IAction {
 	}
 
 	public static class Pop extends IAction {
-		Element cible;
-		public Pop(Element cible) {
-			this.cible=cible;
+
+		public Pop() {
+
 		}
 
 		void exec(Element e) {
-			e.pop(this.cible);
+			e.pop();
 		}
 	}
 
