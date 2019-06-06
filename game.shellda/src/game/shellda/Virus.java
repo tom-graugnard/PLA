@@ -163,7 +163,7 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+					if (m_x + 1 < Options.LARGEUR_CARTE && m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
 						m_model.m_courant.m_carte[m_x][m_y] = null;
 						m_x++;
 						m_model.m_courant.m_carte[m_x][m_y] = this;
@@ -175,7 +175,7 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
+					if (m_x - 1 >= 0 && m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
 						m_model.m_courant.m_carte[m_x][m_y] = null;
 						m_x--;
 						m_model.m_courant.m_carte[m_x][m_y] = this;
@@ -189,7 +189,7 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
+					if (m_y + 1 < Options.HAUTEUR_CARTE && m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
 						m_model.m_courant.m_carte[m_x][m_y] = null;
 						m_y++;
 						m_model.m_courant.m_carte[m_x][m_y] = this;
@@ -201,7 +201,7 @@ public class Virus extends Element {
 					i++;
 				} else {
 					i = 0;
-					if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+					if (m_y - 1 <= 0 && m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
 						m_model.m_courant.m_carte[m_x][m_y] = null;
 						m_y--;
 						m_model.m_courant.m_carte[m_x][m_y] = this;
