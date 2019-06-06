@@ -35,6 +35,7 @@ public class Model extends GameModel {
 	BufferedImage m_corbeilleSprite;
 	BufferedImage m_fichierSprite;
 	BufferedImage m_backgroundSprite;
+	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_virusSprite;
 	BufferedImage m_archiveSprite;
 	
@@ -79,6 +80,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/background.png");
 		try {
 			m_backgroundSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/background_selected.png");
+		try {
+			m_backgroundSelectedSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
