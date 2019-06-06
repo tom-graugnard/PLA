@@ -53,6 +53,9 @@ public class Noeud {
 		int i = 0, j;
 		int x, y;
 		Random rand = new Random();
+		if(profondeur == 0) {
+			ajouter_element(new Executable(this, m_model, Options.LARGEUR_CARTE*3/4, Options.HAUTEUR_CARTE*3/4, "Shellda"));
+		}
 		if (profondeur > 0) {
 			int nombre_dossier = rand.nextInt(profondeur) * 2 + 1;
 			Noeud tmp;
@@ -76,7 +79,7 @@ public class Noeud {
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2; i++) {
+		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 8; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			ajouter_element(new Virus(this, m_model, x, y));

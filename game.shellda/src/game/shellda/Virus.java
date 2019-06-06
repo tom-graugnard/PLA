@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import interpreter.Direction;
 import interpreter.IAutomaton;
@@ -22,6 +23,8 @@ public class Virus extends Element {
 
 	int display;
 	boolean m_decouvert;
+	
+	int type;
 	boolean m_worked;
 	Direction m_last_moved;
 	Direction m_last_2;
@@ -30,6 +33,8 @@ public class Virus extends Element {
 		super(courant, model, x, y);
 		display = 0;
 		model.m_virus.add(this);
+		Random rand = new Random();
+		type = rand.nextInt(4);
 		c = Color.magenta;
 
 		IState s1 = new IState("un");
@@ -226,8 +231,22 @@ public class Virus extends Element {
 	}
 
 	public void paint(Graphics g) {
-		if (m_courant == m_model.m_courant)
-			g.drawImage(m_model.m_virusSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+		if (m_courant == m_model.m_courant) {
+			switch(type) {
+			case 0:
+				g.drawImage(m_model.m_virus1Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				break;
+			case 1:
+				g.drawImage(m_model.m_virus2Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				break;
+			case 2:
+				g.drawImage(m_model.m_virus3Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				break;
+			case 3:
+				g.drawImage(m_model.m_virus4Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				break;
+			}
+		}
 	}
 
 }

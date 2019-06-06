@@ -44,9 +44,8 @@ public class IAction {
 		}
 	}
 
-	public class Wizz extends IAction {
-		Wizz() {
-
+	public static class Wizz extends IAction {
+		public Wizz() {
 		}
 
 		void exec(Element e) {
