@@ -10,7 +10,7 @@ import game.shellda.Element;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
-	IState current;
+	public IState current;
 	List<IBehaviour> behaviours;
 
 	public IAutomaton(IState initial, List<IBehaviour> behaviours) {
@@ -31,7 +31,7 @@ public class IAutomaton {
 		IBehaviour currentBehaviour = null;
 		while (iter.hasNext()) {
 			IBehaviour b = iter.next();
-			if (b.source.name.equals(current.name) || b.source.id == current.id) {
+			if (b.source.name.equals(current.name) ) {
 				currentBehaviour = b;
 				break;
 			}

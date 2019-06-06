@@ -1,6 +1,5 @@
 package interpreter;
 
-import game.shellda.Clink;
 import game.shellda.Element;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
@@ -14,75 +13,136 @@ public class ICondition {
 
 	boolean eval(Element e) {
 		return true;
-	} // à redéfinir dans chaque sous-classe
+	}
 
-	public static class CanMove extends ICondition {
-		Direction direction;
-		
-		public CanMove(Direction direction) {
-			this.direction = direction;
+	// Condition booléenne
+	public static class True extends ICondition {
+
+		public True() {
 		}
 
 		boolean eval(Element e) {
-			return e.canmove(direction);
+			return true;
 		}
-
 	}
-	
-	public static class CanHit extends ICondition {
-		Direction direction;
+
+	public static class Key extends ICondition {
+		IKey m_key;
 		
-		public CanHit(Direction direction) {
-			this.direction = direction;
+		public Key(IKey key) {
+			m_key = key;
 		}
 
 		boolean eval(Element e) {
-			return e.canhit(direction);
+			return true;
 		}
-
 	}
 	
-	public static class CanWizz extends ICondition {
+	public static class MyDir extends ICondition {
+		IDirection m_direction;
 		
-		public CanWizz() {
+		public MyDir(IDirection direction) {
+			m_direction = direction;
 		}
 
 		boolean eval(Element e) {
-			return e.canwizz();
+			return true;
+		}
+	}
+
+	public static class Cell extends ICondition {
+		IDirection m_direction;
+		IKind m_kind;
+		int m_distance;
+
+		public Cell(IDirection direction, IKind kind, int distance) {
+			m_direction = direction;
+			m_kind = kind;
+			m_distance = distance;
 		}
 
-	}
-	
-	public static class CanPop extends ICondition {
-		
-		public CanPop() {
+		public Cell(IDirection direction, IKind kind) {
+			m_direction = direction;
+			m_kind = kind;
+			m_distance = 1;
 		}
 
 		boolean eval(Element e) {
-			return e.canwizz();
+			return true;
 		}
-
 	}
 	
+	public static class Closest extends ICondition {
+		IKind m_kind;
+		IDirection m_direction;
 
-	/*
-	 * public class True extends Condition { True(){} boolean eval(Entity e) {
-	 * return true; } }
-	 * 
-	 * public class Cell extends Condition { Direction direction ; Kind kind ;
-	 * Distance distance ;
-	 * 
-	 * Cell(Direction direction, Kind kind, Distance distance){ this.direction =
-	 * direction ; this.kind = kind ; this.distance = distance ; }
-	 * 
-	 * Cell(Direction direction, Kind kind){ this.direction = direction ; this.kind
-	 * = kind ; this.distance = 1 ; }
-	 * 
-	 * boolean eval(Entity e) { return is_Kind(this.kind, this.direction,
-	 * this.distance, e.position, e.map) ; } }
-	 * 
-	 * public class GotPower extends Condition { GotPower(){} boolean eval(Entity e)
-	 * { return (e.power > 0) ; } }
-	 */
+		public Closest(IKind kind, IDirection direction) {
+			m_kind = kind;
+			m_direction = direction;
+		}
+
+		boolean eval(Element e) {
+			return true;
+		}
+	}
+
+	public static class GotPower extends ICondition {
+		public GotPower() {
+		}
+
+		boolean eval(Element e) {
+			return true;
+		}
+	}
+	
+	public static class GotStuff extends ICondition {
+		public GotStuff() {
+		}
+
+		boolean eval(Element e) {
+			return true;
+		}
+	}
+
+	// Opérateur sur condition
+	public static class BooleanAnd extends ICondition {
+		ICondition m_cond_1;
+		ICondition m_cond_2;
+
+		public BooleanAnd(ICondition cond_1, ICondition cond_2) {
+			m_cond_1 = cond_1;
+			m_cond_2 = cond_2;
+		}
+
+		public boolean eval(Element e) {
+			return m_cond_1.eval(e) && m_cond_2.eval(e);
+		}
+	}
+
+	public static class BooleanOr extends ICondition {
+		ICondition m_cond_1;
+		ICondition m_cond_2;
+
+		public BooleanOr(ICondition cond_1, ICondition cond_2) {
+			m_cond_1 = cond_1;
+			m_cond_2 = cond_2;
+		}
+
+		public boolean eval(Element e) {
+			return m_cond_1.eval(e) || m_cond_2.eval(e);
+		}
+	}
+
+	public static class BooleanNot extends ICondition {
+		ICondition m_cond;
+
+		public BooleanNot(ICondition cond) {
+			m_cond = cond;
+		}
+
+		public boolean eval(Element e) {
+			return !m_cond.eval(e);
+		}
+	}
 
 }

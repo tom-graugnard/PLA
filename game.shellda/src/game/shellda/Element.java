@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import interpreter.Direction;
 import interpreter.IAutomaton;
+import interpreter.IDirection;
 
 public class Element {
 
@@ -48,19 +49,19 @@ public class Element {
 	}
 
 	// Action possible de l'automates
-	public void wizz() {
+	public void wizz(IDirection direction) {
 	}
 
-	public void pop(Element cible) {
+	public void pop(IDirection direction) {
 	}
 
-	public void hit(Direction direction) {
+	public void hit(IDirection direction) {
 	}
 
 	public void egg() {
 	}
 
-	public void move(Direction direction) {
+	public void move(IDirection direction) {
 	}
 
 	// Condition possible de l'automates
