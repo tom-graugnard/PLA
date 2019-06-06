@@ -23,7 +23,7 @@ public class Virus extends Element {
 
 	int display;
 	boolean m_decouvert;
-	
+
 	int type;
 	boolean m_worked;
 	Direction m_last_moved;
@@ -111,13 +111,13 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_y--;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("NORTH");
-					m_worked = true;
-				}
+				// if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_y--;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("NORTH");
+				m_worked = true;
+				// }
 			}
 			break;
 		case SOUTH:
@@ -125,13 +125,14 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_y++;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("SOUTH");
-					m_worked = true;
-				}
+				// if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] ==
+				// null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_y++;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("SOUTH");
+				m_worked = true;
+				// }
 			}
 			break;
 		case EAST:
@@ -139,13 +140,14 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_x++;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("EAST");
-					m_worked = true;
-				}
+				// if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] ==
+				// null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_x++;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("EAST");
+				m_worked = true;
+				// }
 			}
 			break;
 		case WEST:
@@ -153,13 +155,13 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_x--;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("WEST");
-					m_worked = true;
-				}
+				// if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_x--;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("WEST");
+				m_worked = true;
+				// }
 			}
 			break;
 		default:
@@ -206,11 +208,13 @@ public class Virus extends Element {
 			}
 		}
 
-		if (m_last_2 == dir1)
-			move(dir1);
+		if (m_last_2 == dir1) {
+			if (this.canmove(dir1))
+				move(dir1);
+		}
 		m_last_2 = m_last_moved;
 		m_last_moved = dir1;
-		if (!m_worked) {
+		if (!m_worked && this.canmove(dir2)) {
 			move(dir2);
 			m_last_2 = m_last_moved;
 			m_last_moved = dir2;
@@ -232,7 +236,7 @@ public class Virus extends Element {
 
 	public void paint(Graphics g) {
 		if (m_courant == m_model.m_courant) {
-			switch(type) {
+			switch (type) {
 			case 0:
 				g.drawImage(m_model.m_virus1Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 				break;
