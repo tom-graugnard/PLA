@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import interpreter.Direction;
 import interpreter.IAutomaton;
 import interpreter.IDirection;
 
@@ -51,9 +50,12 @@ public class Element {
 	// Action possible de l'automates
 	public void wizz(IDirection direction) {
 	}
-
+	
 	public void pop(IDirection direction) {
+		
 	}
+
+	
 
 	public void hit(IDirection direction) {
 	}

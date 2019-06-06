@@ -43,6 +43,7 @@ public class IAction {
 		
 		void exec(Element e) {
 			e.pop(m_direction);
+
 		}
 	}
 	
