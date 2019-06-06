@@ -1,6 +1,13 @@
 package parser;
 import java.util.List;
 import java.util.ListIterator;
+
+import interpreter.IAction;
+import interpreter.IAutomaton;
+import interpreter.IBehaviour;
+import interpreter.ICondition;
+import interpreter.IDirection;
+import interpreter.IState;
 import interpreter.ITransition;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
@@ -176,6 +183,10 @@ public class Ast {
 		public String toString() { 
 			return value.toString() ; 
 		}
+//		public IDirection make() {
+//	        if(value.)
+//			return new 
+//		}
 	}
 
 	public static class Entity extends Parameter {

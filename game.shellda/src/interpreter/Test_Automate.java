@@ -20,14 +20,14 @@ public class Test_Automate {
 		List<IBehaviour> b=new LinkedList<IBehaviour>();	
 		
 		List<ITransition> t1 = new LinkedList<ITransition>();		
-		Hit hit=new Hit(Direction.NORTH);	
+		Hit hit=new Hit(IDirection.N);	
 		ICondition con = new ICondition();
 		ITransition t_tmp1=new ITransition(con, hit, s2);
 		t1.add(t_tmp1);
 		IBehaviour b_tmp1=new IBehaviour(s1,t1);
 		b.add(b_tmp1);	
 		List<ITransition> t2 = new LinkedList<ITransition>();		
-		Move move=new Move(Direction.NORTH);		
+		Move move=new Move(IDirection.N);		
 		ITransition t_tmp2=new ITransition(con, move, s1);
 		t2.add(t_tmp2);
 		IBehaviour b_tmp2=new IBehaviour(s2,t2);
