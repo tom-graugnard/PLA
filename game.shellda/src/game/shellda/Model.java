@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
@@ -43,10 +44,10 @@ public class Model extends GameModel {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this, "Corbeille");
+		m_joueur = new Clink(null, this, 3, 3);
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
-		m_joueur = new Clink(m_courant, this, 3, 3);
-		m_tree.m_root.m_carte[6][6] = new Virus(m_tree.m_root, m_tree.m_model, 6, 6);
+		m_joueur.m_courant = m_courant;
 		m_courant.m_carte[1][1] = m_joueur;
 
 
@@ -158,10 +159,9 @@ public class Model extends GameModel {
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
-					if (m_courant.m_carte[i][j] != null)
+					if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus))
 						m_courant.m_carte[i][j].step(now);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -170,10 +170,20 @@ public class Model extends GameModel {
 		try {
 			m_joueur.step(now);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		Iterator<Virus> it = m_virus.iterator();
+		while(it.hasNext()) {
+			Virus v = (Virus) it.next();
+			if(v.isDiscovered()) {
+				try {
+					v.step(now);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 	}
 

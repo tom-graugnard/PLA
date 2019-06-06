@@ -22,6 +22,7 @@ public class Element {
 
 	public Element(Noeud courant, Model model, int x, int y) {
 		m_model = model;
+		m_courant = courant;
 		m_x = x;
 		m_y = y;
 	}

@@ -21,6 +21,7 @@ import interpreter.IAction.Pop;
 public class Virus extends Element {
 
 	int display;
+	boolean m_decouvert;
 
 	public Virus(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
@@ -52,8 +53,14 @@ public class Virus extends Element {
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
 
-
 		m_auto = new IAutomaton(s1, b);
+	}
+
+	public boolean isDiscovered() {
+		if (m_model.m_courant == m_courant) {
+			m_decouvert = true;
+		}
+		return m_decouvert;
 	}
 
 	public void step(long now) throws Exception {
@@ -63,7 +70,6 @@ public class Virus extends Element {
 
 	}
 
-	
 	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
@@ -151,7 +157,6 @@ public class Virus extends Element {
 			break;
 		}
 	}
-	
 
 	public void hit() {
 
@@ -173,8 +178,7 @@ public class Virus extends Element {
 					m_model.m_courant.m_carte[m_x][m_y] = this;
 					System.out.println("NORTH");
 				}
-			}
-			else {
+			} else {
 				if (i < 1000) {
 					i++;
 				} else {
@@ -185,8 +189,7 @@ public class Virus extends Element {
 					System.out.println("SOUTH");
 				}
 			}
-		}
-		else {
+		} else {
 			if (e.m_y >= m_y) {
 				if (i < 1000) {
 					i++;
@@ -197,8 +200,7 @@ public class Virus extends Element {
 					m_model.m_courant.m_carte[m_x][m_y] = this;
 					System.out.println("EAST");
 				}
-			}
-			else {
+			} else {
 				if (i < 1000) {
 					i++;
 				} else {
@@ -223,9 +225,10 @@ public class Virus extends Element {
 	public void die(LinkedList<Virus> virus) {
 		virus.remove(this);
 	}
-	
+
 	public void paint(Graphics g) {
-		g.drawImage(m_model.m_virusSprite, m_x*48 + 8, m_y*48 + 8, 32, 32, null);
+		if (m_courant == m_model.m_courant)
+			g.drawImage(m_model.m_virusSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 	}
 
 }

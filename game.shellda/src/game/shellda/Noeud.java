@@ -113,8 +113,6 @@ public class Noeud {
 	}
 
 	public void paint(Graphics g) {
-		int case_width = 48;// Options.WIDTH / Options.LARGEUR_CARTE;
-		int case_height = 48;// Options.HEIGHT / Options.HAUTEUR_CARTE;
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				g.drawImage(m_model.m_backgroundSprite, i*48, j*48, 48, 48, null);
