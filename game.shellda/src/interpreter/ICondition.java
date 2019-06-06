@@ -29,6 +29,19 @@ public class ICondition {
 
 	}
 	
+	public static class CanHit extends ICondition {
+		Direction direction;
+		
+		public CanHit(Direction direction) {
+			this.direction = direction;
+		}
+
+		boolean eval(Element e) {
+			return e.canhit(direction);
+		}
+
+	}
+	
 
 	/*
 	 * public class True extends Condition { True(){} boolean eval(Entity e) {
