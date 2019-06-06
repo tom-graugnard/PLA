@@ -33,13 +33,14 @@ public class IAction {
 		}
 	}
 
-	public class Pop extends IAction {
-		Pop() {
-
+	public static class Pop extends IAction {
+		Element cible;
+		public Pop(Element cible) {
+			this.cible=cible;
 		}
 
 		void exec(Element e) {
-			e.pop();
+			e.pop(this.cible);
 		}
 	}
 

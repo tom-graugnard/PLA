@@ -48,7 +48,7 @@ public class Element {
 	public void wizz() {
 	}
 
-	public void pop() {
+	public void pop(Element cible) {
 	}
 
 	public void hit(Direction direction) {

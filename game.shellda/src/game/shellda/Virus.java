@@ -15,6 +15,7 @@ import interpreter.IState;
 import interpreter.ITransition;
 
 import interpreter.IAction.Move;
+import interpreter.IAction.Pop;
 
 public class Virus extends Element {
 
@@ -39,33 +40,17 @@ public class Virus extends Element {
 
 		Move move1 = new Move(Direction.EAST);
 		Move move2 = new Move(Direction.WEST);
+		Pop suit = new Pop(m_model.m_joueur);
 		CanMove conwest = new CanMove(Direction.WEST);
 		CanMove coneast = new CanMove(Direction.EAST);
 		ICondition con = new ICondition();
 
 		List<ITransition> t1 = new LinkedList<ITransition>();
-		ITransition t_tmp1 = new ITransition(conwest, move2, s2);
+		ITransition t_tmp1 = new ITransition(con, suit, s1);
 		t1.add(t_tmp1);
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
 
-		List<ITransition> t2 = new LinkedList<ITransition>();
-		ITransition t_tmp2 = new ITransition(conwest, move2, s3);
-		t2.add(t_tmp2);
-		IBehaviour b_tmp2 = new IBehaviour(s2, t2);
-		b.add(b_tmp2);
-
-		List<ITransition> t3 = new LinkedList<ITransition>();
-		ITransition t_tmp3 = new ITransition(coneast, move1, s4);
-		t3.add(t_tmp3);
-		IBehaviour b_tmp3 = new IBehaviour(s3, t3);
-		b.add(b_tmp3);
-
-		List<ITransition> t4 = new LinkedList<ITransition>();
-		ITransition t_tmp4 = new ITransition(coneast, move1, s1);
-		t4.add(t_tmp4);
-		IBehaviour b_tmp4 = new IBehaviour(s4, t4);
-		b.add(b_tmp4);
 
 		m_auto = new IAutomaton(s1, b);
 	}
@@ -173,8 +158,55 @@ public class Virus extends Element {
 
 	}
 
-	public void pop() {
-
+	public void pop(Element e) {
+		if ((Math.abs(e.m_x - m_x)) >= (Math.abs(e.m_y - m_y))) {
+			if (e.m_x >= m_x) {
+				if (i < 1000) {
+					i++;
+				} else {
+					i = 0;
+					m_model.m_courant.m_carte[m_x][m_y] = null;
+					m_x++;
+					m_model.m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("NORTH");
+				}
+			}
+			else {
+				if (i < 1000) {
+					i++;
+				} else {
+					i = 0;
+					m_model.m_courant.m_carte[m_x][m_y] = null;
+					m_x--;
+					m_model.m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("SOUTH");
+				}
+			}
+		}
+		else {
+			if (e.m_y >= m_y) {
+				if (i < 1000) {
+					i++;
+				} else {
+					i = 0;
+					m_model.m_courant.m_carte[m_x][m_y] = null;
+					m_y++;
+					m_model.m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("EAST");
+				}
+			}
+			else {
+				if (i < 1000) {
+					i++;
+				} else {
+					i = 0;
+					m_model.m_courant.m_carte[m_x][m_y] = null;
+					m_y--;
+					m_model.m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("WEST");
+				}
+			}
+		}
 	}
 
 	public void wizz() {
