@@ -162,7 +162,8 @@ public class Virus extends Element {
 	}
 
 	public void pop(Element e) {
-		if ((Math.abs(e.m_x - m_x)) >= (Math.abs(e.m_y - m_y))) {
+		Random rand = new Random();
+		if ((Math.abs(e.m_x - m_x)) > (Math.abs(e.m_y - m_y))) {
 			if (e.m_x >= m_x) {
 				if (i < 800) {
 					i++;
@@ -188,7 +189,7 @@ public class Virus extends Element {
 					}
 				}
 			}
-		} else {
+		} else if ((Math.abs(e.m_x - m_x)) > (Math.abs(e.m_y - m_y))) {
 			if (e.m_y >= m_y) {
 				if (i < 800) {
 					i++;
@@ -213,6 +214,63 @@ public class Virus extends Element {
 						System.out.println("NORTH");
 					}
 				}
+			}
+		} else {
+			if (e.m_x >= m_x || e.m_y >= m_y) {
+				int tmp = rand.nextInt(2);
+				if (tmp == 1) {
+					if (i < 800) {
+						i++;
+					} else {
+						i = 0;
+						if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
+							m_courant.m_carte[m_x][m_y] = null;
+							m_x++;
+							m_courant.m_carte[m_x][m_y] = this;
+							System.out.println("EAST");
+						}
+					}
+				} else {
+					if (i < 800) {
+						i++;
+					} else {
+						i = 0;
+						if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
+							m_courant.m_carte[m_x][m_y] = null;
+							m_y++;
+							m_courant.m_carte[m_x][m_y] = this;
+							System.out.println("SOUTH");
+						}
+					}
+				}
+			} else {
+				int tmp = rand.nextInt(2);
+				if (tmp == 1) {
+					if (i < 800) {
+						i++;
+					} else {
+						i = 0;
+						if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
+							m_courant.m_carte[m_x][m_y] = null;
+							m_y--;
+							m_courant.m_carte[m_x][m_y] = this;
+							System.out.println("NORTH");
+						}
+					}
+				} else {
+					if (i < 800) {
+						i++;
+					} else {
+						i = 0;
+						if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
+							m_courant.m_carte[m_x][m_y] = null;
+							m_x--;
+							m_courant.m_carte[m_x][m_y] = this;
+							System.out.println("WEST");
+						}
+					}
+				}
+				//System.out.print(tmp);
 			}
 		}
 	}
