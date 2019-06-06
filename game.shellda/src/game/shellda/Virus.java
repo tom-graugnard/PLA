@@ -1,6 +1,7 @@
 package game.shellda;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
@@ -189,6 +190,10 @@ public class Virus extends Element {
 
 	public void die(LinkedList<Virus> virus) {
 		virus.remove(this);
+	}
+	
+	public void paint(Graphics g) {
+		g.drawImage(m_model.m_virusSprite, m_x*48 + 8, m_y*48 + 8, 32, 32, null);
 	}
 
 }

@@ -1,5 +1,7 @@
 package game.shellda;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,16 +21,21 @@ public class Model extends GameModel {
 	
 	Clink m_joueur;
 
-	BufferedImage m_virusSprite;
-
 	BufferedImage m_boutonplaySprite;
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
 	boolean gameStart = false;
+	
+	Font m_font;
+	
 	BufferedImage m_clinkSprite;
 	BufferedImage m_dossierSprite;
 	BufferedImage m_corbeilleSprite;
+	BufferedImage m_fichierSprite;
+	BufferedImage m_backgroundSprite;
+	BufferedImage m_virusSprite;
+	
 
 	public Model() {
 		loadSprites();
@@ -47,9 +54,39 @@ public class Model extends GameModel {
 	}
 
 	private void loadSprites() {
-		File imageFile = new File("ressources/Virus.png");
+		m_font = new Font ("Arial", 0 , 9);
+		File imageFile;
+		imageFile = new File("ressources/virus.png");
 		try {
 			m_virusSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/clink.png");
+		try {
+			m_clinkSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/background.png");
+		try {
+			m_backgroundSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/folder.png");
+		try {
+			m_dossierSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/file.png");
+		try {
+			m_fichierSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

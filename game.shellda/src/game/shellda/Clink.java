@@ -1,6 +1,7 @@
 package game.shellda;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -135,4 +136,8 @@ public class Clink extends Element {
 		}
 	}
 
+	public void paint(Graphics g) {
+		g.drawImage(m_model.m_clinkSprite, m_x*48 + 8, m_y*48 + 8, 32, 32, null);
+	}
+	
 }

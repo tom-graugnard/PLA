@@ -27,6 +27,8 @@ public class Element {
 	}
 
 	public void paint(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(m_x * 48 + 8, m_y * 48, 32, 32);
 	}
 
 	public void step(long now) throws Exception {

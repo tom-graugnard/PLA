@@ -68,15 +68,15 @@ public class Noeud {
 			}
 		}
 		// On ajoute des fichiers dans notre dossier
-		for (j = i; j < profondeur * 2 + i + 1; j++) {
+		for (j = i; j < (profondeur + 1) * 2 + i; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
-			ajouter_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + i));
+			ajouter_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
 		}
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < Options.PROFONDEUR_ARBORESCENCE - profondeur + 19; i++) {
+		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur)*2; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			ajouter_element(new Virus(this, m_model, x, y));
@@ -117,17 +117,13 @@ public class Noeud {
 		int case_height = 48;// Options.HEIGHT / Options.HAUTEUR_CARTE;
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
-				if (m_carte[i][j] == null) {
-					g.setColor(Color.white);
-				} else {
-					g.setColor(m_carte[i][j].c);
+				g.drawImage(m_model.m_backgroundSprite, i*48, j*48, 48, 48, null);
+				if (m_carte[i][j] != null) {
+					m_carte[i][j].paint(g);
 				}
-				g.fillRect(i * (case_width + 4), j * (case_height + 4), case_width, case_height);
 			}
 		}
-		g.setColor(m_model.m_joueur.c);
-		g.fillRect(m_model.m_joueur.m_x * (case_width + 4), m_model.m_joueur.m_y * (case_height + 4), case_width, case_height);
-
+		m_model.m_joueur.paint(g);
 	}
 
 	public Element[][] carte() {
