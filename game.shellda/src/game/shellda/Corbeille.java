@@ -1,14 +1,24 @@
 package game.shellda;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 
 public class Corbeille extends Dossier {
 
-	public Corbeille(Noeud enfant, Noeud courant, Model model, int no, BufferedImage sprite, int rows, int columns,
-			int x, int y, float scale) {
-		super(enfant, courant, "corbeille", model, no, sprite, rows, columns, x, y, scale);
+	public Corbeille(Noeud courant, Model model, int x, int y, Noeud contenu)  {
+		super(courant, model, x, y, "Corbeille", contenu);
+		
 		c = Color.darkGray;
 	}
 
+	public void paint(Graphics g) {
+		
+		g.drawImage(m_model.m_corbeilleSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
+		
+		g.setFont(m_model.m_font);
+		FontMetrics f = g.getFontMetrics();
+		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name))/2, m_y * 48 + 32 + (16 / 2));
+	}
+	
 }

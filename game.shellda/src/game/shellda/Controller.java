@@ -30,13 +30,14 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void step(long now) {
 		// TODO Auto-generated method stub
-		m_model.step(now);
-		m_view.step(now);
+		if (m_model.gameStart) {
+			m_model.step(now);
+			m_view.step(now);
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -45,16 +46,22 @@ public class Controller extends GameController implements ActionListener {
 		int c = e.getKeyCode();
 		switch (c) {
 		case KeyEvent.VK_RIGHT:
-			m_model.m_joueur.canEast = true;
+			m_model.m_joueur.mouvement = Direction.EAST;
 			break;
 		case KeyEvent.VK_LEFT:
-			m_model.m_joueur.canWest = true;
+			m_model.m_joueur.mouvement = Direction.WEST;
 			break;
 		case KeyEvent.VK_UP:
-			m_model.m_joueur.canNorth = true;
+			m_model.m_joueur.mouvement = Direction.NORTH;
 			break;
 		case KeyEvent.VK_DOWN:
-			m_model.m_joueur.canSouth = true;
+			m_model.m_joueur.mouvement = Direction.SOUTH;
+			break;
+		case KeyEvent.VK_H:
+			m_model.m_joueur.isHitting = true;
+			break;
+		case KeyEvent.VK_W:
+			m_model.m_joueur.isWizzing = true;
 			break;
 		default:
 			break;
@@ -66,16 +73,18 @@ public class Controller extends GameController implements ActionListener {
 		int c = e.getKeyCode();
 		switch (c) {
 		case KeyEvent.VK_RIGHT:
-			m_model.m_joueur.canEast = false;
 			break;
 		case KeyEvent.VK_LEFT:
-			m_model.m_joueur.canWest = false;
 			break;
 		case KeyEvent.VK_UP:
-			m_model.m_joueur.canNorth = false;
 			break;
 		case KeyEvent.VK_DOWN:
-			m_model.m_joueur.canSouth = false;
+			break;
+		case KeyEvent.VK_H:
+			m_model.m_joueur.isHitting = false;
+			break;
+		case KeyEvent.VK_W:
+			m_model.m_joueur.isWizzing = false;
 			break;
 		default:
 			break;

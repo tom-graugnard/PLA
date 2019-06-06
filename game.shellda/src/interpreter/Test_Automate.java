@@ -11,7 +11,7 @@ public class Test_Automate {
 	
 	public static void main(String args[]) throws Exception{
 		
-		Element e= new Element(null, null, 0, null, 0, 0, 0, 0, 0);
+		Element e= new Element(null, null, 0, 0);
 		
 		IState s1= new IState("un"); s1.id=1;
 		IState s2 = new IState("deux"); s2.id=2;

@@ -11,7 +11,7 @@ import game.shellda.Element;
 
 public class IAutomaton {
 	public IState current;
-	public List<IBehaviour> behaviours;
+	List<IBehaviour> behaviours;
 
 	public IAutomaton(IState initial, List<IBehaviour> behaviours) {
 		this.current = initial;
@@ -31,7 +31,7 @@ public class IAutomaton {
 		IBehaviour currentBehaviour = null;
 		while (iter.hasNext()) {
 			IBehaviour b = iter.next();
-			if (b.source.name.equals(current.name) || b.source.id == current.id) {
+			if (b.source.name.equals(current.name) ) {
 				currentBehaviour = b;
 				break;
 			}
