@@ -18,14 +18,15 @@ import interpreter.IAction.Move;
 
 public class Clink extends Element {
 
-	boolean canEast, canNorth, canSouth, canWest, canHit;
-
+	Direction mouvement = null;
+	boolean isHitting = false; 
+	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		c = Color.black;
 		IState s1 = new IState("depart");
 		s1.id = 1;
-
+		
 		List<IBehaviour> b = new LinkedList<IBehaviour>();
 
 		List<ITransition> t1 = new LinkedList<ITransition>();
@@ -57,7 +58,7 @@ public class Clink extends Element {
 
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
-
+		
 		m_auto = new IAutomaton(s1, b);
 	}
 
@@ -66,98 +67,61 @@ public class Clink extends Element {
 			m_auto.step(this);
 	}
 
-	int i = 0;
-
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (i < 150) {
-				i++;
+			if (m_y - 1 >= 0) {
+				m_y--;
 			} else {
-				i = 0;
-				if (m_y - 1 >= 0) {
-					m_y--;
-				} else {
-					m_y = Options.HAUTEUR_CARTE - 1;
-				}
-				System.out.println("North");
+				m_y = Options.HAUTEUR_CARTE - 1;
 			}
 			break;
 		case SOUTH:
-			if (i < 150) {
-				i++;
+			if (m_y + 1 < Options.HAUTEUR_CARTE) {
+				m_y++;
 			} else {
-				i = 0;
-				if (m_y + 1 < Options.HAUTEUR_CARTE) {
-					m_y++;
-				} else {
-					m_y = 0;
-				}
-				System.out.println("South");
+				m_y = 0;
 			}
 			break;
 		case EAST:
-			if (i < 150) {
-				i++;
+			if (m_x + 1 < Options.LARGEUR_CARTE) {
+				m_x++;
 			} else {
-				i = 0;
-				if (m_x + 1 < Options.LARGEUR_CARTE) {
-					m_x++;
-				} else {
-					m_x = 0;
-				}
-				System.out.println("East");
+				m_x = 0;
 			}
 			break;
 		case WEST:
-			if (i < 150) {
-				i++;
+			if (m_x - 1 >= 0) {
+				m_x--;
 			} else {
-				i = 0;
-				if (m_x - 1 >= 0) {
-					m_x--;
-				} else {
-					m_x = Options.LARGEUR_CARTE - 1;
-				}
-				System.out.println("West");
+				m_x = Options.LARGEUR_CARTE - 1;
 			}
 			break;
 		default:
 			break;
 		}
+		mouvement = null;
+		isHitting = false;
 	}
 
 	public boolean canmove(Direction direction) {
-		switch (direction) {
-		case NORTH:
-			return canNorth;
-		case SOUTH:
-			return canSouth;
-		case EAST:
-			return canEast;
-		case WEST:
-			return canWest;
-		default:
-			return false;
-		}
+		return mouvement == direction;
 	}
-	
+
 	public void hit(Direction direction) {
 		Element e = m_model.m_courant.m_carte[m_x][m_y];
-		if(e instanceof Dossier) {
+		if (e instanceof Dossier) {
 			Dossier d = (Dossier) e;
-			m_x = 3;
-			m_y = 3;
+			m_x = 0;
+			m_y = 0;
 			m_model.m_courant = d.m_contenu;
 			m_courant = d.m_contenu;
 		}
+		isHitting = false;
 	}
-
+	
 	public boolean canhit(Direction direction) {
-		if (canHit && m_model.m_courant.m_carte[m_x][m_y] != null) {
-			return true;
-		}
-		return false;
+		return isHitting;
 	}
 
 	public void paint(Graphics g) {
