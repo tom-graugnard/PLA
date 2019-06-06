@@ -183,7 +183,6 @@ public class Clink extends Element {
 	}
 	
 	public void wizz() {
-		System.out.println("Wizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
 		if(inventaire == null) {
 			inventaire = m_courant.m_carte[m_x][m_y];
 			m_courant.m_carte[m_x][m_y] = null;
