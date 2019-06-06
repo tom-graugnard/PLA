@@ -6,7 +6,7 @@ import game.shellda.Element;
 
 public class IAction {
 	
-	IAction(){}
+	public IAction(){}
 	void exec(Element e){}
 	
 	public class Egg extends IAction{

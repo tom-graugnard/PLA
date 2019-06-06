@@ -10,7 +10,7 @@ import game.shellda.Element;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
-	IState current;
+	public IState current;
 	List<IBehaviour> behaviours;
 
 	public IAutomaton(IState initial, List<IBehaviour> behaviours) {

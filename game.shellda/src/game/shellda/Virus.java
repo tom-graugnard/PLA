@@ -23,5 +23,12 @@ public class Virus extends Element {
 	public void die(LinkedList<Virus> virus) {
 		virus.remove(this);
 	}
+	
+	public void move() {
+		
+	}
+	
+	
+	
 
 }
