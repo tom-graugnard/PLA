@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
-import interpreter.IDirection;
+import interpreter.Direction;
 import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
@@ -29,23 +29,23 @@ public class Clink extends Element {
 
 		List<ITransition> t1 = new LinkedList<ITransition>();
 
-		Move move4 = new Move(IDirection.SOUTH);
-		CanMove con = new CanMove(IDirection.SOUTH);
+		Move move4 = new Move(Direction.SOUTH);
+		CanMove con = new CanMove(Direction.SOUTH);
 		ITransition t_tmp4 = new ITransition(con, move4, s1);
 		t1.add(t_tmp4);
 
-		Move move1 = new Move(IDirection.EAST);
-		con = new CanMove(IDirection.EAST);
+		Move move1 = new Move(Direction.EAST);
+		con = new CanMove(Direction.EAST);
 		ITransition t_tmp1 = new ITransition(con, move1, s1);
 		t1.add(t_tmp1);
 
-		Move move2 = new Move(IDirection.WEST);
-		con = new CanMove(IDirection.WEST);
+		Move move2 = new Move(Direction.WEST);
+		con = new CanMove(Direction.WEST);
 		ITransition t_tmp2 = new ITransition(con, move2, s1);
 		t1.add(t_tmp2);
 
-		Move move3 = new Move(IDirection.NORTH);
-		con = new CanMove(IDirection.NORTH);
+		Move move3 = new Move(Direction.NORTH);
+		con = new CanMove(Direction.NORTH);
 		ITransition t_tmp3 = new ITransition(con, move3, s1);
 		t1.add(t_tmp3);
 
@@ -62,7 +62,7 @@ public class Clink extends Element {
 
 	int i = 0;
 
-	public void move(IDirection direction) {
+	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
 
@@ -122,7 +122,7 @@ public class Clink extends Element {
 	}
 
 
-	public boolean canmove(IDirection direction) {
+	public boolean canmove(Direction direction) {
 		switch (direction) {
 		case NORTH:
 			if (m_x - 1 >= 0) {

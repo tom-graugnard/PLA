@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import interpreter.IDirection;
+import interpreter.Direction;
 import interpreter.IAutomaton;
 
 public class Element {
@@ -90,7 +90,7 @@ public class Element {
 
 	}
 
-	public void hit(IDirection direction) {
+	public void hit(Direction direction) {
 		// TODO Auto-generated method stub
 
 	}
@@ -100,12 +100,12 @@ public class Element {
 
 	}
 
-	public void move(IDirection direction) {
+	public void move(Direction direction) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public boolean canmove(IDirection direction) {
+	public boolean canmove(Direction direction) {
 
 		return false;
 	}
