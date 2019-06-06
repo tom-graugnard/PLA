@@ -3,7 +3,6 @@ package game.shellda;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 public class Dossier extends Element {
 
@@ -19,7 +18,12 @@ public class Dossier extends Element {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(m_model.m_dossierSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
+		if(m_name.equals("..")) {
+			g.drawImage(m_model.m_dossierRetourSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
+		}
+		else {
+			g.drawImage(m_model.m_dossierSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
+		}
 		
 		g.setFont(m_model.m_font);
 		FontMetrics f = g.getFontMetrics();

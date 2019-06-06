@@ -31,10 +31,12 @@ public class Model extends GameModel {
 	
 	BufferedImage m_clinkSprite;
 	BufferedImage m_dossierSprite;
+	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
 	BufferedImage m_fichierSprite;
 	BufferedImage m_backgroundSprite;
 	BufferedImage m_virusSprite;
+	BufferedImage m_archiveSprite;
 	
 
 	public Model() {
@@ -77,20 +79,43 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/folder.png");
+		imageFile = new File("ressources/dossier.png");
 		try {
 			m_dossierSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/file.png");
+		imageFile = new File("ressources/dossier_retour.png");
+		try {
+			m_dossierRetourSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier.png");
 		try {
 			m_fichierSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		imageFile = new File("ressources/corbeille.png");
+		try {
+			m_corbeilleSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/archive.png");
+		try {
+			m_archiveSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
+		// ===== Menu =====
 		imageFile = new File("ressources/bouton.png");
 		try {
 			m_boutonplaySprite = ImageIO.read(imageFile);
