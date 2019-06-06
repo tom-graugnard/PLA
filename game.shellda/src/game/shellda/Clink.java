@@ -10,12 +10,14 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.ICondition.CanMove;
+import interpreter.ICondition.CanPop;
 import interpreter.ICondition.CanWizz;
 import interpreter.ICondition.CanHit;
 import interpreter.IState;
 import interpreter.ITransition;
 import interpreter.IAction.Hit;
 import interpreter.IAction.Move;
+import interpreter.IAction.Pop;
 import interpreter.IAction.Wizz;
 
 public class Clink extends Element {
@@ -23,6 +25,7 @@ public class Clink extends Element {
 	Direction mouvement = null;
 	boolean isHitting = false;
 	boolean isWizzing = false;
+	boolean isPopping = false;
 	
 	Element inventaire = null;
 	
