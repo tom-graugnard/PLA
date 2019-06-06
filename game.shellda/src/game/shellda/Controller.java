@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import edu.ricm3.game.GameController;
-import interpreter.Direction;
+import interpreter.IDirection;
 
 public class Controller extends GameController implements ActionListener {
 	Model m_model;

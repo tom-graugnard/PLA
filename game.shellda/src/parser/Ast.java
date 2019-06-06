@@ -1,6 +1,14 @@
 package parser;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import interpreter.IAction;
+import interpreter.IAutomaton;
+import interpreter.IBehaviour;
+import interpreter.ICondition;
+import interpreter.IState;
 import interpreter.ITransition;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
@@ -295,6 +303,10 @@ public class Ast {
 		public String toString() {
 			return expression.toString() ;
 		}
+		
+		public ICondition make() {
+			return new ICondition();
+		}
 	}
 
 	public static class Action extends Ast {
@@ -312,6 +324,10 @@ public class Ast {
 		
 		public String toString() {
 			return expression.toString() ;
+		}
+		
+		public IAction make() {
+			return new IAction();
 		}
 	}
 
@@ -334,6 +350,9 @@ public class Ast {
 		
 		public String as_state_of(Automaton automaton){ 
 			return Dot.declare_node( this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4") ;
+		}
+		public IState make() {
+			return new IState(name.value);
 		}
 	}
 
@@ -370,6 +389,16 @@ public class Ast {
 			return Dot.graph("Automata", string);
 		}
 		
+		public List<IAutomaton> make(){
+			List<IAutomaton> iAutomatons=new LinkedList<IAutomaton>();
+			Iterator<Automaton> iter=automata.iterator();
+			while(iter.hasNext()) {
+				Automaton automate=iter.next();
+				iAutomatons.add(automate.make());
+			}
+			return iAutomatons;
+		}
+		
 	}
 	
 	public static class Automaton extends Ast {
@@ -384,14 +413,28 @@ public class Ast {
 			this.entry = entry;
 			this.behaviours = behaviours;
 		}
-
-	/*	IAutomaton make() {
-			List<IBehaviour> iBehaviours = new List<IBehaviour>() ;
+		
+    
+		
+		
+	public IAutomaton make() {
+			List<IBehaviour> iBehaviours = new LinkedList<IBehaviour>() ;
 			// construction de la liste des IBehaviours
+			
+			
+			Iterator<Behaviour> iter=behaviours.iterator();
+			
+			while(iter.hasNext()) {
+				Behaviour Behaviour=iter.next();
+				iBehaviours.add(Behaviour.make());
+		
+			}
 			IState istate_initial = entry.make();
+			
+			
 			return new IAutomaton(istate_initial, iBehaviours) ;
 		}
-	*/	
+		
 		public String tree_edges() {
 			String output = new String();
 			output += name.as_tree_son_of(this);
@@ -449,6 +492,19 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string ;
 		}
+		
+
+		
+		public IBehaviour make() {
+			List<ITransition> Liste=new LinkedList<ITransition>();
+			Iterator<Transition> iter=transitions.iterator();
+			while(iter.hasNext()) {
+				Transition transition=iter.next();
+				Liste.add(transition.make());
+		
+			}		
+			return new IBehaviour(source.make(),Liste);
+		}
 	}
 
 	public static class Transition extends Ast {
@@ -464,11 +520,11 @@ public class Ast {
 			this.target = target;
 		}
 
-		/*
+		
 		public ITransition make() {
 			return new ITransition(condition.make(), action.make(), target.make());
 		}
-		*/
+		
 		
 		public String tree_edges() {
 			return condition.as_tree_son_of(this) + action.as_tree_son_of(this) + target.as_tree_son_of(this);

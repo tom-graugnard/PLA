@@ -6,7 +6,7 @@ import game.shellda.Element;
 
 public class IAction {
 	
-	IAction(){}
+	public IAction(){}
 	void exec(Element e){}
 	
 	public class Egg extends IAction{
@@ -18,9 +18,9 @@ public class IAction {
 	}
 	
 	public static class Hit extends IAction {
-		Direction direction ;
+		IDirection direction ;
 		
-		public Hit(Direction direction){
+		public Hit(IDirection direction){
 			this.direction = direction ;
 		}
 		
@@ -50,9 +50,9 @@ public class IAction {
 	
 	
 	public static class Move extends IAction {
-		Direction direction ;
+		IDirection direction ;
 		
-		public Move(Direction direction){
+		public Move(IDirection direction){
 			this.direction = direction ;
 		}
 		

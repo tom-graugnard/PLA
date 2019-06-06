@@ -17,9 +17,9 @@ public class ICondition {
 	} // à redéfinir dans chaque sous-classe
 
 	public static class CanMove extends ICondition {
-		Direction direction;
+		IDirection direction;
 		
-		public CanMove(Direction direction) {
+		public CanMove(IDirection direction) {
 			this.direction = direction;
 		}
 
@@ -29,10 +29,14 @@ public class ICondition {
 
 	}
 
-	/*
-	 * public class True extends Condition { True(){} boolean eval(Entity e) {
-	 * return true; } }
-	 * 
+	
+	 public class True extends ICondition { 
+		 True(){} ;
+	     boolean eval(Element e) {
+	    	 return true; } 
+	     }
+	 
+	 /* 
 	 * public class Cell extends Condition { Direction direction ; Kind kind ;
 	 * Distance distance ;
 	 * 

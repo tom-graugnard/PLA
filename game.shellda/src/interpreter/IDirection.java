@@ -3,7 +3,7 @@ package interpreter;
 /**
  * Directions 
  */
-public enum Direction {
+public enum IDirection {
 	NORTH, SOUTH, WEST, EAST;
 
 }
