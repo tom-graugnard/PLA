@@ -48,7 +48,7 @@ public class Model extends GameModel {
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
-		m_tree.m_root.m_carte[6][6] = new Virus(m_tree.m_root, m_tree.m_model, 6, 6);
+		//m_tree.m_root.m_carte[6][6] = new Virus(m_tree.m_root, m_tree.m_model, 6, 6);
 		m_courant.m_carte[1][1] = m_joueur;
 
 
