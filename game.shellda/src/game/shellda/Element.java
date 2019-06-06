@@ -50,7 +50,7 @@ public class Element {
 	public void wizz() {
 	}
 
-	public void pop() {
+	public void pop(Element cible) {
 	}
 
 	public void hit(Direction direction) {
@@ -89,7 +89,7 @@ public class Element {
 			}
 			break;
 		case EAST:
-			if (m_y + 1 < Options.LARGEUR_CARTE) {
+			if (m_x + 1 < Options.LARGEUR_CARTE) {
 				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
 					return true;
 				}
@@ -100,7 +100,7 @@ public class Element {
 			}
 			break;
 		case WEST:
-			if (m_y - 1 >= 0) {
+			if (m_x - 1 >= 0) {
 				if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
 					return true;
 				}

@@ -47,6 +47,9 @@ public class Model extends GameModel {
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur = new Clink(m_courant, this, 3, 3);
+		m_tree.m_root.m_carte[6][6] = new Virus(m_tree.m_root, m_tree.m_model, 6, 6);
+		m_courant.m_carte[1][1] = m_joueur;
+
 
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
