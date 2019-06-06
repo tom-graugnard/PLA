@@ -10,16 +10,21 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.ICondition.CanMove;
+import interpreter.ICondition.CanWizz;
 import interpreter.ICondition.CanHit;
 import interpreter.IState;
 import interpreter.ITransition;
 import interpreter.IAction.Hit;
 import interpreter.IAction.Move;
+import interpreter.IAction.Wizz;
 
 public class Clink extends Element {
 
 	Direction mouvement = null;
-	boolean isHitting = false; 
+	boolean isHitting = false;
+	boolean isWizzing = false;
+	
+	Element inventaire = null;
 	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
@@ -55,6 +60,11 @@ public class Clink extends Element {
 		CanHit con2 = new CanHit(null);
 		ITransition t_tmp5 = new ITransition(con2, hit, s1);
 		t1.add(t_tmp5);
+		
+		Wizz wizz = new Wizz();
+		CanWizz con3 = new CanWizz();
+		ITransition t_tmp6 = new ITransition(con3, wizz, s1);
+		t1.add(t_tmp6);
 
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
@@ -172,8 +182,39 @@ public class Clink extends Element {
 		isHitting = false;
 	}
 	
+	public void wizz() {
+		System.out.println("Wizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+		if(inventaire == null) {
+			inventaire = m_courant.m_carte[m_x][m_y];
+			m_courant.m_carte[m_x][m_y] = null;
+		}
+		else {
+			inventaire.m_courant = m_courant;
+			inventaire.m_x = m_x;
+			inventaire.m_y = m_y;
+			m_courant.m_carte[m_x][m_y] = inventaire;
+			inventaire = null;
+		}
+		isWizzing = false;
+	}
+	
 	public boolean canhit(Direction direction) {
 		return isHitting;
+	}
+	
+	public boolean canwizz() {
+		if(inventaire == null) {
+			if(m_courant.m_carte[m_x][m_y] != null && m_courant.m_carte[m_x][m_y] instanceof Fichier) {
+				return isWizzing;
+			}
+		}
+		else {
+			if(m_courant.m_carte[m_x][m_y] == null) {
+				return isWizzing;
+			}
+		}
+		
+		return false;
 	}
 
 	public void paint(Graphics g) {

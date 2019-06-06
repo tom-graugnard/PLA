@@ -42,6 +42,17 @@ public class ICondition {
 
 	}
 	
+	public static class CanWizz extends ICondition {
+		
+		public CanWizz() {
+		}
+
+		boolean eval(Element e) {
+			return e.canwizz();
+		}
+
+	}
+	
 
 	/*
 	 * public class True extends Condition { True(){} boolean eval(Entity e) {

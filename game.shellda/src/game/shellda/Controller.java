@@ -60,6 +60,9 @@ public class Controller extends GameController implements ActionListener {
 		case KeyEvent.VK_H:
 			m_model.m_joueur.isHitting = true;
 			break;
+		case KeyEvent.VK_W:
+			m_model.m_joueur.isWizzing = true;
+			break;
 		default:
 			break;
 		}
@@ -79,6 +82,9 @@ public class Controller extends GameController implements ActionListener {
 			break;
 		case KeyEvent.VK_H:
 			m_model.m_joueur.isHitting = false;
+			break;
+		case KeyEvent.VK_W:
+			m_model.m_joueur.isWizzing = false;
 			break;
 		default:
 			break;
