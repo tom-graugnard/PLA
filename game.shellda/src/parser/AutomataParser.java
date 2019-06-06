@@ -56,48 +56,32 @@ public class AutomataParser implements AutomataParserConstants {
   }
 
   public static void main(String[] args) throws Exception {
-        Ast ast ;
+	  Ast ast ;
 
-        int i = index_of_input(args) ;
-        if ( option("-string",args) )
-            ast = from_string(args[i]) ;
-        else
-            ast = from_file(args[i]) ;
-//        if ( option("-ast",args) )
-//            System.out.println("// THE AST of the PARSED AUTOMATA in DOT FORMAT \u005cn" + ast.as_dot_tree()) ;
-//        else
-//            System.out.println("// THE PARSED AUTOMATA in DOT FORMAT \u005cn" + ast.as_dot_aut()) ;
-        
-        Element e= new Element(null, null, 0, null, 0, 0, 0, 0, 0);
-        AI_Definitions aut=(AI_Definitions) ast;
-        List<IAutomaton> iauts=aut.make();
-        
-        int nombre_aut= iauts.size();
-//        System.out.println(nombre_aut);
-//        if(nombre_aut<0) {
-//        	
-//        }else {
-//        	for(int k=0;k<nombre_aut;k++) {
-//        	 IAutomaton iaut=iauts.get(k);
-//        	 System.out.println(iaut.behaviours.size());
-//        	 for (int j=0 ;j<10;j++) {
-//        		System.out.println(iaut.current.name);
-//        		iaut.step(e);
-//        	 }
-//        	}
-//         }
-//        for (int j=0;j<nombre_aut;j++) {
-        	for(int k=0;k<nombre_aut;k++) {
-        		System.out.println(iauts.get(0).current.name);
-        		iauts.get(0).step(e);
-        	}
-       
-        
+//      int i = index_of_input(args) ;
+//      if ( option("-string",args) )
+//          ast = from_string(args[i]) ;
+//      else
+//          ast = from_file(args[i]) ;
+//      if ( option("-ast",args) )
+//          System.out.println("// THE AST of the PARSED AUTOMATA in DOT FORMAT \u005cn" + ast.as_dot_tree()) ;
+//      else
+//          System.out.println("// THE PARSED AUTOMATA in DOT FORMAT \u005cn" + ast.as_dot_aut()) ;
+      
+	  ast=from_file("src/parser/automate7.txt");
+      Element e= new Element(null, null, 0, null, 0, 0, 0, 0, 0);
+      AI_Definitions aut=(AI_Definitions) ast;
+      List<IAutomaton> iauts=aut.make();
+      
+      int nombre_aut= iauts.size();
 
-        
-        
-        
-   }
+//      for (int j=0;j<nombre_aut;j++) {
+      	for(int k=0;k<10;k++) {
+      		System.out.println(iauts.get(0).current.name);
+      		System.out.println(iauts.get(0).behaviours.get(1).transitions.size());
+      		iauts.get(0).step(e);
+      	}
+  }
 
 /* == The grammar for writing automata
 

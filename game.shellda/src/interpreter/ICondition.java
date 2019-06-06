@@ -17,9 +17,9 @@ public class ICondition {
 	} // à redéfinir dans chaque sous-classe
 
 	public static class CanMove extends ICondition {
-		Direction direction;
+		IDirection direction;
 		
-		public CanMove(Direction direction) {
+		public CanMove(IDirection direction) {
 			this.direction = direction;
 		}
 

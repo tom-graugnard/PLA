@@ -10,7 +10,7 @@ import game.shellda.Element;
 
 public class IBehaviour {
 	IState source;
-	List<ITransition> transitions;
+	public List<ITransition> transitions;
 
 	public IBehaviour(IState source, List<ITransition> transitions) {
 		this.source = source;
