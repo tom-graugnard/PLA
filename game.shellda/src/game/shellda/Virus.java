@@ -31,20 +31,10 @@ public class Virus extends Element {
 
 		IState s1 = new IState("un");
 		s1.id = 1;
-		IState s2 = new IState("deux");
-		s2.id = 2;
-		IState s3 = new IState("trois");
-		s3.id = 3;
-		IState s4 = new IState("quatre");
-		s4.id = 4;
 
 		List<IBehaviour> b = new LinkedList<IBehaviour>();
 
-		Move move1 = new Move(Direction.EAST);
-		Move move2 = new Move(Direction.WEST);
 		Pop suit = new Pop(m_model.m_joueur);
-		CanMove conwest = new CanMove(Direction.WEST);
-		CanMove coneast = new CanMove(Direction.EAST);
 		ICondition con = new ICondition();
 
 		List<ITransition> t1 = new LinkedList<ITransition>();
@@ -169,46 +159,54 @@ public class Virus extends Element {
 	public void pop(Element e) {
 		if ((Math.abs(e.m_x - m_x)) >= (Math.abs(e.m_y - m_y))) {
 			if (e.m_x >= m_x) {
-				if (i < 1000) {
+				if (i < 800) {
 					i++;
 				} else {
 					i = 0;
-					m_model.m_courant.m_carte[m_x][m_y] = null;
-					m_x++;
-					m_model.m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("NORTH");
+					if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
+						m_model.m_courant.m_carte[m_x][m_y] = null;
+						m_x++;
+						m_model.m_courant.m_carte[m_x][m_y] = this;
+						System.out.println("WEST");
+					}
 				}
 			} else {
-				if (i < 1000) {
+				if (i < 800) {
 					i++;
 				} else {
 					i = 0;
-					m_model.m_courant.m_carte[m_x][m_y] = null;
-					m_x--;
-					m_model.m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("SOUTH");
+					if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
+						m_model.m_courant.m_carte[m_x][m_y] = null;
+						m_x--;
+						m_model.m_courant.m_carte[m_x][m_y] = this;
+						System.out.println("EAST");
+					}
 				}
 			}
 		} else {
 			if (e.m_y >= m_y) {
-				if (i < 1000) {
+				if (i < 800) {
 					i++;
 				} else {
 					i = 0;
-					m_model.m_courant.m_carte[m_x][m_y] = null;
-					m_y++;
-					m_model.m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("EAST");
+					if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
+						m_model.m_courant.m_carte[m_x][m_y] = null;
+						m_y++;
+						m_model.m_courant.m_carte[m_x][m_y] = this;
+						System.out.println("SOUTH");
+					}
 				}
 			} else {
-				if (i < 1000) {
+				if (i < 800) {
 					i++;
 				} else {
 					i = 0;
-					m_model.m_courant.m_carte[m_x][m_y] = null;
-					m_y--;
-					m_model.m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("WEST");
+					if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
+						m_model.m_courant.m_carte[m_x][m_y] = null;
+						m_y--;
+						m_model.m_courant.m_carte[m_x][m_y] = this;
+						System.out.println("NORTH");
+					}
 				}
 			}
 		}
