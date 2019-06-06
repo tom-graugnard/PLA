@@ -10,6 +10,7 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.ICondition.CanMove;
+import interpreter.ICondition.CanHit;
 import interpreter.IState;
 import interpreter.ITransition;
 import interpreter.IAction.Hit;
@@ -17,7 +18,7 @@ import interpreter.IAction.Move;
 
 public class Clink extends Element {
 
-	boolean canEast, canNorth, canSouth, canWest;
+	boolean canEast, canNorth, canSouth, canWest, canHit;
 
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
@@ -48,6 +49,11 @@ public class Clink extends Element {
 		con = new CanMove(Direction.NORTH);
 		ITransition t_tmp3 = new ITransition(con, move3, s1);
 		t1.add(t_tmp3);
+
+		Hit hit = new Hit(null);
+		CanHit con2 = new CanHit(null);
+		ITransition t_tmp5 = new ITransition(con2, hit, s1);
+		t1.add(t_tmp5);
 
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
@@ -135,9 +141,27 @@ public class Clink extends Element {
 			return false;
 		}
 	}
+	
+	public void hit(Direction direction) {
+		Element e = m_model.m_courant.m_carte[m_x][m_y];
+		if(e instanceof Dossier) {
+			Dossier d = (Dossier) e;
+			m_x = 3;
+			m_y = 3;
+			m_model.m_courant = d.m_contenu;
+			m_courant = d.m_contenu;
+		}
+	}
+
+	public boolean canhit(Direction direction) {
+		if (canHit && m_model.m_courant.m_carte[m_x][m_y] != null) {
+			return true;
+		}
+		return false;
+	}
 
 	public void paint(Graphics g) {
-		g.drawImage(m_model.m_clinkSprite, m_x*48 + 8, m_y*48 + 8, 32, 32, null);
+		g.drawImage(m_model.m_clinkSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 	}
-	
+
 }

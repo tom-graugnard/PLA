@@ -38,7 +38,6 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -57,6 +56,9 @@ public class Controller extends GameController implements ActionListener {
 			break;
 		case KeyEvent.VK_DOWN:
 			m_model.m_joueur.canSouth = true;
+			break;
+		case KeyEvent.VK_H:
+			m_model.m_joueur.canHit = true;
 			break;
 		default:
 			break;
@@ -78,6 +80,9 @@ public class Controller extends GameController implements ActionListener {
 			break;
 		case KeyEvent.VK_DOWN:
 			m_model.m_joueur.canSouth = false;
+			break;
+		case KeyEvent.VK_H:
+			m_model.m_joueur.canHit = false;
 			break;
 		default:
 			break;
