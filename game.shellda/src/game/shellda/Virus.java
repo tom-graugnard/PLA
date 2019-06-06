@@ -25,6 +25,9 @@ public class Virus extends Element {
 	boolean m_decouvert;
 	
 	int type;
+	boolean m_worked;
+	Direction m_last_moved;
+	Direction m_last_2;
 
 	public Virus(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
@@ -104,48 +107,59 @@ public class Virus extends Element {
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			if (i < 500) {
+			if (i < 800) {
 				i++;
 			} else {
 				i = 0;
-				m_courant.m_carte[m_x][m_y] = null;
-				m_y--;
-				m_courant.m_carte[m_x][m_y] = this;
-				System.out.println("0");
+				if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
+					m_courant.m_carte[m_x][m_y] = null;
+					m_y--;
+					m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("NORTH");
+					m_worked = true;
+				}
 			}
 			break;
 		case SOUTH:
-			if (i < 500) {
+			if (i < 800) {
 				i++;
 			} else {
 				i = 0;
-				m_courant.m_carte[m_x][m_y] = null;
-				m_y++;
-				m_courant.m_carte[m_x][m_y] = this;
-				System.out.println("0");
+				if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
+					m_courant.m_carte[m_x][m_y] = null;
+					m_y++;
+					m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("SOUTH");
+					m_worked = true;
+				}
 			}
 			break;
 		case EAST:
-			if (i < 500) {
+			if (i < 800) {
 				i++;
 			} else {
 				i = 0;
-				m_courant.m_carte[m_x][m_y] = null;
-				m_x++;
-				m_courant.m_carte[m_x][m_y] = this;
-				System.out.println("0");
+				if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
+					m_courant.m_carte[m_x][m_y] = null;
+					m_x++;
+					m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("EAST");
+					m_worked = true;
+				}
 			}
-
 			break;
 		case WEST:
-			if (i < 500) {
+			if (i < 800) {
 				i++;
 			} else {
 				i = 0;
-				m_courant.m_carte[m_x][m_y] = null;
-				m_x--;
-				m_courant.m_carte[m_x][m_y] = this;
-				System.out.println("1");
+				if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
+					m_courant.m_carte[m_x][m_y] = null;
+					m_x--;
+					m_courant.m_carte[m_x][m_y] = this;
+					System.out.println("WEST");
+					m_worked = true;
+				}
 			}
 			break;
 		default:
@@ -162,117 +176,46 @@ public class Virus extends Element {
 	}
 
 	public void pop(Element e) {
-		Random rand = new Random();
-		if ((Math.abs(e.m_x - m_x)) > (Math.abs(e.m_y - m_y))) {
-			if (e.m_x >= m_x) {
-				if (i < 800) {
-					i++;
-				} else {
-					i = 0;
-					if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
-						m_courant.m_carte[m_x][m_y] = null;
-						m_x++;
-						m_courant.m_carte[m_x][m_y] = this;
-						System.out.println("EAST");
-					}
-				}
+
+		int dis_ver = e.m_y - m_y;
+		int dis_hor = e.m_x - m_x;
+
+		Direction dir1, dir2;
+
+		if (dis_ver < dis_hor) {
+			if (dis_ver < 0) {
+				dir1 = Direction.NORTH;
 			} else {
-				if (i < 800) {
-					i++;
-				} else {
-					i = 0;
-					if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
-						m_courant.m_carte[m_x][m_y] = null;
-						m_x--;
-						m_courant.m_carte[m_x][m_y] = this;
-						System.out.println("WEST");
-					}
-				}
+				dir1 = Direction.SOUTH;
 			}
-		} else if ((Math.abs(e.m_x - m_x)) > (Math.abs(e.m_y - m_y))) {
-			if (e.m_y >= m_y) {
-				if (i < 800) {
-					i++;
-				} else {
-					i = 0;
-					if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
-						m_courant.m_carte[m_x][m_y] = null;
-						m_y++;
-						m_courant.m_carte[m_x][m_y] = this;
-						System.out.println("SOUTH");
-					}
-				}
+			if (dis_hor < 0) {
+				dir2 = Direction.WEST;
 			} else {
-				if (i < 800) {
-					i++;
-				} else {
-					i = 0;
-					if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
-						m_courant.m_carte[m_x][m_y] = null;
-						m_y--;
-						m_courant.m_carte[m_x][m_y] = this;
-						System.out.println("NORTH");
-					}
-				}
+				dir2 = Direction.EAST;
 			}
 		} else {
-			if (e.m_x >= m_x || e.m_y >= m_y) {
-				int tmp = rand.nextInt(2);
-				if (tmp == 1) {
-					if (i < 800) {
-						i++;
-					} else {
-						i = 0;
-						if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
-							m_courant.m_carte[m_x][m_y] = null;
-							m_x++;
-							m_courant.m_carte[m_x][m_y] = this;
-							System.out.println("EAST");
-						}
-					}
-				} else {
-					if (i < 800) {
-						i++;
-					} else {
-						i = 0;
-						if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
-							m_courant.m_carte[m_x][m_y] = null;
-							m_y++;
-							m_courant.m_carte[m_x][m_y] = this;
-							System.out.println("SOUTH");
-						}
-					}
-				}
+			if (dis_ver < 0) {
+				dir2 = Direction.NORTH;
 			} else {
-				int tmp = rand.nextInt(2);
-				if (tmp == 1) {
-					if (i < 800) {
-						i++;
-					} else {
-						i = 0;
-						if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
-							m_courant.m_carte[m_x][m_y] = null;
-							m_y--;
-							m_courant.m_carte[m_x][m_y] = this;
-							System.out.println("NORTH");
-						}
-					}
-				} else {
-					if (i < 800) {
-						i++;
-					} else {
-						i = 0;
-						if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
-							m_courant.m_carte[m_x][m_y] = null;
-							m_x--;
-							m_courant.m_carte[m_x][m_y] = this;
-							System.out.println("WEST");
-						}
-					}
-				}
-				//System.out.print(tmp);
+				dir2 = Direction.SOUTH;
+			}
+			if (dis_hor < 0) {
+				dir1 = Direction.WEST;
+			} else {
+				dir1 = Direction.EAST;
 			}
 		}
+
+		if (m_last_2 == dir1)
+			move(dir1);
+		m_last_2 = m_last_moved;
+		m_last_moved = dir1;
+		if (!m_worked) {
+			move(dir2);
+			m_last_2 = m_last_moved;
+			m_last_moved = dir2;
+		}
+		m_worked = false;
 	}
 
 	public void wizz() {
