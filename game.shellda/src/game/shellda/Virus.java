@@ -25,7 +25,8 @@ public class Virus extends Element {
 
 	int display;
 	boolean m_decouvert;
-
+	Fichier m_proche;
+	
 	int type;
 	boolean m_worked;
 
@@ -172,7 +173,14 @@ public class Virus extends Element {
 	}
 
 	public void hit() {
+		int dis_ver = m_proche.m_y - m_y;
+		int dis_hor = m_proche.m_x - m_x;
 
+		if (Math.abs(dis_ver + dis_hor) == 1) {
+			m_courant.m_carte[m_x + dis_hor][m_y+dis_ver] = null;
+			m_courant.m_carte[m_x][m_y] = null;
+			m_courant.m_carte[m_x + dis_hor][m_y+dis_ver] = this;
+		}
 	}
 
 	public void egg() {
@@ -264,11 +272,11 @@ public class Virus extends Element {
 	}
 
 	public void wizz() {
-		Fichier f = fichierProche();
-		int dis_ver = f.m_y - m_y;
-		int dis_hor = f.m_x - m_x;
+		m_proche = fichierProche();
+		int dis_ver = m_proche.m_y - m_y;
+		int dis_hor = m_proche.m_x - m_x;
 
-		if (Math.abs(dis_ver + dis_hor) > 1) {
+		if (Math.abs(dis_ver + dis_hor) != 1) {
 
 			Direction dir1, dir2;
 
