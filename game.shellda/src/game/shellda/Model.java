@@ -69,7 +69,7 @@ public class Model extends GameModel {
 	private void loadSprites() {
 		m_font = new Font("Arial", 0, 9);
 		File imageFile;
-		imageFile = new File("ressources/clink.png");
+		imageFile = new File("ressources/virus_1.png");
 		try {
 			m_virus1Sprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
@@ -97,21 +97,21 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/virus_1.png");
+		imageFile = new File("ressources/clink_corbeille.png");
 		try {
 			m_clinkSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/background_selected.png");
+		imageFile = new File("ressources/background.png");
 		try {
 			m_backgroundSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/background.png");
+		imageFile = new File("ressources/background_selected.png");
 		try {
 			m_backgroundSelectedSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
@@ -132,7 +132,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/fichier.png");
+		imageFile = new File("ressources/fichier_corbeille.png");
 		try {
 			m_fichierSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
