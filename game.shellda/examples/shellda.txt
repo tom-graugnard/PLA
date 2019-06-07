@@ -17,6 +17,12 @@ Virus(Init){
   *(Ouest):
   | (Cell(L,V)) ? (Move(O)): (Ouest)
   | (True) ? Wait : (Init)
+Virus(Init){
+  *(Init):
+  | !(Cell(E,_)) ? (Move(E)) :(Init)
+  | !(Cell(O,_)) ? (Move(O)) :(Init)
+  | !(Cell(N,_)) ? (Move(N)) :(Init)
+  | !(Cell(S,_)) ? (Move(S)) :(Init)
 }
 
 Fichier(Init){

@@ -276,7 +276,7 @@ public class Ast {
 
 		public ICondition make() {
 			String string_operator = operator.make();
-			if (string_operator.equals("not")) {
+			if (string_operator.equals("not") || string_operator.equals("!")) {
 				return new ICondition.BooleanNot((ICondition) operand.make());
 			}
 			return null;
