@@ -6,23 +6,68 @@ Joueur(Init){
   | (Key(FR)) ? (Move(E)) :(Init)
 }
 
-Virus(Init){
-  *(Init):
-  | (Cell(R,V)) ? (Move(E)):(Est)
-  | (Cell(L,V)) ? (Move(O)):(Ouest)
+
+Virus(Nord){
+  
+  *(Nord):
+  | !(Closest(@,N)) ? (Move(S)):(Sud)
+  | !(Closest(@,O)) ? (Move(N)):(Nord)
+  | !(Closest(@,E)) ? (Move(O)):(Ouest)
+  | !(Closest(@,S)) ? (Move(E)):(Est)
+  | !(Closest(P,N)) ? (Move(S)):(Sud)
+  | !(Closest(P,O)) ? (Move(N)):(Nord)
+  | !(Closest(P,E)) ? (Move(O)):(Ouest)
+  | !(Closest(P,S)) ? (Move(E)):(Est)
+  | !(Cell(E,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(O,_)) ? (Move(N)) :(Nord)
+  | !(Cell(N,_)) ? (Move(S)) :(Sud)
+  | !(Cell(S,_)) ? (Move(E)) :(Est)
+ 
+  *(Ouest):
+  | !(Closest(@,N)) ? (Move(S)):(Sud)
+  | !(Closest(@,O)) ? (Move(N)):(Nord)
+  | !(Closest(@,E)) ? (Move(O)):(Ouest)
+  | !(Closest(@,S)) ? (Move(E)):(Est)
+  | !(Closest(P,N)) ? (Move(S)):(Sud)
+  | !(Closest(P,O)) ? (Move(N)):(Nord)
+  | !(Closest(P,E)) ? (Move(O)):(Ouest)
+  | !(Closest(P,S)) ? (Move(E)):(Est)
+  | !(Cell(E,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(O,_)) ? (Move(N)) :(Nord)
+  | !(Cell(N,_)) ? (Move(S)) :(Sud)
+  | !(Cell(S,_)) ? (Move(E)) :(Est)
   
   *(Est):
-  | (Cell(R,V)) ? (Move(E)): (Est)
-  | (True) ? Wait : (Init)
-  *(Ouest):
-  | (Cell(L,V)) ? (Move(O)): (Ouest)
-  | (True) ? Wait : (Init)
-Virus(Init){
-  *(Init):
-  | !(Cell(E,_)) ? (Move(E)) :(Init)
-  | !(Cell(O,_)) ? (Move(O)) :(Init)
-  | !(Cell(N,_)) ? (Move(N)) :(Init)
-  | !(Cell(S,_)) ? (Move(S)) :(Init)
+  | !(Closest(@,N)) ? (Move(S)):(Sud)
+  | !(Closest(@,O)) ? (Move(N)):(Nord)
+  | !(Closest(@,E)) ? (Move(O)):(Ouest)
+  | !(Closest(@,S)) ? (Move(E)):(Est)
+  | !(Closest(P,N)) ? (Move(S)):(Sud)
+  | !(Closest(P,O)) ? (Move(N)):(Nord)
+  | !(Closest(P,E)) ? (Move(O)):(Ouest)
+  | !(Closest(P,S)) ? (Move(E)):(Est)
+  | !(Cell(E,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(O,_)) ? (Move(N)) :(Nord)
+  | !(Cell(N,_)) ? (Move(S)) :(Sud)
+  | !(Cell(S,_)) ? (Move(E)) :(Est)
+   
+  *(Sud):
+  | !(Closest(@,N)) ? (Move(S)):(Sud)
+  | !(Closest(@,O)) ? (Move(N)):(Nord)
+  | !(Closest(@,E)) ? (Move(O)):(Ouest)
+  | !(Closest(@,S)) ? (Move(E)):(Est)
+  | !(Closest(P,N)) ? (Move(S)):(Sud)
+  | !(Closest(P,O)) ? (Move(N)):(Nord)
+  | !(Closest(P,E)) ? (Move(O)):(Ouest)
+  | !(Closest(P,S)) ? (Move(E)):(Est)
+  | !(Cell(E,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(O,_)) ? (Move(N)) :(Nord)
+  | !(Cell(N,_)) ? (Move(S)) :(Sud)
+  | !(Cell(S,_)) ? (Move(E)) :(Est)
+   
+  
+
+
 }
 
 Fichier(Init){

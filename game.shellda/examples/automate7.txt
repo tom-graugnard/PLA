@@ -1,18 +1,23 @@
-
+Virus(Init){
+  *(Init):
+  | !(Cell(E,_)) ? (Move(E)) :(Init)
+  | !(Cell(O,_)) ? (Move(O)) :(Init)
+  | !(Cell(N,_)) ? (Move(N)) :(Init)
+  | !(Cell(S,_)) ? (Move(S)) :(Init)
+}
 
 Virus(Init){
   *(Init):
-  | (Cell(R,V)) ? (Move(E)):(Est)
-  | (Cell(L,V)) ? (Move(O)):(Ouest)
+  | !(Cell(E,_)) ? (Move(E)):(Est)
+  | !(Cell(O,_)) ? (Move(O)):(Ouest)
   
   *(Est):
-  | (Cell(R,V)) ? (Move(E)): (Est)
+  | !(Cell(E,_)) ? (Move(E)): (Est)
   | (True) ? Wait : (Init)
   *(Ouest):
-  | (Cell(L,V)) ? (Move(O)): (Ouest)
+  | !(Cell(O,_)) ? (Move(O)): (Ouest)
   | (True) ? Wait : (Init)
 }
-
 
 Player0(Init){
   * (Init):
