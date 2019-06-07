@@ -36,17 +36,16 @@ public class Noeud {
 
 	}
 
-	public boolean ajouter_element(Element e) {
-		// Si il y a déjà un élement à cette emplacement alors l'element ne peut être
-		// placé
-		if (m_carte[e.m_x][e.m_y] != null || (e.m_x == 3 && e.m_y == 3)) {
-			return false;
+	public void set_element(Element e) {
+		while (e.m_x < 0) {
+			e.m_x += Options.LARGEUR_CARTE;
 		}
-		// Sinon l'élément peut être placé
-		else {
-			m_carte[e.m_x][e.m_y] = e;
-			return true;
+		e.m_x %= Options.LARGEUR_CARTE;
+		while (e.m_y < 0) {
+			e.m_y += Options.HAUTEUR_CARTE;
 		}
+		e.m_y %= Options.HAUTEUR_CARTE;
+		m_carte[e.m_x][e.m_y] = e;
 	}
 
 	public Element get_element(int x, int y) {
@@ -63,78 +62,71 @@ public class Noeud {
 		else
 			return m_carte[x][y];
 	}
+	
+	public Element remove_element(int x, int y) {
+		while (x < 0) {
+			x += Options.LARGEUR_CARTE;
+		}
+		x %= Options.LARGEUR_CARTE;
+		while (y < 0) {
+			y += Options.HAUTEUR_CARTE;
+		}
+		y %= Options.HAUTEUR_CARTE;
+		if (this == m_model.m_joueur.m_courant && x == m_model.m_joueur.m_x && y == m_model.m_joueur.m_y)
+			return m_model.m_joueur;
+		else {
+			Element element = m_carte[x][y];
+			m_carte[x][y] = null;
+			return element;
+		}
+	}
 
 	public void generer_noeud(int profondeur) {
 		int i = 0, j;
 		int x, y;
 		Random rand = new Random();
 		if (profondeur == 0) {
-			ajouter_element(new Executable(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4,
+			set_element(new Executable(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4,
 					"Shellda"));
 		}
 		if (profondeur > 0) {
-			int nombre_dossier = rand.nextInt(profondeur) * 2 + 1;
+			int nombre_dossier = rand.nextInt(4);
 			Noeud tmp;
-			for (i = 1; i < nombre_dossier + 1; i++) {
+			for (i = 1; i < profondeur + nombre_dossier; i++) {
 				tmp = new Noeud(m_model, this, "" + (char) (profondeur + 'A') + "_" + i);
 				x = i / Options.HAUTEUR_CARTE;
 				y = i % Options.HAUTEUR_CARTE;
-				ajouter_element(new Dossier(this, m_model, x, y, tmp.m_name, tmp));
+				set_element(new Dossier(this, m_model, x, y, tmp.m_name, tmp));
 				m_enfants.add(tmp);
 			}
 			for (i = 0; i < m_enfants.size(); i++) {
 				m_enfants.get(i).generer_noeud(profondeur - 1);
 			}
 		}
+		int nombre_fichier = rand.nextInt(4);
 		// On ajoute des fichiers dans notre dossier
-		for (j = i; j < (profondeur + 1) * 2 + i; j++) {
+		for (j = i; j < (profondeur + 1) * 2 + i + nombre_fichier; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
-			ajouter_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
+			set_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
 		}
+
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 4; i++) {
+		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 22; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
-			ajouter_element(new Virus(this, m_model, x, y));
+			if (get_element(x, y) == null)
+				set_element(new Virus(this, m_model, x, y));
 		}
 		// Generation d'archive
 		for (i = 0; i < 16; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
-			ajouter_element(new Archive(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + i + ".zip"));
+			if (get_element(x, y) == null)
+				set_element(new Archive(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + i + ".zip"));
 		}
-	}
-
-	public void print() {
-		for (int i = 0; i < Options.HAUTEUR_CARTE; i++) {
-			for (int j = 0; j < Options.LARGEUR_CARTE; j++) {
-				System.out.print("|");
-
-				if (m_carte[i][j] == null) {
-					System.out.print(" ");
-				} else {
-					if (m_carte[i][j] instanceof Corbeille) {
-						System.out.print("C");
-					} else if (m_carte[i][j] instanceof Dossier) {
-						System.out.print("D");
-					}
-					if (m_carte[i][j] instanceof Clink) {
-						System.out.print("J");
-					}
-					if (m_carte[i][j] instanceof Virus) {
-						Virus v = (Virus) m_carte[i][j];
-						System.out.print(v.display);
-					}
-
-				}
-
-			}
-			System.out.println("|");
-		}
-
 	}
 
 	public void paint(Graphics g) {
@@ -150,9 +142,5 @@ public class Noeud {
 			}
 		}
 		m_model.m_joueur.paint(g);
-	}
-
-	public Element[][] carte() {
-		return m_carte;
 	}
 }

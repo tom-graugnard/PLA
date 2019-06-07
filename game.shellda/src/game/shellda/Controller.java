@@ -34,37 +34,37 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
 		switch (c) {
 		case KeyEvent.VK_RIGHT:
-			m_model.m_keys.remove(new IKey("FR"));
+			m_model.removeKey("FR");
 			m_model.m_keys.add(new IKey("FR"));
 			break;
 		case KeyEvent.VK_LEFT:
-			m_model.m_keys.remove(new IKey("FL"));
+			m_model.removeKey("FL");
 			m_model.m_keys.add(new IKey("FL"));
 			break;
 		case KeyEvent.VK_UP:
-			m_model.m_keys.remove(new IKey("FU"));
+			m_model.removeKey("FU");
 			m_model.m_keys.add(new IKey("FU"));
 			break;
 		case KeyEvent.VK_DOWN:
-			m_model.m_keys.remove(new IKey("FD"));
+			m_model.removeKey("FD");
 			m_model.m_keys.add(new IKey("FD"));
 			break;
 		case KeyEvent.VK_H:
-			m_model.m_keys.remove(new IKey("h"));
+			m_model.removeKey("h");
 			m_model.m_keys.add(new IKey("h"));
 			break;
 		case KeyEvent.VK_W:
-			m_model.m_keys.remove(new IKey("w"));
+			m_model.removeKey("w");
 			m_model.m_keys.add(new IKey("w"));
 			break;
 		case KeyEvent.VK_P:
-			m_model.m_keys.remove(new IKey("p"));
+			m_model.removeKey("p");
 			m_model.m_keys.add(new IKey("p"));
 			break;
 		default:
@@ -77,25 +77,25 @@ public class Controller extends GameController implements ActionListener {
 		int c = e.getKeyCode();
 		switch (c) {
 		case KeyEvent.VK_RIGHT:
-			m_model.m_keys.remove(new IKey("FR"));
+			m_model.removeKey("FR");
 			break;
 		case KeyEvent.VK_LEFT:
-			m_model.m_keys.remove(new IKey("FL"));
+			m_model.removeKey("FL");
 			break;
 		case KeyEvent.VK_UP:
-			m_model.m_keys.remove(new IKey("FU"));
+			m_model.removeKey("FU");
 			break;
 		case KeyEvent.VK_DOWN:
-			m_model.m_keys.remove(new IKey("FD"));
+			m_model.removeKey("FD");
 			break;
 		case KeyEvent.VK_H:
-			m_model.m_keys.remove(new IKey("h"));
+			m_model.removeKey("h");
 			break;
 		case KeyEvent.VK_W:
-			m_model.m_keys.remove(new IKey("w"));
+			m_model.removeKey("w");
 			break;
 		case KeyEvent.VK_P:
-			m_model.m_keys.remove(new IKey("p"));
+			m_model.removeKey("p");
 			break;
 		default:
 			break;
