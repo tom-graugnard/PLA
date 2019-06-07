@@ -29,7 +29,7 @@ public class Element {
 		m_courant = courant;
 		m_x = x;
 		m_y = y;
-		m_direction.set_direction("N");
+		m_direction = new IDirection("N");
 	}
 
 	public void paint(Graphics g) {
