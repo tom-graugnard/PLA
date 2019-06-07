@@ -39,7 +39,7 @@ public class Noeud {
 	public boolean ajouter_element(Element e) {
 		// Si il y a déjà un élement à cette emplacement alors l'element ne peut être
 		// placé
-		if (m_carte[e.m_x][e.m_y] != null) {
+		if (m_carte[e.m_x][e.m_y] != null || (e.m_x == 3 && e.m_y == 3)) {
 			return false;
 		}
 		// Sinon l'élément peut être placé
