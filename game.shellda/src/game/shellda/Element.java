@@ -64,6 +64,13 @@ public class Element {
 	}
 
 	public void Move(IDirection direction) {
+		if(direction.absolue()) {
+			int[] coordonnees = direction.coordonnees();
+			m_courant.m_carte[m_x][m_y] = null;
+			m_x += coordonnees[0];
+			m_y += coordonnees[1];
+			m_courant.m_carte[m_x][m_y] = this;
+		}
 	}
 
 	public void Jump(IDirection direction) {

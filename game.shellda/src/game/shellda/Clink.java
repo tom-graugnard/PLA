@@ -25,6 +25,7 @@ public class Clink extends Element {
 	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
+		m_auto = m_model.m_automateJoueur.copy();
 	}
 
 	public void step(long now) throws Exception {
@@ -33,6 +34,10 @@ public class Clink extends Element {
 	}
 
 	public void Move(IDirection direction) {
+		System.out.println("Move de PLAYER =========================");
+		int[] coordonnees = direction.coordonnees();
+		m_x += coordonnees[0];
+		m_y += coordonnees[1];
 	}
 
 	public void Hit(IDirection direction) {

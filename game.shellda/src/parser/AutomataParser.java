@@ -17,6 +17,10 @@ public class AutomataParser implements AutomataParserConstants {
 		Ast ast = new AutomataParser(new BufferedReader(new FileReader(path_file))).Run();
 		return ast;
 	}
+	
+	public static List<IAutomaton> automatas_from_file(String path_file) throws Exception {
+		return ((AI_Definitions)from_file(path_file)).make();
+	}
 
 	public static Ast from_string(String input) throws Exception {
 		Ast ast = new AutomataParser(new java.io.StringReader(input)).Run();
