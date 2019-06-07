@@ -337,7 +337,7 @@ public class Ast {
 
 		public Object make() {
 			String function_name = name.make();
-			/*Fonction de IConditon*/
+			/* Fonction de IConditon */
 			if (function_name.equals("True")) {
 				return new ICondition.True();
 			} else if (function_name.equals("Key")) {
@@ -352,28 +352,55 @@ public class Ast {
 				return new ICondition.GotPower();
 			} else if (function_name.equals("GotStuff")) {
 				return new ICondition.GotStuff();
-			} 
-			/*Fonction de IAction*/
+			}
+			/* Fonction de IAction */
 			else if (function_name.equals("Wait")) {
 				return new IAction.Wait();
 			} else if (function_name.equals("Wizz")) {
-				return new IAction.Wizz((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Wizz();
+				else
+					return new IAction.Wizz((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Pop")) {
-				return new IAction.Pop((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Pop();
+				else
+					return new IAction.Pop((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Move")) {
-				return new IAction.Move((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Move();
+				else
+					return new IAction.Move((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Jump")) {
-				return new IAction.Jump((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Jump();
+				else
+					return new IAction.Jump((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Turn")) {
-				return new IAction.Turn((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Turn();
+				else
+					return new IAction.Turn((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Hit")) {
-				return new IAction.Hit((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Hit();
+				else
+					return new IAction.Hit((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Protect")) {
-				return new IAction.Protect((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Protect();
+				else
+					return new IAction.Protect((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Pick")) {
-				return new IAction.Pick((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Pick();
+				else
+					return new IAction.Pick((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Throw")) {
-				return new IAction.Throw((IDirection) parameters.get(0).make());
+				if (parameters.size() == 0)
+					return new IAction.Throw();
+				else
+					return new IAction.Throw((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Store")) {
 				return new IAction.Store();
 			} else if (function_name.equals("Get")) {
@@ -384,7 +411,7 @@ public class Ast {
 				return new IAction.Kamikaze();
 			} else if (function_name.equals("Egg")) {
 				return new IAction.Egg();
-			} 
+			}
 			return null;
 		}
 
@@ -503,8 +530,8 @@ public class Ast {
 			this.kind = "AI_Definitions";
 			this.automata = list;
 		}
-		
-		public List<IAutomaton> make(){
+
+		public List<IAutomaton> make() {
 			LinkedList<IAutomaton> result = new LinkedList<IAutomaton>();
 			ListIterator<Automaton> Iter = automata.listIterator();
 			while (Iter.hasNext()) {
@@ -557,9 +584,9 @@ public class Ast {
 			for (int i = 0; i < behaviours.size(); i++) {
 				iBehaviours.add(behaviours.get(i).make());
 			}
-			return new IAutomaton(entry.make(), iBehaviours);
+			return new IAutomaton(entry.make(), iBehaviours, name.make());
 		}
-		
+
 		public String tree_edges() {
 			String output = new String();
 			output += name.as_tree_son_of(this);

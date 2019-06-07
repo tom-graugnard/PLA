@@ -1,5 +1,0 @@
-Automate1(Etat1){
-*(Etat1): True ? Wait :(Etat2)
-*(Etat2): True ? Wait :(Etat1)
-}
-
