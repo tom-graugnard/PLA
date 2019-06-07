@@ -1,5 +1,5 @@
 
-Clink(Init){
+ClinkNorm(Init){
   * (Init):
   | (Cell(P,N) & Key(FU)) ? Move(N) :(Canwizz)
   | (Cell(P,S) & Key(FD)) ? Move(S) :(Canwizz)
@@ -49,6 +49,15 @@ Clink(Init){
   | Key(p) ? Pop :(Init)
 }
 
+ClinkCorb(Init){
+	*(Init):
+	| Key(FU) ? Move(N) : (Init)
+	| Key(FD) ? Move(S) : (Init)
+	| Key(p) ? Pop : (Init)
+	| Key(SPACE) ? Hit : (Init)
+	| Key(w) ? Wizz : (Init)
+}
+
 
 Virus(Init){
   *(Init):
@@ -60,4 +69,29 @@ Virus(Init){
   | (!Cell(O,S) & Closest(P,S)) ? Wizz(S) :(Init)
   | (!Cell(O,O) & Closest(P,O)) ? Wizz(O) :(Init)
   | (!Cell(O,E) & Closest(P,E)) ? Wizz(E) :(Init)
+}
+
+Dossier(Init){
+	*(Init): 
+	|Key(p) ? Pop : (Init)
+	|Key(w) ? Wizz : (Init)
+}
+
+
+Fichier(Init){
+	*(Init): 
+	|Key(w) & Cell(@,) ? Hit : (Invisible)
+	|Key(a) & !Cell(@,) ? Pop : (Init)
+	|Key(b) & !Cell(@,) ? Wizz : (Init)
+	*(Invisible)
+	|Key(FU) & !Cell(O,N) ? Move(N) : (Poser)
+	|Key(FD) & !Cell(O,S) ? Move(S) : (Poser)
+	|Key(FR) & !(Cell(O,E) ? Move(E) : (Poser)
+	|Key(FL) & !(Cell(O,W) ? Move(W) : (Poser)
+	|Key(FU) & Cell(O,N) ? Move(N) : (Invisible)
+	|Key(FD) & Cell(O,S) ? Move(S) : (Invisible)
+	|Key(FR) & (Cell(O,E) ? Move(E) : (Invisible)
+	|Key(FL) & (Cell(O,W) ? Move(W) : (Invisible)
+	*(Poser)
+	|Key(w) ? Hit : (Init)
 }
