@@ -9,7 +9,6 @@ Clink(Init){
   | (!Cell(O,S) & Key(FD)) ? Move(S) :(Init)
   | (!Cell(O,O) & Key(FL)) ? Move(O) :(Init)
   | (!Cell(O,E) & Key(FR)) ? Move(E) :(Init)
-  | Key(SPACE) ? Hit :(Init)
   | Key(p) ? Pop :(Init)
   * (Canwizz):
   | (Cell(P,N) & Key(FU)) ? Move(N) :(Canwizz)
@@ -33,7 +32,6 @@ Clink(Init){
   | (!Cell(O,O) & Key(FL)) ? Move(O) :(Objet)
   | (!Cell(O,E) & Key(FR)) ? Move(E) :(Objet)
   | Key(w) ? Wizz :(Canwizz)
-  | Key(SPACE) ? Hit :(Init)
   | Key(p) ? Pop :(Init)
   * (Pasposer):
   | (Cell(P,N) & Key(FU)) ? Move(N) :(Pasposer)
@@ -60,4 +58,8 @@ Virus(Init){
   | (!Cell(O,S) & Closest(P,S)) ? Wizz(S) :(Init)
   | (!Cell(O,O) & Closest(P,O)) ? Wizz(O) :(Init)
   | (!Cell(O,E) & Closest(P,E)) ? Wizz(E) :(Init)
+}
+
+Inerte(Init){
+  *(Init)
 }

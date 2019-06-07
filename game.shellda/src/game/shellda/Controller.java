@@ -23,7 +23,6 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void notifyVisible() {
-		// TODO Auto-generated method stub
 
 	}
 
