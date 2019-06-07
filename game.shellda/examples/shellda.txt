@@ -1,0 +1,18 @@
+Joueur(Init){
+  * (Init):
+  | (Key(FU)) ? (Move(N)) :(Init)
+  | (Key(FD)) ? (Move(S)) :(Init)
+  | (Key(FL)) ? (Move(O)) :(Init)
+  | (Key(FR)) ? (Move(E)) :(Init)
+}
+
+Virus(Est){
+  *(Est):
+  | (True) ? (Move(E)) :(Ouest)
+  *(Ouest):
+  | (True) ? (Move(O)): (Est)
+}
+
+Fichier(Init){
+	*(Init): True ? Wait: (Init)
+}

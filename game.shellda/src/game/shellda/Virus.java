@@ -32,6 +32,7 @@ public class Virus extends Element {
 		super(courant, model, x, y);
 		display = 0;
 		model.m_virus.add(this);
+		m_auto = m_model.m_automateVirus.copy();
 		Random rand = new Random();
 		type = rand.nextInt(4);
 	}
@@ -46,9 +47,6 @@ public class Virus extends Element {
 	public void step(long now) throws Exception {
 		if (m_auto != null)
 			m_auto.step(this);
-	}
-
-	public void Move(IDirection direction) {
 	}
 
 	public void Hit(IDirection direction) {

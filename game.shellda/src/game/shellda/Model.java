@@ -6,11 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameModel;
+import interpreter.IAutomaton;
 import interpreter.IKey;
+
+import parser.AutomataParser;
 
 public class Model extends GameModel {
 
@@ -46,9 +50,32 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 	
+	IAutomaton m_automateVirus;
+	IAutomaton m_automateJoueur;
+	IAutomaton m_automateFichier;
+
 	public LinkedList<IKey> m_keys;
 
 	public Model() {
+		// Lecture d'automate
+		List<IAutomaton> automates = null;
+		try {
+			automates = AutomataParser.automatas_from_file("examples/shellda.txt");
+		} catch (Exception e) {
+			System.out.println("Erreur dans la récupération d'automates");
+		}
+		for(int i = 0; i < automates.size(); i++) {
+			if(automates.get(i).m_name.equals("Virus")) {
+				m_automateVirus = automates.get(i);
+			}
+			else if(automates.get(i).m_name.equals("Joueur")) {
+				m_automateJoueur = automates.get(i);
+			}
+			else if(automates.get(i).m_name.equals("Fichier")) {
+				m_automateFichier = automates.get(i);
+			}
+		}
+
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this, "Corbeille");
@@ -188,7 +215,6 @@ public class Model extends GameModel {
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
