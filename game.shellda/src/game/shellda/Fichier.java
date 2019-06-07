@@ -1,6 +1,5 @@
 package game.shellda;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
@@ -16,6 +15,7 @@ public class Fichier extends Element{
 		super(courant, model, x, y);
 		m_kind = new IKind("P");
 		m_name = name;
+		m_kind = new IKind("P");
 	}
 	
 	public void paint(Graphics g) {
