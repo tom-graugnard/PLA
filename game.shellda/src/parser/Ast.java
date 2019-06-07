@@ -232,20 +232,7 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
-		public IDirection make() {
-	        if(value.kind.charAt(0)=='N') {
-	        	return IDirection.NORTH;
-	        }else if(value.kind.charAt(0)=='E') {
-	        	return IDirection.EAST;
-	        }else if(value.kind.charAt(0)=='S') {
-	        	return IDirection.SOUTH;
-	        }else {
-			return IDirection.WEST; 
-		  }
-		}
 	}
-//		
-	     //}
 
 	public static class Entity extends Parameter {
 
@@ -447,9 +434,9 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
-		public ICondition make() {
-			return new ICondition();
-		}
+//		public ICondition make() {
+//			return new ICondition();
+//		}
 	}
 
 	public static class Action extends Ast {
@@ -473,10 +460,10 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
-		public IAction make() {
-			return new IAction();
-			
-		}
+//		public IAction make() {
+//			return new IAction();
+//			
+//		}
 	}
 
 	public static class State extends Ast {
@@ -503,9 +490,9 @@ public class Ast {
 		public String as_state_of(Automaton automaton) {
 			return Dot.declare_node(this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4");
 		}
-		public IState make() {
-			return new IState(name.value);
-		}
+//		public IState make() {
+//			return new IState(name.value);
+//		}
 	}
 
 	public static class AI_Definitions extends Ast {
@@ -638,14 +625,14 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string;
 		}
-		public IBehaviour make() {
-			List<ITransition> itransitions=new LinkedList<ITransition>();
-			Iterator<Transition> iter=transitions.iterator();
-			while(iter.hasNext()) {
-				
-				itransitions.add(iter.next().make());
-			}return new IBehaviour(source.make(),itransitions);
-		}
+//		public IBehaviour make() {
+//			List<ITransition> itransitions=new LinkedList<ITransition>();
+//			Iterator<Transition> iter=transitions.iterator();
+//			while(iter.hasNext()) {
+//				
+//				itransitions.add(iter.next().make());
+//			}return new IBehaviour(source.make(),itransitions);
+//		}
 	}
 
 	public static class Transition extends Ast {
