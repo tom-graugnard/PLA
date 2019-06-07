@@ -116,13 +116,13 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_y--;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("NORTH");
-					m_worked = true;
-				}
+				// if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_y--;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("NORTH");
+				m_worked = true;
+				// }
 			}
 			break;
 		case SOUTH:
@@ -130,13 +130,14 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_y++;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("SOUTH");
-					m_worked = true;
-				}
+				// if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] ==
+				// null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_y++;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("SOUTH");
+				m_worked = true;
+				// }
 			}
 			break;
 		case EAST:
@@ -144,13 +145,14 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_x++;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("EAST");
-					m_worked = true;
-				}
+				// if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] ==
+				// null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_x++;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("EAST");
+				m_worked = true;
+				// }
 			}
 			break;
 		case WEST:
@@ -158,13 +160,13 @@ public class Virus extends Element {
 				i++;
 			} else {
 				i = 0;
-				if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
-					m_courant.m_carte[m_x][m_y] = null;
-					m_x--;
-					m_courant.m_carte[m_x][m_y] = this;
-					System.out.println("WEST");
-					m_worked = true;
-				}
+				// if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
+				m_courant.m_carte[m_x][m_y] = null;
+				m_x--;
+				m_courant.m_carte[m_x][m_y] = this;
+				System.out.println("WEST");
+				m_worked = true;
+				// }
 			}
 			break;
 		default:
