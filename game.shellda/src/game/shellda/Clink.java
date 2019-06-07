@@ -9,6 +9,7 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.IDirection;
+import interpreter.IKind;
 import interpreter.IState;
 import interpreter.ITransition;
 import interpreter.IAction.Hit;
@@ -25,6 +26,7 @@ public class Clink extends Element {
 	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
+		m_kind = new IKind("@");
 		m_auto = m_model.m_automateJoueur.copy();
 	}
 

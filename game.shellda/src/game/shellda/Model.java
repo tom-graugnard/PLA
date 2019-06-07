@@ -218,7 +218,7 @@ public class Model extends GameModel {
 	
 	@Override
 	public void step(long now) {
-		if(now - old > 1000) {
+		if(now - old > 100) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
