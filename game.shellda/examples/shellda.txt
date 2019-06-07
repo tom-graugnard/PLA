@@ -1,4 +1,4 @@
-Joueur(Init){
+Joueur1(Init){
   * (Init):
   | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Init)
   | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Init)
@@ -15,6 +15,12 @@ Joueur(Init){
   | (Key(h)) ? Hit :(Attrap)
   | Key(w) & !Cell(E,_,0) ? Wizz : (Init)
   | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Attrap)
+}
+Joueur2(Init){
+* (Init):
+  | (Key(FU)) ? (Move(N)) :(Init)
+  | (Key(FD)) ? (Move(S)) :(Init)
+  | Key(h) ? Hit : (Init)
 }
 
 Virus(Est){
