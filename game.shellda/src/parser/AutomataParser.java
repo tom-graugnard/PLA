@@ -64,24 +64,6 @@ public class AutomataParser implements AutomataParserConstants {
 		System.out.println("AUTOMATE PARSER");
 
 		List<IAutomaton> autos = ((AI_Definitions) ast).make();
-
-		IAutomaton auto = autos.get(0);
-
-		System.out.println("Test des automates:");
-
-		System.out.println(auto.current.name);
-
-		auto.step(null);
-
-		System.out.println(auto.current.name);
-
-		auto.step(null);
-
-		System.out.println(auto.current.name);
-
-		auto.step(null);
-
-		System.out.println(auto.current.name);
 	}
 
 	/*

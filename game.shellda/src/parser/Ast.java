@@ -573,7 +573,7 @@ public class Ast {
 			for (int i = 0; i < behaviours.size(); i++) {
 				iBehaviours.add(behaviours.get(i).make());
 			}
-			return new IAutomaton(entry.make(), iBehaviours);
+			return new IAutomaton(entry.make(), iBehaviours, name.make());
 		}
 
 		public String tree_edges() {
