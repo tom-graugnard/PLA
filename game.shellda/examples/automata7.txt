@@ -1,4 +1,5 @@
 Virus(Init){
+
 	*(Init):
 	| Cell(R,V) ? Move(E) : (Est)
 	| Cell(L,V) ? Move(O) : (Ouest)
