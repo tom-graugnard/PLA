@@ -9,7 +9,6 @@ ClinkNorm(Init){
   | (!Cell(O,S) & Key(FD)) ? Move(S) :(Init)
   | (!Cell(O,O) & Key(FL)) ? Move(O) :(Init)
   | (!Cell(O,E) & Key(FR)) ? Move(E) :(Init)
-  | Key(SPACE) ? Hit :(Init)
   | Key(p) ? Pop :(Init)
   * (Canwizz):
   | (Cell(P,N) & Key(FU)) ? Move(N) :(Canwizz)
@@ -33,7 +32,6 @@ ClinkNorm(Init){
   | (!Cell(O,O) & Key(FL)) ? Move(O) :(Objet)
   | (!Cell(O,E) & Key(FR)) ? Move(E) :(Objet)
   | Key(w) ? Wizz :(Canwizz)
-  | Key(SPACE) ? Hit :(Init)
   | Key(p) ? Pop :(Init)
   * (Pasposer):
   | (Cell(P,N) & Key(FU)) ? Move(N) :(Pasposer)
@@ -94,4 +92,8 @@ Fichier(Init){
 	|Key(FL) & (Cell(O,W) ? Move(W) : (Invisible)
 	*(Poser)
 	|Key(w) ? Hit : (Init)
+
+  
+Inerte(Init){
+  *(Init)
 }

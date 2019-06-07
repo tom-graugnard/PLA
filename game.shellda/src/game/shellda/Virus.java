@@ -225,13 +225,13 @@ public class Virus extends Element {
 				} else {
 					dir1 = Direction.SOUTH;
 				}
-				if (dis_hor < 0) {
+				if (dis_hor < 0 && m_x != 0) {
 					dir2 = Direction.WEST;
 				} else {
 					dir2 = Direction.EAST;
 				}
 			} else {
-				if (dis_ver < 0) {
+				if (dis_ver < 0 && m_y != 0) {
 					dir2 = Direction.NORTH;
 				} else {
 					dir2 = Direction.SOUTH;
