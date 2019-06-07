@@ -14,7 +14,6 @@ public class Dossier extends Element {
 		super(courant, model, x, y);
 		m_contenu = contenu;
 		m_name = name;
-		c = Color.orange;
 	}
 
 	public void paint(Graphics g) {
