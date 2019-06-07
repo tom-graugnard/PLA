@@ -3,11 +3,9 @@ package interpreter;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IState {
-	public int id;
-	public String name ;
-	// Le nom de l'état (Waiting, Hungry, Angry, ...) peut vous servir à adapter la représentation de l'entité à son humeur. 
+	public String m_name;
 	
 	public IState(String name){
-		this.name = name ;
+		m_name = name ;
 	}
 }

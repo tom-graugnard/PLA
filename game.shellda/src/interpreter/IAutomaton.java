@@ -34,7 +34,7 @@ public class IAutomaton {
 		IBehaviour currentBehaviour = null;
 		while (iter.hasNext()) {
 			IBehaviour b = iter.next();
-			if (b.source.name.equals(m_current.name) ) {
+			if (b.m_source.m_name.equals(m_current.m_name) ) {
 				currentBehaviour = b;
 				break;
 			}
@@ -48,5 +48,9 @@ public class IAutomaton {
 		if (tmp == m_current)
 			return false;
 		return true;
+	}
+	
+	public IAutomaton copy() {
+		return new IAutomaton(m_current, m_behaviours, m_name);
 	}
 }
