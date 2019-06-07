@@ -8,7 +8,7 @@ public class Test {
 		Model m = new Model();
 
 		while (true) {
-			m.m_tree.print();
+			//m.m_tree.print();
 			for (int i = 0; i < m.m_virus.size(); i++) {
 				m.m_virus.get(i).actualiser();
 			}

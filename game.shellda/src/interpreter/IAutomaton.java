@@ -10,12 +10,15 @@ import game.shellda.Element;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
-	public IState current;
-	List<IBehaviour> behaviours;
+	public String m_name;
+	
+	public IState m_current;
+	List<IBehaviour> m_behaviours;
 
-	public IAutomaton(IState initial, List<IBehaviour> behaviours) {
-		this.current = initial;
-		this.behaviours = behaviours;
+	public IAutomaton(IState initial, List<IBehaviour> behaviours, String name) {
+		m_name = name;
+		m_current = initial;
+		m_behaviours = behaviours;
 	}
 
 	public boolean step(Element e) throws Exception {
@@ -26,12 +29,12 @@ public class IAutomaton {
 		// return true si une transition effectuée, false si aucune transition possible
 		// (=?= mort de l'automate ?)
 
-		Iterator<IBehaviour> iter = behaviours.iterator();
+		Iterator<IBehaviour> iter = m_behaviours.iterator();
 
 		IBehaviour currentBehaviour = null;
 		while (iter.hasNext()) {
 			IBehaviour b = iter.next();
-			if (b.source.name.equals(current.name) || b.source.id == current.id) {
+			if (b.m_source.m_name.equals(m_current.m_name) ) {
 				currentBehaviour = b;
 				break;
 			}
@@ -40,10 +43,14 @@ public class IAutomaton {
 		if (currentBehaviour == null) {
 			throw new Exception("Aucune transition possible\n");
 		}
-		IState tmp = current;
-		current = currentBehaviour.step(e);
-		if (tmp == current)
+		IState tmp = m_current;
+		m_current = currentBehaviour.step(e);
+		if (tmp == m_current)
 			return false;
 		return true;
+	}
+	
+	public IAutomaton copy() {
+		return new IAutomaton(m_current, m_behaviours, m_name);
 	}
 }
