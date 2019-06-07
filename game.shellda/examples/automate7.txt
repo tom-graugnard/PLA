@@ -1,5 +1,19 @@
 
 
+Virus(Init){
+  *(Init):
+  | (Cell(R,V)) ? (Move(E)):(Est)
+  | (Cell(L,V)) ? (Move(O)):(Ouest)
+  
+  *(Est):
+  | (Cell(R,V)) ? (Move(E)): (Est)
+  | (True) ? Wait : (Init)
+  *(Ouest):
+  | (Cell(L,V)) ? (Move(O)): (Ouest)
+  | (True) ? Wait : (Init)
+}
+
+
 Player0(Init){
   * (Init):
   | Key(FU) ? Move(N) :(Init)
