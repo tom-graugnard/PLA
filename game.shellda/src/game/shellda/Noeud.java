@@ -49,12 +49,32 @@ public class Noeud {
 		}
 	}
 
+	public Element get_element(int x, int y) {
+		while (x < 0) {
+			x += Options.LARGEUR_CARTE;
+		}
+		while (x > Options.LARGEUR_CARTE - 1) {
+			x -= Options.LARGEUR_CARTE;
+		}
+		while (y < 0) {
+			y += Options.HAUTEUR_CARTE;
+		}
+		while (y > Options.HAUTEUR_CARTE - 1) {
+			y -= Options.HAUTEUR_CARTE;
+		}
+		if (this == m_model.m_joueur.m_courant && x == m_model.m_joueur.m_x && y == m_model.m_joueur.m_y)
+			return m_model.m_joueur;
+		else
+			return m_carte[x][y];
+	}
+
 	public void generer_noeud(int profondeur) {
 		int i = 0, j;
 		int x, y;
 		Random rand = new Random();
-		if(profondeur == 0) {
-			ajouter_element(new Executable(this, m_model, Options.LARGEUR_CARTE*3/4, Options.HAUTEUR_CARTE*3/4, "Shellda"));
+		if (profondeur == 0) {
+			ajouter_element(new Executable(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4,
+					"Shellda"));
 		}
 		if (profondeur > 0) {
 			int nombre_dossier = rand.nextInt(profondeur) * 2 + 1;

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameModel;
+import interpreter.IKey;
 
 public class Model extends GameModel {
 
@@ -44,6 +45,8 @@ public class Model extends GameModel {
 	BufferedImage m_virus2Sprite;
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
+	
+	public LinkedList<IKey> m_keys;
 
 	public Model() {
 		loadSprites();
