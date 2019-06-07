@@ -25,6 +25,10 @@ public class IAction {
 	public static class Wizz extends IAction{
 		IDirection m_direction;
 		
+		public Wizz() {
+			m_direction = new IDirection("F");
+		}
+		
 		public Wizz(IDirection direction) {
 			m_direction = direction;
 		}
@@ -36,6 +40,10 @@ public class IAction {
 	
 	public static class Pop extends IAction{
 		IDirection m_direction;
+		
+		public Pop() {
+			m_direction = new IDirection("F");
+		}
 		
 		public Pop(IDirection direction) {
 			m_direction = direction;
@@ -50,6 +58,10 @@ public class IAction {
 	public static class Move extends IAction{
 		IDirection m_direction;
 		
+		public Move() {
+			m_direction = new IDirection("F");
+		}
+		
 		public Move(IDirection direction) {
 			m_direction = direction;
 		}
@@ -61,6 +73,10 @@ public class IAction {
 	
 	public static class Jump extends IAction{
 		IDirection m_direction;
+		
+		public Jump() {
+			m_direction = new IDirection("F");
+		}
 		
 		public Jump(IDirection direction) {
 			m_direction = direction;
@@ -74,6 +90,10 @@ public class IAction {
 	public static class Turn extends IAction{
 		IDirection m_direction;
 		
+		public Turn() {
+			m_direction = new IDirection("R");
+		}
+		
 		public Turn(IDirection direction) {
 			m_direction = direction;
 		}
@@ -85,6 +105,10 @@ public class IAction {
 	
 	public static class Hit extends IAction{
 		IDirection m_direction;
+		
+		public Hit() {
+			m_direction = new IDirection("F");
+		}
 		
 		public Hit(IDirection direction) {
 			m_direction = direction;
@@ -98,6 +122,10 @@ public class IAction {
 	public static class Protect extends IAction{
 		IDirection m_direction;
 		
+		public Protect() {
+			m_direction = new IDirection("F");
+		}
+		
 		public Protect(IDirection direction) {
 			m_direction = direction;
 		}
@@ -110,6 +138,10 @@ public class IAction {
 	public static class Pick extends IAction{
 		IDirection m_direction;
 		
+		public Pick() {
+			m_direction = new IDirection("F");
+		}
+		
 		public Pick(IDirection direction) {
 			m_direction = direction;
 		}
@@ -121,6 +153,10 @@ public class IAction {
 	
 	public static class Throw extends IAction{
 		IDirection m_direction;
+		
+		public Throw() {
+			m_direction = new IDirection("F");
+		}
 		
 		public Throw(IDirection direction) {
 			m_direction = direction;
