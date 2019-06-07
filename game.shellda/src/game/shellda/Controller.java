@@ -1,35 +1,30 @@
 package game.shellda;
 
-import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.concurrent.TimeUnit;
+import java.util.LinkedList;
 
 import edu.ricm3.game.GameController;
-import interpreter.IDirection;
+import interpreter.IKey;
 
 public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 
 	public Controller(Model model, View view) {
-		// TODO Auto-generated constructor stub
 		m_model = model;
 		m_view = view;
+		m_model.m_keys = new LinkedList<IKey>();
 	}
 
 	@Override
 	public void notifyVisible() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void step(long now) {
-		// TODO Auto-generated method stub
 		if (m_model.gameStart) {
 			m_model.step(now);
 			m_view.step(now);
@@ -38,7 +33,6 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-
 	}
 
 	@Override
@@ -46,22 +40,32 @@ public class Controller extends GameController implements ActionListener {
 		int c = e.getKeyCode();
 		switch (c) {
 		case KeyEvent.VK_RIGHT:
-			m_model.m_joueur.mouvement = Direction.EAST;
+			m_model.m_keys.remove(new IKey("FR"));
+			m_model.m_keys.add(new IKey("FR"));
 			break;
 		case KeyEvent.VK_LEFT:
-			m_model.m_joueur.mouvement = Direction.WEST;
+			m_model.m_keys.remove(new IKey("FL"));
+			m_model.m_keys.add(new IKey("FL"));
 			break;
 		case KeyEvent.VK_UP:
-			m_model.m_joueur.mouvement = Direction.NORTH;
+			m_model.m_keys.remove(new IKey("FU"));
+			m_model.m_keys.add(new IKey("FU"));
 			break;
 		case KeyEvent.VK_DOWN:
-			m_model.m_joueur.mouvement = Direction.SOUTH;
+			m_model.m_keys.remove(new IKey("FD"));
+			m_model.m_keys.add(new IKey("FD"));
 			break;
 		case KeyEvent.VK_H:
-			m_model.m_joueur.isHitting = true;
+			m_model.m_keys.remove(new IKey("h"));
+			m_model.m_keys.add(new IKey("h"));
 			break;
 		case KeyEvent.VK_W:
-			m_model.m_joueur.isWizzing = true;
+			m_model.m_keys.remove(new IKey("w"));
+			m_model.m_keys.add(new IKey("w"));
+			break;
+		case KeyEvent.VK_P:
+			m_model.m_keys.remove(new IKey("p"));
+			m_model.m_keys.add(new IKey("p"));
 			break;
 		default:
 			break;
@@ -73,18 +77,25 @@ public class Controller extends GameController implements ActionListener {
 		int c = e.getKeyCode();
 		switch (c) {
 		case KeyEvent.VK_RIGHT:
+			m_model.m_keys.remove(new IKey("FR"));
 			break;
 		case KeyEvent.VK_LEFT:
+			m_model.m_keys.remove(new IKey("FL"));
 			break;
 		case KeyEvent.VK_UP:
+			m_model.m_keys.remove(new IKey("FU"));
 			break;
 		case KeyEvent.VK_DOWN:
+			m_model.m_keys.remove(new IKey("FD"));
 			break;
 		case KeyEvent.VK_H:
-			m_model.m_joueur.isHitting = false;
+			m_model.m_keys.remove(new IKey("h"));
 			break;
 		case KeyEvent.VK_W:
-			m_model.m_joueur.isWizzing = false;
+			m_model.m_keys.remove(new IKey("w"));
+			break;
+		case KeyEvent.VK_P:
+			m_model.m_keys.remove(new IKey("p"));
 			break;
 		default:
 			break;

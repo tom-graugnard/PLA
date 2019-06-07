@@ -345,7 +345,11 @@ public class Ast {
 			} else if (function_name.equals("MyDir")) {
 				return new ICondition.MyDir((IDirection) parameters.get(0).make());
 			} else if (function_name.equals("Cell")) {
-				return new ICondition.Cell((IDirection) parameters.get(0).make(), (IKind) parameters.get(1).make());
+				if (parameters.size() == 3)
+					return new ICondition.Cell((IDirection) parameters.get(0).make(), (IKind) parameters.get(1).make(),
+							((Integer) parameters.get(2).make()).intValue());
+				else
+					return new ICondition.Cell((IDirection) parameters.get(0).make(), (IKind) parameters.get(1).make());
 			} else if (function_name.equals("Closest")) {
 				return new ICondition.Closest((IKind) parameters.get(0).make(), (IDirection) parameters.get(1).make());
 			} else if (function_name.equals("GotPower")) {

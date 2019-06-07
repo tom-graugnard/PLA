@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameModel;
+import interpreter.IKey;
 
 public class Model extends GameModel {
 
@@ -44,6 +45,8 @@ public class Model extends GameModel {
 	BufferedImage m_virus2Sprite;
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
+	
+	public LinkedList<IKey> m_keys;
 
 	public Model() {
 		loadSprites();
@@ -94,7 +97,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/clink.png");
+		imageFile = new File("ressources/clink_corbeille.png");
 		try {
 			m_clinkSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
@@ -129,7 +132,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/fichier.png");
+		imageFile = new File("ressources/fichier_corbeille.png");
 		try {
 			m_fichierSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {

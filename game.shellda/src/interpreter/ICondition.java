@@ -34,7 +34,7 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			return true;
+			return e.Key(m_key);
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			return true;
+			return e.Mydir(m_direction);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			return true;
+			return e.Cell(m_direction, m_kind, m_distance);
 		}
 	}
 	
@@ -82,7 +82,7 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			return true;
+			return e.Closest(m_kind, m_direction);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			return true;
+			return e.GotPower();
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			return true;
+			return e.GotStuff();
 		}
 	}
 
