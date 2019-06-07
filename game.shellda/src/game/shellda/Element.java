@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import interpreter.Direction;
 import interpreter.IAutomaton;
+import interpreter.IDirection;
 
 public class Element {
 
@@ -48,75 +48,28 @@ public class Element {
 	}
 
 	// Action possible de l'automates
-	public void wizz() {
+	public void wizz(IDirection direction) {
+	}
+	
+	public void pop(IDirection direction) {
+		
 	}
 
-	public void pop(Element cible) {
-	}
-
-	public void hit(Direction direction) {
+	public void hit(IDirection direction) {
 	}
 
 	public void egg() {
 	}
 
-	public void move(Direction direction) {
+	public void move(IDirection direction) {
 	}
 
 	// Condition possible de l'automates
-	public boolean canmove(Direction direction) {
-		switch (direction) {
-		case NORTH:
-			if (m_y - 1 >= 0) {
-				if (m_model.m_courant.m_carte[m_x][m_y - 1] == null) {
-					return true;
-				}
-			} else {
-				if (m_model.m_courant.m_carte[m_x][Options.HAUTEUR_CARTE - 1] == null) {
-					return true;
-				}
-			}
-
-			break;
-		case SOUTH:
-			if (m_y + 1 < Options.HAUTEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x][m_y + 1] == null) {
-					return true;
-				}
-			} else {
-				if (m_model.m_courant.m_carte[m_x][0] == null) {
-					return true;
-				}
-			}
-			break;
-		case EAST:
-			if (m_x + 1 < Options.LARGEUR_CARTE) {
-				if (m_model.m_courant.m_carte[m_x + 1][m_y] == null) {
-					return true;
-				}
-			} else {
-				if (m_model.m_courant.m_carte[0][m_y] == null) {
-					return true;
-				}
-			}
-			break;
-		case WEST:
-			if (m_x - 1 >= 0) {
-				if (m_model.m_courant.m_carte[m_x - 1][m_y] == null) {
-					return true;
-				}
-			} else {
-				if (m_model.m_courant.m_carte[Options.LARGEUR_CARTE - 1][m_y] == null) {
-					return true;
-				}
-			}
-			break;
-		}
-
+	public boolean canmove(IDirection direction) {
 		return false;
 	}
 
-	public boolean canhit(Direction direction) {
+	public boolean canhit(IDirection direction) {
 		return false;
 	}
 	

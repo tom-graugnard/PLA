@@ -18,16 +18,17 @@ import interpreter.ITransition;
 
 import interpreter.IAction.Move;
 import interpreter.IAction.Pop;
+import interpreter.IAction.Wizz;
+import interpreter.IAction.Egg;
 
 public class Virus extends Element {
 
 	int display;
 	boolean m_decouvert;
-
+	Fichier m_proche;
+	
 	int type;
 	boolean m_worked;
-	Direction m_last_moved;
-	Direction m_last_2;
 
 	public Virus(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
@@ -42,11 +43,15 @@ public class Virus extends Element {
 
 		List<IBehaviour> b = new LinkedList<IBehaviour>();
 
-		Pop suit = new Pop(m_model.m_joueur);
+		Pop suit = new Pop();
 		ICondition con = new ICondition();
 
+		Egg egg = new Egg();
+
+		Wizz wizz = new Wizz();
+
 		List<ITransition> t1 = new LinkedList<ITransition>();
-		ITransition t_tmp1 = new ITransition(con, suit, s1);
+		ITransition t_tmp1 = new ITransition(con, wizz, s1);
 		t1.add(t_tmp1);
 		IBehaviour b_tmp1 = new IBehaviour(s1, t1);
 		b.add(b_tmp1);
@@ -170,59 +175,144 @@ public class Virus extends Element {
 	}
 
 	public void hit() {
+		int dis_ver = m_proche.m_y - m_y;
+		int dis_hor = m_proche.m_x - m_x;
 
+		if (Math.abs(dis_ver + dis_hor) == 1) {
+			m_courant.m_carte[m_x + dis_hor][m_y+dis_ver] = null;
+			m_courant.m_carte[m_x][m_y] = null;
+			m_courant.m_carte[m_x + dis_hor][m_y+dis_ver] = this;
+		}
 	}
 
 	public void egg() {
+		if (i < 300) {
+			i++;
+		} else {
+			i = 0;
+			if (canmove(Direction.WEST)) {
+				Virus v = new Virus(m_courant, m_model, m_x - 1, m_y);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x - 1][m_y] = v;
 
+			} else if (canmove(Direction.EAST)) {
+				Virus v = new Virus(m_courant, m_model, m_x + 1, m_y);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x + 1][m_y] = v;
+			} else if (canmove(Direction.NORTH)) {
+				Virus v = new Virus(m_courant, m_model, m_x, m_y - 1);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x][m_y - 1] = v;
+			} else if (canmove(Direction.SOUTH)) {
+				Virus v = new Virus(m_courant, m_model, m_x, m_y + 1);
+				v.m_decouvert = true;
+				m_courant.m_carte[m_x][m_y + 1] = v;
+			}
+		}
 	}
 
-	public void pop(Element e) {
+	public void pop() {
 
-		int dis_ver = e.m_y - m_y;
-		int dis_hor = e.m_x - m_x;
+		int dis_ver = m_model.m_joueur.m_y - m_y;
+		int dis_hor = m_model.m_joueur.m_x - m_x;
 
-		Direction dir1, dir2;
+		if (Math.abs(dis_ver + dis_hor) > 1) {
+			Direction dir1, dir2;
 
-		if (dis_ver < dis_hor) {
-			if (dis_ver < 0) {
-				dir1 = Direction.NORTH;
+			if (dis_ver < dis_hor) {
+				if (dis_ver < 0) {
+					dir1 = Direction.NORTH;
+				} else {
+					dir1 = Direction.SOUTH;
+				}
+				if (dis_hor < 0) {
+					dir2 = Direction.WEST;
+				} else {
+					dir2 = Direction.EAST;
+				}
 			} else {
-				dir1 = Direction.SOUTH;
+				if (dis_ver < 0) {
+					dir2 = Direction.NORTH;
+				} else {
+					dir2 = Direction.SOUTH;
+				}
+				if (dis_hor < 0) {
+					dir1 = Direction.WEST;
+				} else {
+					dir1 = Direction.EAST;
+				}
 			}
-			if (dis_hor < 0) {
-				dir2 = Direction.WEST;
-			} else {
-				dir2 = Direction.EAST;
+
+			move(dir1);
+
+			if (!m_worked) {
+				move(dir2);
+
 			}
-		} else {
-			if (dis_ver < 0) {
-				dir2 = Direction.NORTH;
-			} else {
-				dir2 = Direction.SOUTH;
-			}
-			if (dis_hor < 0) {
-				dir1 = Direction.WEST;
-			} else {
-				dir1 = Direction.EAST;
+			m_worked = false;
+		}
+	}
+
+	Fichier fichierProche() {
+		int min = 99;
+		int tmp;
+		Fichier res = null;
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				Element e = m_courant.m_carte[i][j];
+				if (e instanceof Fichier) {
+					Fichier f = (Fichier) e;
+					tmp = Math.abs(f.m_y - m_y) + Math.abs(f.m_x - m_x);
+					if (tmp < min) {
+						min = tmp;
+						res = f;
+					}
+				}
 			}
 		}
-
-		if (m_last_2 == dir1) {
-			if (this.canmove(dir1))
-				move(dir1);
-		}
-		m_last_2 = m_last_moved;
-		m_last_moved = dir1;
-		if (!m_worked && this.canmove(dir2)) {
-			move(dir2);
-			m_last_2 = m_last_moved;
-			m_last_moved = dir2;
-		}
-		m_worked = false;
+		return res;
 	}
 
 	public void wizz() {
+		m_proche = fichierProche();
+		int dis_ver = m_proche.m_y - m_y;
+		int dis_hor = m_proche.m_x - m_x;
+
+		if (Math.abs(dis_ver + dis_hor) != 1) {
+
+			Direction dir1, dir2;
+
+			if (dis_ver < dis_hor) {
+				if (dis_ver < 0) {
+					dir1 = Direction.NORTH;
+				} else {
+					dir1 = Direction.SOUTH;
+				}
+				if (dis_hor <= 0 && m_x != 0) {
+					dir2 = Direction.WEST;
+				} else {
+					dir2 = Direction.EAST;
+				}
+			} else {
+				if (dis_ver <= 0 && m_y != 0) {
+					dir2 = Direction.NORTH;
+				} else {
+					dir2 = Direction.SOUTH;
+				}
+				if (dis_hor < 0) {
+					dir1 = Direction.WEST;
+				} else {
+					dir1 = Direction.EAST;
+				}
+			}
+
+			move(dir1);
+
+			if (!m_worked) {
+				move(dir2);
+			}
+			m_worked = false;
+		}
 
 	}
 
