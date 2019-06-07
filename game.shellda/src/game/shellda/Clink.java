@@ -34,10 +34,17 @@ public class Clink extends Element {
 	}
 
 	public void Move(IDirection direction) {
-		System.out.println("Move de PLAYER =========================");
 		int[] coordonnees = direction.coordonnees();
 		m_x += coordonnees[0];
 		m_y += coordonnees[1];
+		while (m_x < 0) {
+			m_x += Options.LARGEUR_CARTE;
+		}
+		m_x %= Options.LARGEUR_CARTE;
+		while (m_y < 0) {
+			m_y += Options.HAUTEUR_CARTE;
+		}
+		m_y %= Options.HAUTEUR_CARTE;
 	}
 
 	public void Hit(IDirection direction) {

@@ -91,6 +91,16 @@ public class Model extends GameModel {
 		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
 				Options.BoutonExitScale);
 	}
+	
+	public boolean removeKey(String key) {
+		for(int i = 0; i < m_keys.size(); i++) {
+			if(m_keys.get(i).m_key.equals(key)){
+				m_keys.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private void loadSprites() {
 		m_font = new Font("Arial", 0, 9);

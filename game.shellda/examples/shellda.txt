@@ -8,7 +8,7 @@ Joueur(Init){
 
 Virus(Est){
   *(Est):
-  | !(Cell(E,_)) ? (Move(E)) :(Est)
+  | !(Cell(E,_,8)) ? (Move(E)) :(Est)
   | !(Cell(O,_)) ? (Move(O)) :(Ouest)
   | !(Cell(N,_)) ? (Move(N)) :(Nord)
   | !(Cell(S,_)) ? (Move(S)) :(Sud)

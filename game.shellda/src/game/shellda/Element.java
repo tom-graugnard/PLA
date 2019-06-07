@@ -116,7 +116,7 @@ public class Element {
 
 	// Condition possible de l'automate
 	public boolean Key(IKey key) {
-		return m_model.m_keys.remove(key);
+		return m_model.removeKey(key.m_key);
 	}
 	
 	public boolean Mydir(IDirection direction) {
