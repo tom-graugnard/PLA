@@ -8,10 +8,11 @@ Joueur(Init){
 
 Virus(Est){
   *(Est):
-  | (True) ? (Move(E)) :(Ouest)
-  *(Ouest):
-  | (True) ? (Move(O)): (Est)
+
+  | True ? Move(E) :(Est)
+
 }
+
 
 Fichier(Init){
 	*(Init): True ? Wait: (Init)

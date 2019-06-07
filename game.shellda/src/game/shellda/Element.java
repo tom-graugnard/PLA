@@ -29,6 +29,7 @@ public class Element {
 		m_courant = courant;
 		m_x = x;
 		m_y = y;
+		m_kind = new IKind("V");
 		m_direction = new IDirection("N");
 	}
 
@@ -65,9 +66,23 @@ public class Element {
 	public void Move(IDirection direction) {
 		if(direction.absolue()) {
 			int[] coordonnees = direction.coordonnees();
+			m_x = m_x % Options.LARGEUR_CARTE;
+			m_y = m_y % Options.HAUTEUR_CARTE;
 			m_courant.m_carte[m_x][m_y] = null;
 			m_x += coordonnees[0];
 			m_y += coordonnees[1];
+			if(m_x == -1) {
+				m_x = Options.LARGEUR_CARTE - 1;
+			}
+			if(m_y == -1) {
+				m_y = Options.HAUTEUR_CARTE - 1;
+			}
+			if(m_x == Options.LARGEUR_CARTE) {
+				m_x = 0;
+			}
+			if(m_y == Options.HAUTEUR_CARTE) {
+				m_y = 0;
+			}
 			m_courant.m_carte[m_x][m_y] = this;
 		}
 	}
@@ -132,7 +147,13 @@ public class Element {
 		coordonnees[0] *= distance;
 		coordonnees[1] *= distance;
 		Element element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-		return element != null && element.m_kind.equals(kind);
+		if(element == null) {
+			return false;
+		}
+		if(element.m_kind == null) {
+			return false;
+		}
+		return element.m_kind.equals(kind);																																																																																																																	
 	}
 	
 	public boolean Closest(IKind kind, IDirection direction) {
@@ -161,6 +182,9 @@ public class Element {
 			//Si on a déjà parcourue toute la ligne/colonne alors on renvoie faux
 			if(coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1)
 				return false;
+		}
+		if(element.m_kind == null) {
+			return false;
 		}
 		return element.m_kind.equals(kind);
 	}

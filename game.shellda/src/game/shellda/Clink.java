@@ -5,16 +5,10 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
-import interpreter.IAutomaton;
-import interpreter.IBehaviour;
-import interpreter.ICondition;
+
 import interpreter.IDirection;
-import interpreter.IState;
-import interpreter.ITransition;
-import interpreter.IAction.Hit;
-import interpreter.IAction.Move;
-import interpreter.IAction.Pop;
-import interpreter.IAction.Wizz;
+import interpreter.IKind;
+
 
 public class Clink extends Element {
 	boolean isHitting = false;
@@ -25,6 +19,7 @@ public class Clink extends Element {
 	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
+		m_kind = new IKind("@");
 		m_auto = m_model.m_automateJoueur.copy();
 	}
 
