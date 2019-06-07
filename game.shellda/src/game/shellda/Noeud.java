@@ -36,7 +36,15 @@ public class Noeud {
 
 	}
 
-	public void ajouter_element(Element e) {
+	public void set_element(Element e) {
+		while (e.m_x < 0) {
+			e.m_x += Options.LARGEUR_CARTE;
+		}
+		e.m_x %= Options.LARGEUR_CARTE;
+		while (e.m_y < 0) {
+			e.m_y += Options.HAUTEUR_CARTE;
+		}
+		e.m_y %= Options.HAUTEUR_CARTE;
 		m_carte[e.m_x][e.m_y] = e;
 	}
 
@@ -54,13 +62,31 @@ public class Noeud {
 		else
 			return m_carte[x][y];
 	}
+	
+	public Element remove_element(int x, int y) {
+		while (x < 0) {
+			x += Options.LARGEUR_CARTE;
+		}
+		x %= Options.LARGEUR_CARTE;
+		while (y < 0) {
+			y += Options.HAUTEUR_CARTE;
+		}
+		y %= Options.HAUTEUR_CARTE;
+		if (this == m_model.m_joueur.m_courant && x == m_model.m_joueur.m_x && y == m_model.m_joueur.m_y)
+			return m_model.m_joueur;
+		else {
+			Element element = m_carte[x][y];
+			m_carte[x][y] = null;
+			return element;
+		}
+	}
 
 	public void generer_noeud(int profondeur) {
 		int i = 0, j;
 		int x, y;
 		Random rand = new Random();
 		if (profondeur == 0) {
-			ajouter_element(new Executable(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4,
+			set_element(new Executable(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4,
 					"Shellda"));
 		}
 		if (profondeur > 0) {
@@ -70,7 +96,7 @@ public class Noeud {
 				tmp = new Noeud(m_model, this, "" + (char) (profondeur + 'A') + "_" + i);
 				x = i / Options.HAUTEUR_CARTE;
 				y = i % Options.HAUTEUR_CARTE;
-				ajouter_element(new Dossier(this, m_model, x, y, tmp.m_name, tmp));
+				set_element(new Dossier(this, m_model, x, y, tmp.m_name, tmp));
 				m_enfants.add(tmp);
 			}
 			for (i = 0; i < m_enfants.size(); i++) {
@@ -82,7 +108,7 @@ public class Noeud {
 		for (j = i; j < (profondeur + 1) * 2 + i + nombre_fichier; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
-			ajouter_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
+			set_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
 		}
 
 		// On genere au maximum un nombre de virus égal à la profondeur dans
@@ -92,14 +118,14 @@ public class Noeud {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			if (get_element(x, y) == null)
-				ajouter_element(new Virus(this, m_model, x, y));
+				set_element(new Virus(this, m_model, x, y));
 		}
 		// Generation d'archive
 		for (i = 0; i < 16; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			if (get_element(x, y) == null)
-				ajouter_element(new Archive(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + i + ".zip"));
+				set_element(new Archive(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + i + ".zip"));
 		}
 	}
 

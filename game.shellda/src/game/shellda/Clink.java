@@ -34,7 +34,25 @@ public class Clink extends Element {
 	}
 
 	public void Move(IDirection direction) {
-		int[] coordonnees = direction.coordonnees();
+		int[] coordonnees;
+		if (direction.absolue()) {
+			coordonnees = direction.coordonnees();
+			m_direction = direction;
+		}
+		else {
+			if(direction.front()) {
+				coordonnees = m_direction.coordonnees();
+			} else if(direction.back()) {
+				m_direction = m_direction.absolue_back();
+				coordonnees = m_direction.coordonnees();
+			} else if(direction.right()) {
+				m_direction = m_direction.absolue_right();
+				coordonnees = m_direction.coordonnees();
+			} else /*direction.left()*/ {
+				m_direction = m_direction.absolue_left();
+				coordonnees = m_direction.coordonnees();
+			}
+		}
 		m_x += coordonnees[0];
 		m_y += coordonnees[1];
 		while (m_x < 0) {
@@ -75,6 +93,28 @@ public class Clink extends Element {
 			inventaire = null;
 		}
 		isWizzing = false;
+	}
+	
+	public void Pop(IDirection direction) {
+		int[] coordonnees;
+		if (direction.absolue()) {
+			coordonnees = direction.coordonnees();
+		}
+		else {
+			if(direction.front()) {
+				coordonnees = m_direction.coordonnees();
+			} else if(direction.back()) {
+				coordonnees = m_direction.absolue_back().coordonnees();
+			} else if(direction.right()) {
+				coordonnees = m_direction.absolue_right().coordonnees();
+			} else /*direction.left()*/ {
+				coordonnees = m_direction.absolue_left().coordonnees();
+			}
+		}
+		Element element = m_courant.remove_element(m_x + coordonnees[0], m_y + coordonnees[1]);
+		element.m_x = m_x + coordonnees[0]*2;
+		element.m_y = m_y + coordonnees[1]*2;
+		m_courant.set_element(element);
 	}
 
 	public void paint(Graphics g) {

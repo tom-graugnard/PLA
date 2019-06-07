@@ -133,7 +133,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/clink_corbeille.png");
+		imageFile = new File("ressources/clink.png");
 		try {
 			m_clinkSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
@@ -168,7 +168,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/fichier_corbeille.png");
+		imageFile = new File("ressources/fichier.png");
 		try {
 			m_fichierSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {

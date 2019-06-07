@@ -1,14 +1,25 @@
 Joueur(Init){
   * (Init):
-  | (Key(FU)) ? (Move(N)) :(Init)
-  | (Key(FD)) ? (Move(S)) :(Init)
-  | (Key(FL)) ? (Move(O)) :(Init)
-  | (Key(FR)) ? (Move(E)) :(Init)
+  | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Init)
+  | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Init)
+  | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Init)
+  | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Init)
+  | (Key(h)) ? Hit :(Init)
+  | Key(w) & Cell(E,P,0) ? Wizz : (Attrap)
+  | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Init)
+  * (Attrap)
+  | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Attrap)
+  | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Attrap)
+  | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Attrap)
+  | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Attrap)
+  | (Key(h)) ? Hit :(Attrap)
+  | Key(w) & !Cell(E,_,0) ? Wizz : (Init)
+  | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Attrap)
 }
 
 Virus(Est){
   *(Est):
-  | !(Cell(E,_,8)) ? (Move(E)) :(Est)
+  | !(Cell(E,_)) ? (Move(E)) :(Est)
   | !(Cell(O,_)) ? (Move(O)) :(Ouest)
   | !(Cell(N,_)) ? (Move(N)) :(Nord)
   | !(Cell(S,_)) ? (Move(S)) :(Sud)
