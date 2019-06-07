@@ -204,26 +204,34 @@ public class Model extends GameModel {
 			System.exit(-1);
 		}
 	}
-
-	/*
-	 * private void splitSprite() { int width = m_sprite.getWidth(null); int height
-	 * = m_sprite.getHeight(null); m_sprites = new BufferedImage[m_nrows * m_ncols];
-	 * m_w = width / m_ncols; m_h = height / m_nrows; for (int i = 0; i < m_nrows;
-	 * i++) { for (int j = 0; j < m_ncols; j++) { int x = j * m_w; int y = i * m_h;
-	 * m_sprites[(i * m_ncols) + j] = m_sprite.getSubimage(x, y, m_w, m_h); } } }
-	 */
-
+	
+	long old = 0;
+	
 	@Override
 	public void step(long now) {
-		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
-			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
-				try {
-					if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus))
-						m_courant.m_carte[i][j].step(now);
-				} catch (Exception e) {
-					e.printStackTrace();
+		if(now - old > 1000) {
+			System.out.println(now - old);
+			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+					try {
+						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus))
+							m_courant.m_carte[i][j].step(now);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			for (int i = 0; i < m_virus.size(); i++) {
+				Virus v = m_virus.get(i);
+				if (v.isDiscovered()) {
+					try {
+						v.step(now);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			old = now;
 		}
 
 		try {
@@ -232,16 +240,7 @@ public class Model extends GameModel {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < m_virus.size(); i++) {
-			Virus v = m_virus.get(i);
-			if (v.isDiscovered()) {
-				try {
-					v.step(now);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		
 
 	}
 

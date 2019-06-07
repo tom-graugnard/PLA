@@ -30,6 +30,7 @@ public class Element {
 		m_x = x;
 		m_y = y;
 		m_direction = new IDirection("N");
+		m_kind = new IKind("_");
 	}
 
 	public void paint(Graphics g) {
@@ -68,6 +69,14 @@ public class Element {
 			m_courant.m_carte[m_x][m_y] = null;
 			m_x += coordonnees[0];
 			m_y += coordonnees[1];
+			while (m_x < 0) {
+				m_x += Options.LARGEUR_CARTE;
+			}
+			m_x %= Options.LARGEUR_CARTE;
+			while (m_y < 0) {
+				m_y += Options.HAUTEUR_CARTE;
+			}
+			m_y %= Options.HAUTEUR_CARTE;
 			m_courant.m_carte[m_x][m_y] = this;
 		}
 	}
