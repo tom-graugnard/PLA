@@ -38,7 +38,8 @@ public class Model extends GameModel {
 
 	BufferedImage m_executableSprite;
 
-	BufferedImage m_clinkSprite;
+	BufferedImage m_clink_nSprite;
+	BufferedImage m_clink_cSprite;
 	BufferedImage m_dossierSprite;
 	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
@@ -141,7 +142,14 @@ public class Model extends GameModel {
 		}
 		imageFile = new File("ressources/clink.png");
 		try {
-			m_clinkSprite = ImageIO.read(imageFile);
+			m_clink_nSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/clink_corbeille.png");
+		try {
+			m_clink_cSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

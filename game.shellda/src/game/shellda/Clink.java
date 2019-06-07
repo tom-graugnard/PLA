@@ -115,6 +115,9 @@ public class Clink extends Element {
 			element.m_y = m_y + coordonnees[1] * 2;
 			m_courant.set_element(element);
 		}
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_nSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+		}
 	}
 
 	public static class ClinkCorb extends Clink {
@@ -130,10 +133,11 @@ public class Clink extends Element {
 			m_courant = m_model.corb_parent;
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_cSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+		}
 	}
 
-	public void paint(Graphics g) {
-		g.drawImage(m_model.m_clinkSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
-	}
+	
 
 }
