@@ -1,0 +1,63 @@
+
+Clink(Init){
+  * (Init):
+  | (Cell(P,N) & Key(FU)) ? Move(N) :(Canwizz)
+  | (Cell(P,S) & Key(FD)) ? Move(S) :(Canwizz)
+  | (Cell(P,O) & Key(FL)) ? Move(O) :(Canwizz)
+  | (Cell(P,E) & Key(FR)) ? Move(E) :(Canwizz)
+  | (!Cell(O,N) & Key(FU)) ? Move(N) :(Init)
+  | (!Cell(O,S) & Key(FD)) ? Move(S) :(Init)
+  | (!Cell(O,O) & Key(FL)) ? Move(O) :(Init)
+  | (!Cell(O,E) & Key(FR)) ? Move(E) :(Init)
+  | Key(SPACE) ? Hit :(Init)
+  | Key(p) ? Pop :(Init)
+  * (Canwizz):
+  | (Cell(P,N) & Key(FU)) ? Move(N) :(Canwizz)
+  | (Cell(P,S) & Key(FD)) ? Move(S) :(Canwizz)
+  | (Cell(P,O) & Key(FL)) ? Move(O) :(Canwizz)
+  | (Cell(P,E) & Key(FR)) ? Move(E) :(Canwizz)
+  | (!Cell(O,N) & Key(FU)) ? Move(N) :(Init)
+  | (!Cell(O,S) & Key(FD)) ? Move(S) :(Init)
+  | (!Cell(O,O) & Key(FL)) ? Move(O) :(Init)
+  | (!Cell(O,E) & Key(FR)) ? Move(E) :(Init)
+  | Key(w) ? Wizz :(Objet)
+  | Key(SPACE) ? Hit :(Init)
+  | Key(p) ? Pop :(Init)
+  * (Objet):
+  | (Cell(P,N) & Key(FU)) ? Move(N) :(Pasposer)
+  | (Cell(P,S) & Key(FD)) ? Move(S) :(Pasposer)
+  | (Cell(P,O) & Key(FL)) ? Move(O) :(Pasposer)
+  | (Cell(P,E) & Key(FR)) ? Move(E) :(Pasposer)
+  | (!Cell(O,N) & Key(FU)) ? Move(N) :(Objet)
+  | (!Cell(O,S) & Key(FD)) ? Move(S) :(Objet)
+  | (!Cell(O,O) & Key(FL)) ? Move(O) :(Objet)
+  | (!Cell(O,E) & Key(FR)) ? Move(E) :(Objet)
+  | Key(w) ? Wizz :(Canwizz)
+  | Key(SPACE) ? Hit :(Init)
+  | Key(p) ? Pop :(Init)
+  * (Pasposer):
+  | (Cell(P,N) & Key(FU)) ? Move(N) :(Pasposer)
+  | (Cell(P,S) & Key(FD)) ? Move(S) :(Pasposer)
+  | (Cell(P,O) & Key(FL)) ? Move(O) :(Pasposer)
+  | (Cell(P,E) & Key(FR)) ? Move(E) :(Pasposer)
+  | (!Cell(O,N) & Key(FU)) ? Move(N) :(Objet)
+  | (!Cell(O,S) & Key(FD)) ? Move(S) :(Objet)
+  | (!Cell(O,O) & Key(FL)) ? Move(O) :(Objet)
+  | (!Cell(O,E) & Key(FR)) ? Move(E) :(Objet)
+  | Key(w) ? Wizz :(Canwizz)
+  | Key(SPACE) ? Hit :(Init)
+  | Key(p) ? Pop :(Init)
+}
+
+
+Virus(Init){
+  *(Init):
+  | (!Cell(O,N) & Closest(@,N)) ? Pop(N) :(Init)
+  | (!Cell(O,S) & Closest(@,S)) ? Pop(S) :(Init)
+  | (!Cell(O,O) & Closest(@,O)) ? Pop(O) :(Init)
+  | (!Cell(O,E) & Closest(@,E)) ? Pop(E) :(Init)
+  | (!Cell(O,N) & Closest(P,N)) ? Wizz(N) :(Init)
+  | (!Cell(O,S) & Closest(P,S)) ? Wizz(S) :(Init)
+  | (!Cell(O,O) & Closest(P,O)) ? Wizz(O) :(Init)
+  | (!Cell(O,E) & Closest(P,E)) ? Wizz(E) :(Init)
+}
