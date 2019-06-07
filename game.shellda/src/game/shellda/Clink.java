@@ -23,7 +23,7 @@ public class Clink extends Element {
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		m_kind = new IKind("@");
-		m_auto = m_model.m_automateJoueur.copy();
+		m_auto = m_model.m_automateJoueur1.copy();
 	}
 
 	public void step(long now) throws Exception {
