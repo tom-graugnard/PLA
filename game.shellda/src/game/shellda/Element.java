@@ -30,7 +30,7 @@ public class Element {
 		m_x = x;
 		m_y = y;
 		m_direction = new IDirection("N");
-		m_kind = new IKind("_");
+		m_kind = new IKind("V");
 	}
 
 	public void paint(Graphics g) {

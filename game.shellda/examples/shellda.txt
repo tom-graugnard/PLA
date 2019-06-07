@@ -6,14 +6,29 @@ Joueur(Init){
   | (Key(FR)) ? (Move(E)) :(Init)
 }
 
-Virus(Init){
-  *(Init):
-  | !(Cell(E,_)) ? (Move(E)) :(Init)
-  | !(Cell(O,_)) ? (Move(O)) :(Init)
-  | !(Cell(N,_)) ? (Move(N)) :(Init)
-  | !(Cell(S,_)) ? (Move(S)) :(Init)
+Virus(Est){
+  *(Est):
+  | !(Cell(E,_)) ? (Move(E)) :(Est)
+  | !(Cell(O,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(N,_)) ? (Move(N)) :(Nord)
+  | !(Cell(S,_)) ? (Move(S)) :(Sud)
+  *(Ouest):
+  | !(Cell(O,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(N,_)) ? (Move(N)) :(Nord)
+  | !(Cell(S,_)) ? (Move(S)) :(Sud)
+  | !(Cell(E,_)) ? (Move(E)) :(Est)
+  *(Nord):
+  | !(Cell(N,_)) ? (Move(N)) :(Nord)
+  | !(Cell(S,_)) ? (Move(S)) :(Sud)
+  | !(Cell(E,_)) ? (Move(E)) :(Est)
+  | !(Cell(O,_)) ? (Move(O)) :(Ouest)
+  *(Sud):
+  | !(Cell(S,_)) ? (Move(S)) :(Sud)
+  | !(Cell(E,_)) ? (Move(E)) :(Est)
+  | !(Cell(O,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(N,_)) ? (Move(N)) :(Nord)
 }
 
 Fichier(Init){
-	*(Init): True ? Wait: (Init)
+	*(Init)
 }

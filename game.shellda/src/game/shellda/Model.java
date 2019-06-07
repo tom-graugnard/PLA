@@ -83,7 +83,6 @@ public class Model extends GameModel {
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
-		m_courant.m_carte[1][1] = m_joueur;
 
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
@@ -210,7 +209,6 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		if(now - old > 1000) {
-			System.out.println(now - old);
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {

@@ -8,6 +8,8 @@ public class IKind {
 	}
 	
 	public boolean equals(IKind kind) {
+		if(m_type.equals("_") || kind.m_type.equals("_"))
+			return true;
 		return m_type.equals(kind.m_type);
 	}
 }
