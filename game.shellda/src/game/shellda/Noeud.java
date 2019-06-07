@@ -53,15 +53,11 @@ public class Noeud {
 		while (x < 0) {
 			x += Options.LARGEUR_CARTE;
 		}
-		while (x > Options.LARGEUR_CARTE - 1) {
-			x -= Options.LARGEUR_CARTE;
-		}
+		x %= Options.LARGEUR_CARTE;
 		while (y < 0) {
 			y += Options.HAUTEUR_CARTE;
 		}
-		while (y > Options.HAUTEUR_CARTE - 1) {
-			y -= Options.HAUTEUR_CARTE;
-		}
+		y %= Options.HAUTEUR_CARTE;
 		if (this == m_model.m_joueur.m_courant && x == m_model.m_joueur.m_x && y == m_model.m_joueur.m_y)
 			return m_model.m_joueur;
 		else
@@ -99,7 +95,7 @@ public class Noeud {
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 8; i++) {
+		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 4; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			ajouter_element(new Virus(this, m_model, x, y));

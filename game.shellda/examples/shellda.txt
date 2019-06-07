@@ -6,11 +6,12 @@ Joueur(Init){
   | (Key(FR)) ? (Move(E)) :(Init)
 }
 
-Virus(Est){
-  *(Est):
-
-  | True ? Move(E) :(Est)
-
+Virus(Init){
+  *(Init):
+  | !(Cell(E,_)) ? (Move(E)) :(Init)
+  | !(Cell(O,_)) ? (Move(O)) :(Init)
+  | !(Cell(N,_)) ? (Move(N)) :(Init)
+  | !(Cell(S,_)) ? (Move(S)) :(Init)
 }
 
 
