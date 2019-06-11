@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import interpreter.IKind;
 import java.util.Random;
 
+import game.shellda.Clink.ClinkCorb;
+
 public class Fichier extends Element {
 
 	String m_name;
@@ -103,6 +105,8 @@ public class Fichier extends Element {
 				}
 			}
 		}
+		ClinkCorb m = (ClinkCorb) m_model.m_joueur;
+		m.m_lasers.clear(); // Probleme faut les clear de la carte
 		m_model.m_nb_fichier_corbeille--;
 	}
 
