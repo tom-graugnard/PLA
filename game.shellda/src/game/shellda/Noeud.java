@@ -146,10 +146,10 @@ public class Noeud {
 	public void paint(Graphics g) {
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
-				g.drawImage(m_model.m_backgroundSprite, i * 48, j * 48, 48, 48, null);
+				g.drawImage(m_model.m_backgroundSprite, i * 48, j * 48 + 10, 48, 48, null);
 				if (m_carte[i][j] != null) {
 					if (m_model.m_joueur.m_x == i && m_model.m_joueur.m_y == j) {
-						g.drawImage(m_model.m_backgroundSelectedSprite, i * 48, j * 48, 48, 48, null);
+						g.drawImage(m_model.m_backgroundSelectedSprite, i * 48, j * 48 + 10, 48, 48, null);
 					}
 				}
 			}

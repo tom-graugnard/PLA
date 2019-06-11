@@ -14,7 +14,7 @@ public class Balle extends Element {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(m_model.m_balleSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+		g.drawImage(m_model.m_balleSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 	}
 
 	long w = 0;

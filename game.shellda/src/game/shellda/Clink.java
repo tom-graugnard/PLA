@@ -107,7 +107,7 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
