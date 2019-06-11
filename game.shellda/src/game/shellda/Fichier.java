@@ -15,6 +15,7 @@ public class Fichier extends Element {
 	int m_x_ancien, m_y_ancien;
 	Noeud m_courant_ancien;
 	String m_name_ancien;
+	Element m_type;
 
 	public Fichier(Noeud courant, Model model, int x, int y, String name) {
 		super(courant, model, x, y);
@@ -43,22 +44,37 @@ public class Fichier extends Element {
 
 	public void goCorbeille() {
 		Random r = new Random();
-		int r_x = r.nextInt(13);
-		int r_y = r.nextInt(9);
-		r_x += 3;
+		int r_x = r.nextInt(Options.LARGEUR_CARTE - Options.DECALAGE_CORBEILLE);
+		int r_y = r.nextInt(Options.HAUTEUR_CARTE);
+		r_x += Options.DECALAGE_CORBEILLE;
 		while (m_model.m_corbeille.m_carte[r_x][r_y] != null) {
 			r_x = r.nextInt(13);
 			r_y = r.nextInt(9);
 			r_x += 3;
 		}
 		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, "%&%%", m_x, m_y,
-				m_courant,m_name);
+				m_courant, m_name, this);
 		m_model.m_nb_fichier_corbeille++;
 	}
 
 	public void retour() {
-		m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model, m_x_ancien,
-				m_y_ancien, m_name_ancien);
+		if (m_type instanceof Decompresseur) {
+			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new Decompresseur(m_courant_ancien, m_model, m_x_ancien,
+					m_y_ancien);
+		} else {
+			if (m_type instanceof AntiVirus) {
+				m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new AntiVirus(m_courant_ancien, m_model,
+						m_x_ancien, m_y_ancien);
+			} else {
+				if (m_type instanceof Shellda) {
+					m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new Shellda(m_courant_ancien, m_model,
+							m_x_ancien, m_y_ancien);
+				} else {
+					m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model,
+							m_x_ancien, m_y_ancien, m_name_ancien);
+				}
+			}
+		}
 		m_model.m_nb_fichier_corbeille--;
 	}
 
@@ -72,15 +88,16 @@ public class Fichier extends Element {
 	public static class FichCorb extends Fichier {
 
 		public FichCorb(Noeud courant, Model model, int x, int y, String name, int old_x, int old_y, Noeud old_noeud,
-				String old_name) {
+				String old_name, Element type) {
 			super(courant, model, x, y, name);
 			m_x_ancien = old_x;
 			m_y_ancien = old_y;
 			m_courant_ancien = old_noeud;
 			m_name_ancien = old_name;
+			m_type = type;
 			m_auto = m_model.m_automateFichier.copy();
 		}
-		
+
 		public void paint(Graphics g) {
 			g.drawImage(m_model.m_fichierCorrompuSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
 

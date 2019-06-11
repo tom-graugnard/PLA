@@ -99,9 +99,11 @@ public class Clink extends Element {
 				}
 			}
 			Element element = m_courant.remove_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-			element.m_x = m_x + coordonnees[0] * 2;
-			element.m_y = m_y + coordonnees[1] * 2;
-			m_courant.set_element(element);
+			if (element != null) {
+				element.m_x = m_x + coordonnees[0] * 2;
+				element.m_y = m_y + coordonnees[1] * 2;
+				m_courant.set_element(element);
+			}
 		}
 
 		public void paint(Graphics g) {
@@ -122,7 +124,7 @@ public class Clink extends Element {
 		public void step(long now) throws Exception {
 			if (m_auto != null)
 				m_auto.step(this);
-			if (now - m_old_corbeille > Options.PC_SPEED/4) {
+			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
 				for (int i = 0; i < m_lasers.size(); i++)
 					m_lasers.get(i).step(now);
 				m_old_corbeille = now;
