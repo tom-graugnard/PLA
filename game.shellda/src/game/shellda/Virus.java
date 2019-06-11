@@ -11,6 +11,7 @@ import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
 import interpreter.IDirection;
+import interpreter.IKind;
 import interpreter.IState;
 import interpreter.ITransition;
 
@@ -45,7 +46,38 @@ public class Virus extends Element {
 	}
 
 	public void Hit(IDirection direction) {
-		Move(direction);
+		int[] coordonnees;
+		coordonnees = direction.coordonnees();
+		int m_x_ = m_x + coordonnees[0], m_y_ = m_y + coordonnees[1];
+		if (m_x_ > Options.LARGEUR_CARTE - 1) {
+			m_x_ = 0;
+		}
+		if (m_x_ < 0) {
+			m_x_ = Options.LARGEUR_CARTE;
+		}
+		if (m_y_ > Options.HAUTEUR_CARTE - 1) {
+			m_y_ = 0;
+		}
+		if (m_y_ < 0) {
+			m_y_ = Options.HAUTEUR_CARTE;
+		}
+		Element e = m_model.m_courant.get_element(m_x_, m_y_);
+		if (e instanceof Fichier) {
+			Fichier f = (Fichier) e;
+			f.m_infection -= Options.DEGATS_VIRUS;
+			if (f.m_infection <= 0) {
+				Move(direction);
+			}
+		}
+		if (m_model.m_joueur.m_x == m_x_ && m_model.m_joueur.m_y == m_y_ && m_courant == m_model.m_courant) {
+			if (!(e instanceof Dossier || e instanceof Fichier)) {
+				Move(direction);
+				m_model.m_joueur.m_courant = m_model.m_tree.m_root;
+				m_model.m_courant = m_model.m_tree.m_root;
+				m_model.m_joueur.m_x = 0;
+				m_model.m_joueur.m_y = 0;
+			}
+		}
 	}
 
 	public void Egg() {
@@ -66,6 +98,37 @@ public class Virus extends Element {
 		}
 	}
 
+	public void Pop(IDirection direction) {
+		int[] coordonnees;
+		coordonnees = direction.coordonnees();
+		int m_x_ = m_x + coordonnees[0], m_y_ = m_y + coordonnees[1];
+		if (m_x_ > Options.LARGEUR_CARTE - 1) {
+			m_x_ = 0;
+		}
+		if (m_x_ < 0) {
+			m_x_ = Options.LARGEUR_CARTE;
+		}
+		if (m_y_ > Options.HAUTEUR_CARTE - 1) {
+			m_y_ = 0;
+		}
+		if (m_y_ < 0) {
+			m_y_ = Options.HAUTEUR_CARTE;
+		}
+		Element e = m_model.m_courant.m_carte[m_x_][m_y_];
+		if (e instanceof Dossier && !(e instanceof Corbeille)) {
+			Dossier d = (Dossier) e;
+			if (d.m_contenu.m_carte[8][8] == null) {
+				m_x = 8;
+				m_y = 8;
+				m_courant = d.m_contenu;
+				// m_decouvert = false; // A VOIR
+			}
+		} else {
+			// System.out.print(m_x_ + " ");
+			// System.out.println(m_y_);
+		}
+	}
+
 	public void Wizz(IDirection direction) {
 		m_type = (m_type + 1) % 4;
 	}
@@ -82,6 +145,21 @@ public class Virus extends Element {
 		if (m_courant == m_model.m_courant) {
 			switch (m_type) {
 			case 0:
+				g.drawImage(m_model.m_virus1Sprite, m_x*48 + 8, m_y *48 + 8, 32, 32, null);
+				break;
+			case 1:
+				g.drawImage(m_model.m_virus2Sprite, m_x*48 + 8, m_y *48 + 8, 32, 32, null);
+				break;
+			case 2:
+				g.drawImage(m_model.m_virus3Sprite, m_x*48 + 8, m_y *48 + 8, 32, 32, null);
+				break;
+			case 3:
+				g.drawImage(m_model.m_virus4Sprite, m_x*48 + 8, m_y *48 + 8, 32, 32, null);
+				break;
+			}
+			/*
+			switch (m_type) {
+			case 0:
 				g.drawImage(m_model.m_virus1Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 				break;
 			case 1:
@@ -94,6 +172,7 @@ public class Virus extends Element {
 				g.drawImage(m_model.m_virus4Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 				break;
 			}
+			*/
 		}
 	}
 

@@ -125,7 +125,7 @@ public class Noeud {
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 22; i++) {
+		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 1; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			if (get_element(x, y) == null)
