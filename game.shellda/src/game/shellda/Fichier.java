@@ -16,7 +16,7 @@ public class Fichier extends Element {
 		super(courant, model, x, y);
 		m_kind = new IKind("P");
 		m_name = name;
-		
+		m_infection = 100;
 	}
 
 	public void paint(Graphics g) {

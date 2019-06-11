@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
+import interpreter.IKind;
+
 public class Dossier extends Element {
 
 	String m_name;
@@ -14,6 +16,7 @@ public class Dossier extends Element {
 		super(courant, model, x, y);
 		m_contenu = contenu;
 		m_name = name;
+		m_kind = new IKind("D");
 	}
 
 	public void paint(Graphics g) {
