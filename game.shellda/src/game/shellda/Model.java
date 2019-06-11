@@ -235,7 +235,7 @@ public class Model extends GameModel {
 			System.exit(-1);
 		}
 		
-		imageFile = new File("ressources/flamme.jpg");
+		imageFile = new File("ressources/Fire.png");
 		try {
 			m_projectileSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
