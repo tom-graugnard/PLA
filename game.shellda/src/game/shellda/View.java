@@ -60,11 +60,9 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_courant.paint(g);
-		//m_model.m_boutonexit.paint(g);
 	}
 
 	public void step(long now) {
-		// TODO Auto-generated method stub
 	}
 
 }

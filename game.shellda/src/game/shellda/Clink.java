@@ -1,22 +1,10 @@
 package game.shellda;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.util.LinkedList;
-import java.util.List;
 
 import game.shellda.Fichier.FichCorb;
-import interpreter.IAutomaton;
-import interpreter.IBehaviour;
-import interpreter.ICondition;
 import interpreter.IDirection;
 import interpreter.IKind;
-import interpreter.IState;
-import interpreter.ITransition;
-import interpreter.IAction.Hit;
-import interpreter.IAction.Move;
-import interpreter.IAction.Pop;
-import interpreter.IAction.Wizz;
 
 public class Clink extends Element {
 	Element inventaire = null; 
@@ -25,11 +13,6 @@ public class Clink extends Element {
 		super(courant, model, x, y);
 		m_kind = new IKind("@");
 		m_auto = m_model.m_automateJoueur1.copy();
-	}
-
-	public void step(long now) throws Exception {
-		if (m_auto != null)
-			m_auto.step(this);
 	}
 
 	public void Move(IDirection direction) {
@@ -81,9 +64,6 @@ public class Clink extends Element {
 
 				if (d instanceof Corbeille) {
 					m_model.m_joueur = new ClinkCorb(m_courant, m_model, 0, 4);
-					m_courant.m_carte[7][4] = new FichCorb(m_courant, m_model, 7, 4, "tmp1");
-					m_courant.m_carte[9][2] = new FichCorb(m_courant, m_model, 9, 2, "tmp2");
-
 				}
 			} else if (e instanceof Executable) {
 				((Executable) e).interaction();
@@ -125,7 +105,7 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_nSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 		}
 	}
 
@@ -136,7 +116,6 @@ public class Clink extends Element {
 
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			// TODO Auto-generated constructor stub
 			m_auto = m_model.m_automateJoueur2.copy();
 		}
 
@@ -176,7 +155,7 @@ public class Clink extends Element {
 	}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
