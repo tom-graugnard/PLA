@@ -12,8 +12,9 @@ public class Options {
 	
 	public static float BoutonPlayScale=0.1F;
 	public static float BoutonExitScale=0.05F;
+	public static float BoutonOptionScale=1.5F;
 	
 	public static int DEGATS_VIRUS = 25;
 	
-	public static float TEMPS_ACTUALISATION = 1000;
+	public static float TEMPS_ACTUALISATION = 500;
 }

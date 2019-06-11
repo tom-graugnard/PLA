@@ -108,8 +108,12 @@ public class Controller extends GameController implements ActionListener {
 		// TODO Auto-generated method stub
 		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
 			m_model.gameStart = true;
-		if (m_model.m_boutonexit.inside(e.getX(), e.getY()))
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false)
 			m_model.shutdown();
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==true)
+			m_model.gameOption=false;
+		if(m_model.m_boutonoption.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false)
+			m_model.gameOption=true;
 	}
 
 	@Override
