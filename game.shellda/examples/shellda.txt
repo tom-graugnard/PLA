@@ -21,7 +21,14 @@ Joueur2(Init){
   | (Key(FU)) ? (Move(N)) :(Init)
   | (Key(FD)) ? (Move(S)) :(Init)
   | Key(h) ? Hit : (Init)
-  | Key(w) ? Wizz :(Init)
+  | Key(p) ? Pop : (Init)
+  | Key(w) ? Wizz : (Init)
+}
+
+Balle(Init){
+	*(Init):
+	| !Cell(E,_) ? Move(E): (Init)
+	| True ? Hit(E) : (Init)
 }
 
 Virus(Est){
@@ -30,6 +37,14 @@ Virus(Est){
   | Cell(O,P)    ?  Hit(O)   :(Ouest)
   | Cell(N,P)    ?  Hit(N)   :(Nord)
   | Cell(S,P)    ?  Hit(S)   :(Sud)
+  | Cell(E,@)    ?  Hit(E)   :(Est)
+  | Cell(O,@)    ?  Hit(O)   :(Ouest)
+  | Cell(N,@)    ?  Hit(N)   :(Nord)
+  | Cell(S,@)    ?  Hit(S)   :(Sud)
+  | Cell(E,D)	 ?  Pop(E)  :(Est)
+  | Cell(O,D)	 ?  Pop(O)  :(Ouest)
+  | Cell(S,D)	 ?  Pop(S)  :(Sud)
+  | Cell(N,D)	 ?  Pop(N)  :(Nord)
   | (Closest(@,N) & !Cell(N,@)) ? Move(N)   :(Nord)
   | (Closest(@,S) & !Cell(S,@)) ? Move(S)   :(Sud)
   | (Closest(@,O) & !Cell(O,@)) ? Move(O)   :(Ouest)
@@ -48,6 +63,14 @@ Virus(Est){
   | Cell(O,P)    ?  Hit(O)   :(Ouest)
   | Cell(N,P)    ?  Hit(N)   :(Nord)
   | Cell(S,P)    ?  Hit(S)   :(Sud)
+  | Cell(E,@)    ?  Hit(E)   :(Est)
+  | Cell(O,@)    ?  Hit(O)   :(Ouest)
+  | Cell(N,@)    ?  Hit(N)   :(Nord)
+  | Cell(S,@)    ?  Hit(S)   :(Sud)
+  | Cell(E,D)	 ?  Pop(E)  :(Est)
+  | Cell(O,D)	 ?  Pop(O)  :(Ouest)
+  | Cell(S,D)	 ?  Pop(S)  :(Sud)
+  | Cell(N,D)	 ?  Pop(N)  :(Nord)
   | (Closest(@,N) & !Cell(N,@)) ? Move(N)   :(Nord)
   | (Closest(@,S) & !Cell(S,@)) ? Move(S)   :(Sud)
   | (Closest(@,O) & !Cell(O,@)) ? Move(O)   :(Ouest)
@@ -66,6 +89,14 @@ Virus(Est){
   | Cell(O,P)    ?  Hit(O)   :(Ouest)
   | Cell(N,P)    ?  Hit(N)   :(Nord)
   | Cell(S,P)    ?  Hit(S)   :(Sud)
+  | Cell(E,@)    ?  Hit(E)   :(Est)
+  | Cell(O,@)    ?  Hit(O)   :(Ouest)
+  | Cell(N,@)    ?  Hit(N)   :(Nord)
+  | Cell(S,@)    ?  Hit(S)   :(Sud)
+  | Cell(E,D)	 ?  Pop(E)  :(Est)
+  | Cell(O,D)	 ?  Pop(O)  :(Ouest)
+  | Cell(S,D)	 ?  Pop(S)  :(Sud)
+  | Cell(N,D)	 ?  Pop(N)  :(Nord)
   | (Closest(@,N) & !Cell(N,@)) ? Move(N)   :(Nord)
   | (Closest(@,S) & !Cell(S,@)) ? Move(S)   :(Sud)
   | (Closest(@,O) & !Cell(O,@)) ? Move(O)   :(Ouest)
@@ -84,6 +115,14 @@ Virus(Est){
   | Cell(O,P)    ?  Hit(O)   :(Ouest)
   | Cell(N,P)    ?  Hit(N)   :(Nord)
   | Cell(S,P)    ?  Hit(S)   :(Sud)
+  | Cell(E,@)    ?  Hit(E)   :(Est)
+  | Cell(O,@)    ?  Hit(O)   :(Ouest)
+  | Cell(N,@)    ?  Hit(N)   :(Nord)
+  | Cell(S,@)    ?  Hit(S)   :(Sud)
+  | Cell(E,D)	 ?  Pop(E)  :(Est)
+  | Cell(O,D)	 ?  Pop(O)  :(Ouest)
+  | Cell(S,D)	 ?  Pop(S)  :(Sud)
+  | Cell(N,D)	 ?  Pop(N)  :(Nord)
   | (Closest(@,N) & !Cell(N,@)) ? Move(N)   :(Nord)
   | (Closest(@,S) & !Cell(S,@)) ? Move(S)   :(Sud)
   | (Closest(@,O) & !Cell(O,@)) ? Move(O)   :(Ouest)
@@ -99,14 +138,12 @@ Virus(Est){
   | True ? Egg :(Nord)
 }
 
-Fichier(Init){
-	*(Init) 
-}
-
-Projectile(Init){
-*(Init) :
-|!(Cell(E,_)) ? Move(E) : (Init)
-|(True)      ? Wait    : (Arret)
-*(Arret) :
+Fichier(Zero){
+	*(Zero):
+	| !(Cell(N,_)) ? Move(N) : (Un)
+	*(Un):
+	| !(Cell(S,_)) ? Move(S) : (Deux)
+	*(Deux):
+	| !(Cell(S,_)) ? Move(S) : (Zero)
 }
 

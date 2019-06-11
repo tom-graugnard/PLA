@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
+import game.shellda.Fichier.FichCorb;
 import interpreter.IAutomaton;
 import interpreter.IBehaviour;
 import interpreter.ICondition;
@@ -77,8 +78,13 @@ public class Clink extends Element {
 				m_y = 0;
 				m_model.m_courant = d.m_contenu;
 				m_courant = d.m_contenu;
-				if (d instanceof Corbeille)
+
+				if (d instanceof Corbeille) {
 					m_model.m_joueur = new ClinkCorb(m_courant, m_model, 0, 4);
+					m_courant.m_carte[7][4] = new FichCorb(m_courant, m_model, 7, 4, "tmp1");
+					m_courant.m_carte[9][2] = new FichCorb(m_courant, m_model, 9, 2, "tmp2");
+
+				}
 			} else if (e instanceof Executable) {
 				((Executable) e).interaction();
 			}
@@ -116,6 +122,10 @@ public class Clink extends Element {
 			element.m_x = m_x + coordonnees[0] * 2;
 			element.m_y = m_y + coordonnees[1] * 2;
 			m_courant.set_element(element);
+		}
+
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_nSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 		}
 	}
 
@@ -165,8 +175,17 @@ public class Clink extends Element {
 		
 	}
 
-	public void paint(Graphics g) {
-		g.drawImage(m_model.m_clinkSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_cSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+		}
+
+		public void Pop(IDirection direction) {
+			if (m_model.limitBalle < 3 && m_courant.m_carte[m_x + 1][m_y]==null) {
+				m_courant.m_carte[m_x + 1][m_y] = new Balle(m_courant, m_model, m_x + 1, m_y);
+				m_model.limitBalle++;
+			}
+		}
+
 	}
 
 }

@@ -69,17 +69,16 @@ public class Element {
 		if (direction.absolue()) {
 			coordonnees = direction.coordonnees();
 			m_direction = direction;
-		}
-		else {
-			if(direction.front()) {
+		} else {
+			if (direction.front()) {
 				coordonnees = m_direction.coordonnees();
-			} else if(direction.back()) {
+			} else if (direction.back()) {
 				m_direction = m_direction.absolue_back();
 				coordonnees = m_direction.coordonnees();
-			} else if(direction.right()) {
+			} else if (direction.right()) {
 				m_direction = m_direction.absolue_right();
 				coordonnees = m_direction.coordonnees();
-			} else /*direction.left()*/ {
+			} else /* direction.left() */ {
 				m_direction = m_direction.absolue_left();
 				coordonnees = m_direction.coordonnees();
 			}
@@ -183,13 +182,14 @@ public class Element {
 		int[] coordonnees_incr = new int[2];
 		coordonnees_incr[0] = coordonnees[0];
 		coordonnees_incr[1] = coordonnees[1];
+
 		Element element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
 		while (element == null) {
 			coordonnees[0] += coordonnees_incr[0];
 			coordonnees[1] += coordonnees_incr[1];
 			element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
 			// Si on a déjà parcourue toute la ligne/colonne alors on renvoie faux
-			if (coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1)
+			if (coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1 || coordonnees[0] < 0 || coordonnees[1] < 0)
 				return false;
 		}
 		return element.m_kind.equals(kind);
