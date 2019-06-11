@@ -4,6 +4,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import interpreter.IKind;
+
 public class Archive extends Element{
 
 	String m_name;
@@ -13,6 +15,7 @@ public class Archive extends Element{
 	public Archive(Noeud courant, Model model, int x, int y, String name) {
 		super(courant, model, x, y);
 		m_name = name;
+		m_kind = new IKind("G");
 	}
 
 	public void paint(Graphics g) {

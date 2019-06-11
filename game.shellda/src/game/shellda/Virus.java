@@ -24,8 +24,8 @@ public class Virus extends Element {
 	int display;
 	boolean m_decouvert;
 	Fichier m_proche;
-	
-	int type;
+
+	int m_type;
 	boolean m_worked;
 
 	public Virus(Noeud courant, Model model, int x, int y) {
@@ -34,7 +34,7 @@ public class Virus extends Element {
 		model.m_virus.add(this);
 		m_auto = m_model.m_automateVirus.copy();
 		Random rand = new Random();
-		type = rand.nextInt(4);
+		m_type = rand.nextInt(4);
 	}
 
 	public boolean isDiscovered() {
@@ -50,17 +50,29 @@ public class Virus extends Element {
 	}
 
 	public void Hit(IDirection direction) {
-		int dis_ver = m_proche.m_y - m_y;
-		int dis_hor = m_proche.m_x - m_x;
-
-		if (Math.abs(dis_ver + dis_hor) == 1) {
-			m_courant.m_carte[m_x + dis_hor][m_y+dis_ver] = null;
-			m_courant.m_carte[m_x][m_y] = null;
-			m_courant.m_carte[m_x + dis_hor][m_y+dis_ver] = this;
-		}
+		Move(direction);
 	}
 
 	public void Egg() {
+		if (m_x - 1 >= 0 && m_courant.m_carte[m_x - 1][m_y] == null) {
+			m_courant.m_carte[m_x - 1][m_y] = new Virus(m_courant, m_model, m_x - 1, m_y);
+		} else {
+			if (m_x + 1 < Options.LARGEUR_CARTE && m_courant.m_carte[m_x + 1][m_y] == null) {
+				m_courant.m_carte[m_x + 1][m_y] = new Virus(m_courant, m_model, m_x + 1, m_y);
+			} else {
+				if (m_y - 1 >= 0 && m_courant.m_carte[m_x][m_y - 1] == null) {
+					m_courant.m_carte[m_x][m_y - 1] = new Virus(m_courant, m_model, m_x, m_y - 1);
+				} else {
+					if (m_y + 1 < Options.HAUTEUR_CARTE && m_courant.m_carte[m_x][m_y + 1] == null) {
+						m_courant.m_carte[m_x][m_y + 1] = new Virus(m_courant, m_model, m_x, m_y + 1);
+					}
+				}
+			}
+		}
+	}
+
+	public void Wizz(IDirection direction) {
+		m_type = (m_type + 1) % 4;
 	}
 
 	void actualiser() {
@@ -80,7 +92,7 @@ public class Virus extends Element {
 
 	public void paint(Graphics g) {
 		if (m_courant == m_model.m_courant) {
-			switch (type) {
+			switch (m_type) {
 			case 0:
 				g.drawImage(m_model.m_virus1Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 				break;
