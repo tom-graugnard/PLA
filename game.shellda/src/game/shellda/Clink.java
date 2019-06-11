@@ -77,8 +77,11 @@ public class Clink extends Element {
 				m_y = 0;
 				m_model.m_courant = d.m_contenu;
 				m_courant = d.m_contenu;
-				if (d instanceof Corbeille)
+				
+				if (d instanceof Corbeille) {
 					m_model.m_joueur = new ClinkCorb(m_courant, m_model, 0, 4);
+					m_courant.m_carte[7][4]=new Fichier(m_courant, m_model, 7, 4,"tmp");
+				}
 			} else if (e instanceof Executable) {
 				((Executable) e).interaction();
 			}
@@ -138,6 +141,12 @@ public class Clink extends Element {
 		public void paint(Graphics g) {
 			g.drawImage(m_model.m_clink_cSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 		}
+		
+		public void Pop(IDirection direction) {
+			m_courant.m_carte[m_x+1][m_y]=new Balle(m_courant, m_model, m_x+1, m_y);
+			//System.out.println(m_courant.m_name);
+		}
+		
 	}
 
 	
