@@ -1,24 +1,11 @@
 package game.shellda;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
-import interpreter.IAutomaton;
-import interpreter.IBehaviour;
-import interpreter.ICondition;
 import interpreter.IDirection;
-import interpreter.IKind;
-import interpreter.IState;
-import interpreter.ITransition;
 
-import interpreter.IAction.Move;
-import interpreter.IAction.Pop;
-import interpreter.IAction.Wizz;
-import interpreter.IAction.Egg;
 
 public class Virus extends Element {
 
@@ -58,19 +45,20 @@ public class Virus extends Element {
 			m_x_ = 0;
 		}
 		if (m_x_ < 0) {
-			m_x_ = Options.LARGEUR_CARTE;
+			m_x_ = Options.LARGEUR_CARTE - 1;
 		}
 		if (m_y_ > Options.HAUTEUR_CARTE - 1) {
 			m_y_ = 0;
 		}
 		if (m_y_ < 0) {
-			m_y_ = Options.HAUTEUR_CARTE;
+			m_y_ = Options.HAUTEUR_CARTE - 1;
 		}
 		Element e = m_model.m_courant.m_carte[m_x_][m_y_];
 		if (e instanceof Fichier) {
 			Fichier f = (Fichier) e;
 			f.m_infection -= Options.DEGATS_VIRUS;
 			if (f.m_infection <= 0) {
+				f.goCorbeille();
 				Move(direction);
 			}
 		}

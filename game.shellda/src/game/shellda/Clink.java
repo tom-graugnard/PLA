@@ -1,22 +1,10 @@
 package game.shellda;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.util.LinkedList;
-import java.util.List;
 
 import game.shellda.Fichier.FichCorb;
-import interpreter.IAutomaton;
-import interpreter.IBehaviour;
-import interpreter.ICondition;
 import interpreter.IDirection;
 import interpreter.IKind;
-import interpreter.IState;
-import interpreter.ITransition;
-import interpreter.IAction.Hit;
-import interpreter.IAction.Move;
-import interpreter.IAction.Pop;
-import interpreter.IAction.Wizz;
 
 
 public class Clink extends Element {
@@ -134,7 +122,6 @@ public class Clink extends Element {
 
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			// TODO Auto-generated constructor stub
 			m_auto = m_model.m_automateJoueur2.copy();
 		}
 

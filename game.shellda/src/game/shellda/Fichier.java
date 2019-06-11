@@ -3,8 +3,8 @@ package game.shellda;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-import interpreter.IDirection;
 import interpreter.IKind;
+import java.util.Random;
 
 public class Fichier extends Element {
 
@@ -37,11 +37,23 @@ public class Fichier extends Element {
 		}
 	}
 	
+	public void goCorbeille() {
+		Random r = new Random();
+		int r_x = r.nextInt(13);
+		int r_y = r.nextInt(9);
+		r_x += 3;
+		while(m_model.m_corbeille.m_carte[r_x][r_y] != null) {
+			r_x = r.nextInt(13);
+			r_y = r.nextInt(9);
+			r_x += 3;
+		}
+		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille,m_model,r_x,r_y,"%&%%");
+	}
+	
 	public static class FichNorm extends Fichier {
 
 		public FichNorm(Noeud courant, Model model, int x, int y, String name) {
 			super(courant, model, x, y, name);
-			// TODO Auto-generated constructor stub
 		}
 	}
 	
@@ -49,7 +61,6 @@ public class Fichier extends Element {
 
 		public FichCorb(Noeud courant, Model model, int x, int y, String name) {
 			super(courant, model, x, y, name);
-			// TODO Auto-generated constructor stub
 			m_auto = m_model.m_automateFichier.copy();
 		}
 		

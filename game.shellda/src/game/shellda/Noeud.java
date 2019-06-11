@@ -1,6 +1,6 @@
 package game.shellda;
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
@@ -23,7 +23,8 @@ public class Noeud {
 		m_model = m;
 		m_enfants = new LinkedList<Noeud>();
 		m_carte = new Element[Options.LARGEUR_CARTE][Options.HAUTEUR_CARTE];
-		m_carte[0][0] = new Corbeille(this, m_model, 0, 0, m_model.m_corbeille);
+		if (!name.equals("Corbeille"))
+			m_carte[0][0] = new Corbeille(this, m_model, 0, 0, m_model.m_corbeille);
 	}
 
 	public Noeud(Model m, Noeud parent, String name) {
@@ -62,7 +63,7 @@ public class Noeud {
 		else
 			return m_carte[x][y];
 	}
-	
+
 	public Element remove_element(int x, int y) {
 		while (x < 0) {
 			x += Options.LARGEUR_CARTE;
@@ -114,7 +115,7 @@ public class Noeud {
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
-		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 22; i++) {
+		for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2 + 1; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			if (get_element(x, y) == null)
