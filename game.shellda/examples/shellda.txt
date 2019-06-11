@@ -33,6 +33,10 @@ Balle(Init){
 
 Virus(Est){
   *(Est):
+  | Cell(E,P)    ?  Hit(E)   :(Est)
+  | Cell(O,P)    ?  Hit(O)   :(Ouest)
+  | Cell(N,P)    ?  Hit(N)   :(Nord)
+  | Cell(S,P)    ?  Hit(S)   :(Sud)
   | Cell(E,@)    ?  Hit(E)   :(Est)
   | Cell(O,@)    ?  Hit(O)   :(Ouest)
   | Cell(N,@)    ?  Hit(N)   :(Nord)
@@ -55,6 +59,10 @@ Virus(Est){
   | !(Cell(S,_)) ? (Move(S)) :(Sud)
   | True ? Egg :(Est)
   *(Ouest):
+  | Cell(E,P)    ?  Hit(E)   :(Est)
+  | Cell(O,P)    ?  Hit(O)   :(Ouest)
+  | Cell(N,P)    ?  Hit(N)   :(Nord)
+  | Cell(S,P)    ?  Hit(S)   :(Sud)
   | Cell(E,@)    ?  Hit(E)   :(Est)
   | Cell(O,@)    ?  Hit(O)   :(Ouest)
   | Cell(N,@)    ?  Hit(N)   :(Nord)
@@ -77,6 +85,10 @@ Virus(Est){
   | !(Cell(E,_)) ? (Move(E)) :(Est)
   | True ? Egg :(Ouest)
   *(Nord):
+  | Cell(E,P)    ?  Hit(E)   :(Est)
+  | Cell(O,P)    ?  Hit(O)   :(Ouest)
+  | Cell(N,P)    ?  Hit(N)   :(Nord)
+  | Cell(S,P)    ?  Hit(S)   :(Sud)
   | Cell(E,@)    ?  Hit(E)   :(Est)
   | Cell(O,@)    ?  Hit(O)   :(Ouest)
   | Cell(N,@)    ?  Hit(N)   :(Nord)
@@ -99,6 +111,10 @@ Virus(Est){
   | !(Cell(O,_)) ? (Move(O)) :(Ouest)
   | True ? Egg :(Sud)
   *(Sud):
+  | Cell(E,P)    ?  Hit(E)   :(Est)
+  | Cell(O,P)    ?  Hit(O)   :(Ouest)
+  | Cell(N,P)    ?  Hit(N)   :(Nord)
+  | Cell(S,P)    ?  Hit(S)   :(Sud)
   | Cell(E,@)    ?  Hit(E)   :(Est)
   | Cell(O,@)    ?  Hit(O)   :(Ouest)
   | Cell(N,@)    ?  Hit(N)   :(Nord)
