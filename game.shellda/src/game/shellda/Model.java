@@ -94,6 +94,7 @@ public class Model extends GameModel {
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
 
+
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
 				Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2,
@@ -242,7 +243,7 @@ public class Model extends GameModel {
 
 	@Override
 	public void step(long now) {
-		if (now - old > 600) {
+		if(now - old > Options.TEMPS_ACTUALISATION) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
