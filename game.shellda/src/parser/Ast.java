@@ -1,8 +1,11 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import interpreter.IAction;
 import interpreter.IAutomaton;
@@ -453,6 +456,7 @@ public class Ast {
 			this.expression = expression;
 		}
 
+
 		// TODO: Changer pour obtenir la bonne condition à partir de l'expression
 		public ICondition make() {
 			return (ICondition) expression.make();
@@ -505,7 +509,6 @@ public class Ast {
 			this.kind = "State";
 			this.name = new Terminal(string);
 		}
-
 		public IState make() {
 			return new IState(name.make());
 		}
@@ -534,6 +537,9 @@ public class Ast {
 			this.kind = "AI_Definitions";
 			this.automata = list;
 		}
+		
+
+		
 
 		public List<IAutomaton> make() {
 			LinkedList<IAutomaton> result = new LinkedList<IAutomaton>();
@@ -627,6 +633,8 @@ public class Ast {
 			this.source = state;
 			this.transitions = transitions;
 		}
+		
+		
 
 		public IBehaviour make() {
 			LinkedList<ITransition> _transitions = new LinkedList<ITransition>();

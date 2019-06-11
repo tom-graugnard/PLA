@@ -82,7 +82,7 @@ public class Noeud {
 	}
 
 	public void generer_noeud(int profondeur) {
-		int i = 0, j;
+		int i = 1, j;
 		int x, y;
 		Random rand = new Random();
 		if (profondeur == 0) {

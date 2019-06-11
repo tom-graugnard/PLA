@@ -22,6 +22,8 @@ public class Model extends GameModel {
 	Tree m_tree;
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
+	Projectile m_projectile;
+
 
 	Noeud m_courant;
 
@@ -38,6 +40,7 @@ public class Model extends GameModel {
 
 	BufferedImage m_executableSprite;
 
+	BufferedImage m_projectileSprite;
 	BufferedImage m_clinkSprite;
 	BufferedImage m_dossierSprite;
 	BufferedImage m_dossierRetourSprite;
@@ -56,6 +59,8 @@ public class Model extends GameModel {
 	IAutomaton m_automateJoueur1;
 	IAutomaton m_automateJoueur2;
 	IAutomaton m_automateFichier;
+	IAutomaton m_automateProjectile;
+
 
 	public LinkedList<IKey> m_keys;
 
@@ -76,6 +81,9 @@ public class Model extends GameModel {
 			}
 			else if(automates.get(i).m_name.equals("Joueur2")) {
 				m_automateJoueur2 = automates.get(i);
+			}
+			else if(automates.get(i).m_name.equals("Projectile")) {
+				m_automateProjectile = automates.get(i);
 			}
 			else if(automates.get(i).m_name.equals("Fichier")) {
 				m_automateFichier = automates.get(i);
@@ -218,13 +226,30 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
+		imageFile = new File("ressources/exit.png");
+		try {
+			m_boutonexitSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
+		imageFile = new File("ressources/flamme.jpg");
+		try {
+			m_projectileSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
 	}
 	
 	long old = 0;
 	
 	@Override
 	public void step(long now) {
-		if(now - old > 100) {
+		if(now - old > 1000) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
