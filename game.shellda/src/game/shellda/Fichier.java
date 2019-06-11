@@ -16,7 +16,7 @@ public class Fichier extends Element {
 		super(courant, model, x, y);
 		m_kind = new IKind("P");
 		m_name = name;
-		m_auto = m_model.m_automateFichier.copy();
+		
 	}
 
 	public void paint(Graphics g) {
@@ -25,6 +25,34 @@ public class Fichier extends Element {
 		g.setFont(m_model.m_font);
 		FontMetrics f = g.getFontMetrics();
 		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 32 + (16 / 2));
+	}
+	
+	long w = 0;
+
+	public void step(long now) throws Exception {
+		if (now - w > 1000) {
+			if (m_auto != null)
+				m_auto.step(this);
+			w = now;
+		}
+	}
+	
+	public static class FichNorm extends Fichier {
+
+		public FichNorm(Noeud courant, Model model, int x, int y, String name) {
+			super(courant, model, x, y, name);
+			// TODO Auto-generated constructor stub
+		}
+	}
+	
+	public static class FichCorb extends Fichier {
+
+		public FichCorb(Noeud courant, Model model, int x, int y, String name) {
+			super(courant, model, x, y, name);
+			// TODO Auto-generated constructor stub
+			m_auto = m_model.m_automateFichier.copy();
+		}
+		
 	}
 
 }

@@ -106,7 +106,12 @@ Virus(Est){
   | True ? Egg :(Nord)
 }
 
-Fichier(Init){
-	* (Init):
+Fichier(Zero){
+	*(Zero):
+	| !(Cell(N,_)) ? Move(N) : (Un)
+	*(Un):
+	| !(Cell(S,_)) ? Move(S) : (Deux)
+	*(Deux):
+	| !(Cell(S,_)) ? Move(S) : (Zero)
 }
 

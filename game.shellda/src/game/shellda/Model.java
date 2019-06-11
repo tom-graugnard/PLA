@@ -23,7 +23,8 @@ public class Model extends GameModel {
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
-
+	int limitBalle;
+	
 	Noeud m_courant;
 
 	Clink m_joueur;
@@ -252,6 +253,7 @@ public class Model extends GameModel {
 							m_courant.m_carte[i][j].step(now);
 							if(m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j].m_x+1>=Options.LARGEUR_CARTE) {
 								m_courant.m_carte[m_courant.m_carte[i][j].m_x][m_courant.m_carte[i][j].m_y]=null;
+								this.limitBalle--;
 							}
 
 						}

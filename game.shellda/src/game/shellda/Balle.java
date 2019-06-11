@@ -27,8 +27,11 @@ public class Balle extends Element {
 	}
 
 	public void Hit(IDirection direction) {
-		m_courant.m_carte[m_x][m_y] = null;
-		m_courant.m_carte[m_x + 1][m_y] = null;
+		if (!(m_courant.m_carte[m_x + 1][m_y] instanceof Balle)) {
+			m_courant.m_carte[m_x][m_y] = null;
+			m_courant.m_carte[m_x + 1][m_y] = null;
+			m_model.limitBalle--;
+		}
 	}
 
 }
