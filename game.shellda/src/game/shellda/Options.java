@@ -18,4 +18,6 @@ public class Options {
 	public static int DEGATS_VIRUS = 25;
 	public static int CORROMPU_DEFAITE = 20;
 	
+	public static int DECALAGE_CORBEILLE = 3;
+	
 }
