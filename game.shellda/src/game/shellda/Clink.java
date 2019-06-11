@@ -18,7 +18,7 @@ import interpreter.IAction.Pop;
 import interpreter.IAction.Wizz;
 
 public class Clink extends Element {
-	Element inventaire = null;
+	Element inventaire = null; 
 
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
@@ -120,6 +120,9 @@ public class Clink extends Element {
 	}
 
 	public static class ClinkCorb extends Clink {
+		Projectile projectile;
+		
+		
 
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
@@ -132,6 +135,34 @@ public class Clink extends Element {
 			m_courant = m_model.corb_parent;
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
+		
+		public void Wizz(IDirection direction) {//pour tirer le projectile
+			if(projectile==null) {
+				projectile=new Projectile(this.m_courant,this.m_model,this.m_x+1,this.m_y);
+				m_courant.m_carte[m_x+1][m_y]=projectile;
+			}
+			else {
+				if(projectile.m_x==Options.LARGEUR_CARTE) {
+					die(projectile);
+				}
+			}
+		}
+
+		
+		public void die(Projectile projectile) {
+			
+			projectile=null;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	public void paint(Graphics g) {

@@ -1,8 +1,11 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import interpreter.IAction;
 import interpreter.IAutomaton;
@@ -451,9 +454,7 @@ public class Ast {
 			this.kind = "Condition";
 			this.expression = expression;
 		}
-		public ICondition make() {
-			return new ICondition();
-		}
+
 
 		// TODO: Changer pour obtenir la bonne condition à partir de l'expression
 		public ICondition make() {
@@ -501,10 +502,6 @@ public class Ast {
 			this.name = new Terminal(string);
 		}
 		public IState make() {
-			return new IState(name.value);
-		}
-
-		public IState make() {
 			return new IState(name.make());
 		}
 
@@ -530,14 +527,7 @@ public class Ast {
 			this.automata = list;
 		}
 		
-		public List<IAutomaton> make() {
-			List<IAutomaton>List= new ArrayList<IAutomaton>();
-			Iterator<Automaton> iter= this.automata.iterator();
-			while(iter.hasNext()) {
-				List.add(iter.next().make());
-			}
-			return List;
-		}
+
 		
 
 		public List<IAutomaton> make() {
@@ -634,18 +624,6 @@ public class Ast {
 		}
 		
 		
-		public IBehaviour make() {
-			
-			List<ITransition>Liste=new LinkedList<ITransition>();
-			Iterator<Transition> iter=transitions.iterator();
-			
-			while(iter.hasNext()) {
-				Transition tmp;
-				tmp=iter.next();
-				Liste.add(tmp.make());
-			}
-			return new IBehaviour(source.make(),Liste);
-		}
 
 		public IBehaviour make() {
 			LinkedList<ITransition> _transitions = new LinkedList<ITransition>();

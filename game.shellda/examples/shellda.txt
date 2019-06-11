@@ -21,6 +21,7 @@ Joueur2(Init){
   | (Key(FU)) ? (Move(N)) :(Init)
   | (Key(FD)) ? (Move(S)) :(Init)
   | Key(h) ? Hit : (Init)
+  | Key(w) ? Wizz :(Init)
 }
 
 Virus(Est){
@@ -99,5 +100,13 @@ Virus(Est){
 }
 
 Fichier(Init){
-	*(Init)
+	*(Init) 
 }
+
+Projectile(Init){
+*(Init) :
+|!(Cell(E,_)) ? Move(E) : (Init)
+|(True)      ? Wait    : (Arret)
+*(Arret) :
+}
+
