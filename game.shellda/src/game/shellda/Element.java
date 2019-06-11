@@ -81,6 +81,7 @@ public class Element {
 	public void step(long now) throws Exception {
 		if (m_auto != null)
 			m_auto.step(this);
+		update(now);
 	}
 
 	public Noeud noeud() {

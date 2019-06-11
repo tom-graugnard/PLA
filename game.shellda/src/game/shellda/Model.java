@@ -243,6 +243,7 @@ public class Model extends GameModel {
 
 	@Override
 	public void step(long now) {
+		
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
@@ -253,14 +254,14 @@ public class Model extends GameModel {
 				}
 			}
 		}
+		
 		// Mise à jour des éléments
 		if (now - m_old_courant > Options.PC_SPEED) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Balle))
+						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Virus) &&!(m_courant.m_carte[i][j] instanceof Balle))
 							m_courant.m_carte[i][j].step(now);
-						//TODO: ATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 						if (m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j] instanceof Balle) {
 							m_courant.m_carte[i][j].step(now);
 							if(m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j].m_x+1>=Options.LARGEUR_CARTE) {
@@ -274,8 +275,21 @@ public class Model extends GameModel {
 					}
 				}
 			}
+			for (int i = 0; i < m_virus.size(); i++) {
+				Virus v = m_virus.get(i);
+				if (v.m_courant == m_courant) {
+					if (v.isDiscovered()) {
+						try {
+							v.step(now);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 			m_old_courant = now;
 		}
+		
 		if (now - m_old_tree > Options.PC_SPEED * 4) {
 			for (int i = 0; i < m_virus.size(); i++) {
 				Virus v = m_virus.get(i);
@@ -291,6 +305,7 @@ public class Model extends GameModel {
 			}
 			m_old_tree = now;
 		}
+		
 		m_joueur.update(now);
 		try {
 			m_joueur.step(now);
