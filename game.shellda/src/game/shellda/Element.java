@@ -31,7 +31,7 @@ public class Element {
 		m_y = y;
 		m_kind = new IKind("V");
 		m_direction = new IDirection("N");
-		m_kind = new IKind("_");
+		m_kind = new IKind("V");
 	}
 
 	public void paint(Graphics g) {
@@ -65,23 +65,36 @@ public class Element {
 	}
 
 	public void Move(IDirection direction) {
-		if(direction.absolue()) {
-			int[] coordonnees = direction.coordonnees();
-			m_x = m_x % Options.LARGEUR_CARTE;
-			m_y = m_y % Options.HAUTEUR_CARTE;
-			m_courant.m_carte[m_x][m_y] = null;
-			m_x += coordonnees[0];
-			m_y += coordonnees[1];
-			while (m_x < 0) {
-				m_x += Options.LARGEUR_CARTE;
+		int[] coordonnees;
+		if (direction.absolue()) {
+			coordonnees = direction.coordonnees();
+			m_direction = direction;
+		} else {
+			if (direction.front()) {
+				coordonnees = m_direction.coordonnees();
+			} else if (direction.back()) {
+				m_direction = m_direction.absolue_back();
+				coordonnees = m_direction.coordonnees();
+			} else if (direction.right()) {
+				m_direction = m_direction.absolue_right();
+				coordonnees = m_direction.coordonnees();
+			} else /* direction.left() */ {
+				m_direction = m_direction.absolue_left();
+				coordonnees = m_direction.coordonnees();
 			}
-			m_x %= Options.LARGEUR_CARTE;
-			while (m_y < 0) {
-				m_y += Options.HAUTEUR_CARTE;
-			}
-			m_y %= Options.HAUTEUR_CARTE;
-			m_courant.m_carte[m_x][m_y] = this;
 		}
+		m_courant.m_carte[m_x][m_y] = null;
+		m_x += coordonnees[0];
+		m_y += coordonnees[1];
+		while (m_x < 0) {
+			m_x += Options.LARGEUR_CARTE;
+		}
+		m_x %= Options.LARGEUR_CARTE;
+		while (m_y < 0) {
+			m_y += Options.HAUTEUR_CARTE;
+		}
+		m_y %= Options.HAUTEUR_CARTE;
+		m_courant.m_carte[m_x][m_y] = this;
 	}
 
 	public void Jump(IDirection direction) {
@@ -119,65 +132,64 @@ public class Element {
 
 	// Condition possible de l'automate
 	public boolean Key(IKey key) {
-		return m_model.m_keys.remove(key);
+		return m_model.removeKey(key.m_key);
 	}
-	
+
 	public boolean Mydir(IDirection direction) {
 		return direction.m_direction == m_direction.m_direction;
 	}
 
 	public boolean Cell(IDirection direction, IKind kind, int distance) {
-		int[] coordonnees;
-		if (direction.absolue()) {
-			coordonnees = direction.coordonnees();
-		} else /* direction.relative() */ {
-			if(direction.front()) {
-				coordonnees = direction.absolue_front().coordonnees();
-			} else if(direction.back()) {
-				coordonnees = direction.absolue_back().coordonnees();
-			} else if(direction.right()) {
-				coordonnees = direction.absolue_right().coordonnees();
-			} else /*direction.left()*/ {
-				coordonnees = direction.absolue_left().coordonnees();
+		if (distance == 0) {
+			return m_courant.m_carte[m_x][m_y] != null && m_courant.m_carte[m_x][m_y].m_kind.equals(kind);
+		} else {
+			int[] coordonnees;
+			if (direction.absolue()) {
+				coordonnees = direction.coordonnees();
+			} else /* direction.relative() */ {
+				if (direction.front()) {
+					coordonnees = m_direction.absolue_front().coordonnees();
+				} else if (direction.back()) {
+					coordonnees = m_direction.absolue_back().coordonnees();
+				} else if (direction.right()) {
+					coordonnees = m_direction.absolue_right().coordonnees();
+				} else /* direction.left() */ {
+					coordonnees = m_direction.absolue_left().coordonnees();
+				}
 			}
+			coordonnees[0] *= distance;
+			coordonnees[1] *= distance;
+			Element element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
+			return element != null && element.m_kind.equals(kind);
 		}
-		coordonnees[0] *= distance;
-		coordonnees[1] *= distance;
-		Element element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-		if(element == null) {
-			return false;
-		}
-		if(element.m_kind == null) {
-			return false;
-		}
-		return element.m_kind.equals(kind);																																																																																																																	
 	}
-	
+
 	public boolean Closest(IKind kind, IDirection direction) {
 		int[] coordonnees;
 		if (direction.absolue()) {
 			coordonnees = direction.coordonnees();
 		} else /* direction.relative() */ {
-			if(direction.front()) {
+			if (direction.front()) {
 				coordonnees = direction.absolue_front().coordonnees();
-			} else if(direction.back()) {
+			} else if (direction.back()) {
 				coordonnees = direction.absolue_back().coordonnees();
-			} else if(direction.right()) {
+			} else if (direction.right()) {
 				coordonnees = direction.absolue_right().coordonnees();
-			} else /*direction.left()*/ {
+			} else /* direction.left() */ {
 				coordonnees = direction.absolue_left().coordonnees();
 			}
 		}
 		int[] coordonnees_incr = new int[2];
 		coordonnees_incr[0] = coordonnees[0];
 		coordonnees_incr[1] = coordonnees[1];
+
 		Element element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-		while(element == null) {
+		while (element == null) {
 			coordonnees[0] += coordonnees_incr[0];
 			coordonnees[1] += coordonnees_incr[1];
 			element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-			//Si on a déjà parcourue toute la ligne/colonne alors on renvoie faux
-			if(coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1)
+			// Si on a déjà parcourue toute la ligne/colonne alors on renvoie faux
+			if (coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1 || coordonnees[0] < 0 || coordonnees[1] < 0)
 				return false;
 		}
 		if(element.m_kind == null) {
@@ -185,11 +197,11 @@ public class Element {
 		}
 		return element.m_kind.equals(kind);
 	}
-	
+
 	public boolean GotPower() {
 		return true;
 	}
-	
+
 	public boolean GotStuff() {
 		return true;
 	}

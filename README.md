@@ -46,3 +46,16 @@ Tâches réalisées :
  
  - Réparer tout ce qui a été changé à cause du parser
  - Comportement du joueur dans la corbeille
+  
+ ## VENDREDI 7/06
+ 
+ Tâches réalisées :
+  
+  - Fin du parser
+  - Automate du joueur monde 1
+  - Amélioration de l'affichage
+  
+ Tâches en cours :
+ 
+ - Automate du joueur monde 2
+ - Automate des virus
