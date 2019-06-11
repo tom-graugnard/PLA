@@ -1,6 +1,5 @@
 package game.shellda;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;

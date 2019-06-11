@@ -53,11 +53,13 @@ public class Fichier extends Element {
 		}
 		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, "%&%%", m_x, m_y,
 				m_courant,m_name);
+		m_model.m_nb_fichier_corbeille++;
 	}
 
 	public void retour() {
 		m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model, m_x_ancien,
 				m_y_ancien, m_name_ancien);
+		m_model.m_nb_fichier_corbeille--;
 	}
 
 	public static class FichNorm extends Fichier {
@@ -77,6 +79,14 @@ public class Fichier extends Element {
 			m_courant_ancien = old_noeud;
 			m_name_ancien = old_name;
 			m_auto = m_model.m_automateFichier.copy();
+		}
+		
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_fichierCorrompuSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
+
+			g.setFont(m_model.m_font);
+			FontMetrics f = g.getFontMetrics();
+			g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 32 + (16 / 2));
 		}
 
 	}

@@ -2,7 +2,6 @@ package game.shellda;
 
 import java.awt.Graphics;
 
-import game.shellda.Fichier.FichCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
