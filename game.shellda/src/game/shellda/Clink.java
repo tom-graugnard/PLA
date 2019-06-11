@@ -15,11 +15,6 @@ public class Clink extends Element {
 		m_auto = m_model.m_automateJoueur1.copy();
 	}
 
-	public void step(long now) throws Exception {
-		if (m_auto != null)
-			m_auto.step(this);
-	}
-
 	public void Move(IDirection direction) {
 		int[] coordonnees;
 		if (direction.absolue()) {
@@ -110,7 +105,7 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_nSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 		}
 	}
 
@@ -128,11 +123,11 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
-			if (m_model.limitBalle < 3) {
+			if (m_model.limitBalle < 3 && m_courant.m_carte[m_x + 1][m_y]==null) {
 				m_courant.m_carte[m_x + 1][m_y] = new Balle(m_courant, m_model, m_x + 1, m_y);
 				m_model.limitBalle++;
 			}

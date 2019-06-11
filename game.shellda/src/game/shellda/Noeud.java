@@ -87,13 +87,14 @@ public class Noeud {
 		int x, y;
 		Random rand = new Random();
 		if (profondeur == 0) {
-			set_element(new Executable(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4,
-					"Shellda"));
+			set_element(new Shellda(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4));
 		}
-		if (profondeur > 0) {
+		else if (profondeur > 0) {
 			int nombre_dossier = rand.nextInt(4);
+			System.out.println(" - "  + profondeur);
+			System.out.println(profondeur + nombre_dossier + 1);
 			Noeud tmp;
-			for (i = 1; i < profondeur + nombre_dossier; i++) {
+			for (i = 1; i < profondeur + nombre_dossier + 1; i++) {
 				tmp = new Noeud(m_model, this, "" + (char) (profondeur + 'A') + "_" + i);
 				x = i / Options.HAUTEUR_CARTE;
 				y = i % Options.HAUTEUR_CARTE;
@@ -111,6 +112,16 @@ public class Noeud {
 			y = j % Options.HAUTEUR_CARTE;
 			set_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
 		}
+		
+		x = (int) rand.nextInt(Options.LARGEUR_CARTE);
+		y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
+		if (get_element(x, y) == null)
+			set_element(new Decompresseur(this, m_model, x, y));
+		
+		x = (int) rand.nextInt(Options.LARGEUR_CARTE);
+		y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
+		if (get_element(x, y) == null)
+			set_element(new AntiVirus(this, m_model, x, y));
 
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
@@ -138,6 +149,12 @@ public class Noeud {
 					if (m_model.m_joueur.m_x == i && m_model.m_joueur.m_y == j) {
 						g.drawImage(m_model.m_backgroundSelectedSprite, i * 48, j * 48, 48, 48, null);
 					}
+				}
+			}
+		}
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				if (m_carte[i][j] != null) {
 					m_carte[i][j].paint(g);
 				}
 			}

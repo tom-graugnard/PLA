@@ -23,7 +23,7 @@ public class Model extends GameModel {
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
 	int limitBalle;
-	
+
 	Noeud m_courant;
 
 	Clink m_joueur;
@@ -92,7 +92,6 @@ public class Model extends GameModel {
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
-
 
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
@@ -238,16 +237,29 @@ public class Model extends GameModel {
 		}
 	}
 
-	long old = 0;
+	long m_old_courant = 0;
+	long m_old_tree = 0;
 
 	@Override
 	public void step(long now) {
-		if(now - old > Options.TEMPS_ACTUALISATION) {
+		
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				try {
+					if(m_courant.m_carte[i][j] != null)
+						m_courant.m_carte[i][j].update(now);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		// Mise à jour des éléments
+		if (now - m_old_courant > Options.PC_SPEED) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus)
-								&& !(m_courant.m_carte[i][j] instanceof Balle))
+						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Virus) &&!(m_courant.m_carte[i][j] instanceof Balle))
 							m_courant.m_carte[i][j].step(now);
 						if (m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j] instanceof Balle) {
 							m_courant.m_carte[i][j].step(now);
@@ -264,18 +276,36 @@ public class Model extends GameModel {
 			}
 			for (int i = 0; i < m_virus.size(); i++) {
 				Virus v = m_virus.get(i);
-				if (v.isDiscovered()) {
-					try {
-						v.step(now);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (v.m_courant == m_courant) {
+					if (v.isDiscovered()) {
+						try {
+							v.step(now);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
-			
-			old = now;
+			m_old_courant = now;
 		}
-
+		
+		if (now - m_old_tree > Options.PC_SPEED * 4) {
+			for (int i = 0; i < m_virus.size(); i++) {
+				Virus v = m_virus.get(i);
+				if (v.m_courant != m_courant) {
+					if (v.isDiscovered()) {
+						try {
+							v.step(now);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			m_old_tree = now;
+		}
+		
+		m_joueur.update(now);
 		try {
 			m_joueur.step(now);
 		} catch (Exception e) {
