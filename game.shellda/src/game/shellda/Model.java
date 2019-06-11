@@ -66,7 +66,10 @@ public class Model extends GameModel {
 
 	public LinkedList<IKey> m_keys;
 
+	NameGenerator m_generator;
+	
 	public Model() {
+		m_generator = new NameGenerator();
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {

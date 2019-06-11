@@ -87,17 +87,17 @@ public class Noeud {
 	public void generer_noeud(int profondeur) {
 		int i = 1, j;
 		int x, y;
+		String s;
 		Random rand = new Random();
 		if (profondeur == 0) {
 			set_element(new Shellda(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4));
 		}
 		else if (profondeur > 0) {
 			int nombre_dossier = rand.nextInt(4);
-			System.out.println(" - "  + profondeur);
-			System.out.println(profondeur + nombre_dossier + 1);
 			Noeud tmp;
 			for (i = 1; i < profondeur + nombre_dossier + 1; i++) {
-				tmp = new Noeud(m_model, this, "" + (char) (profondeur + 'A') + "_" + i);
+				s = m_model.m_generator.generate();
+				tmp = new Noeud(m_model, this, s);
 				x = i / Options.HAUTEUR_CARTE;
 				y = i % Options.HAUTEUR_CARTE;
 				set_element(new Dossier(this, m_model, x, y, tmp.m_name, tmp));
@@ -112,7 +112,8 @@ public class Noeud {
 		for (j = i; j < (profondeur + 1) * 2 + i + nombre_fichier; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
-			set_element(new Fichier(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + j));
+			s = m_model.m_generator.generate();
+			set_element(new Fichier(this, m_model, x, y, s));
 		}
 		
 		x = (int) rand.nextInt(Options.LARGEUR_CARTE);
@@ -138,8 +139,10 @@ public class Noeud {
 		for (i = 0; i < 16; i++) {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
-			if (get_element(x, y) == null)
-				set_element(new Archive(this, m_model, x, y, "F" + (char) (profondeur + 'A') + "_" + i + ".zip"));
+			if (get_element(x, y) == null) {
+				s = m_model.m_generator.generate();
+				set_element(new Archive(this, m_model, x, y, s));
+			}
 		}
 	}
 
