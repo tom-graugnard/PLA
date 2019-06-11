@@ -148,7 +148,7 @@ public class Clink extends Element {
 		}
 
 		public void Pop(IDirection direction) {
-			if (m_model.limitBalle < 3) {
+			if (m_model.limitBalle < 3 && m_courant.m_carte[m_x + 1][m_y]==null) {
 				m_courant.m_carte[m_x + 1][m_y] = new Balle(m_courant, m_model, m_x + 1, m_y);
 				m_model.limitBalle++;
 			}
