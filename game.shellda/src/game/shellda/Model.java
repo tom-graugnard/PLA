@@ -27,13 +27,13 @@ public class Model extends GameModel {
 
 	Clink m_joueur;
 	Noeud corb_parent;
-	
+
 	BufferedImage m_boutonplaySprite;
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
 	boolean gameStart = false;
-	
+
 	Font m_font;
 
 	BufferedImage m_executableSprite;
@@ -51,7 +51,7 @@ public class Model extends GameModel {
 	BufferedImage m_virus2Sprite;
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
-	
+
 	IAutomaton m_automateVirus;
 	IAutomaton m_automateJoueur1;
 	IAutomaton m_automateJoueur2;
@@ -67,17 +67,14 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			System.out.println("Erreur dans la récupération d'automates");
 		}
-		for(int i = 0; i < automates.size(); i++) {
-			if(automates.get(i).m_name.equals("Virus")) {
+		for (int i = 0; i < automates.size(); i++) {
+			if (automates.get(i).m_name.equals("Virus")) {
 				m_automateVirus = automates.get(i);
-			}
-			else if(automates.get(i).m_name.equals("Joueur1")) {
+			} else if (automates.get(i).m_name.equals("Joueur1")) {
 				m_automateJoueur1 = automates.get(i);
-			}
-			else if(automates.get(i).m_name.equals("Joueur2")) {
+			} else if (automates.get(i).m_name.equals("Joueur2")) {
 				m_automateJoueur2 = automates.get(i);
-			}
-			else if(automates.get(i).m_name.equals("Fichier")) {
+			} else if (automates.get(i).m_name.equals("Fichier")) {
 				m_automateFichier = automates.get(i);
 			}
 		}
@@ -97,10 +94,10 @@ public class Model extends GameModel {
 		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
 				Options.BoutonExitScale);
 	}
-	
+
 	public boolean removeKey(String key) {
-		for(int i = 0; i < m_keys.size(); i++) {
-			if(m_keys.get(i).m_key.equals(key)){
+		for (int i = 0; i < m_keys.size(); i++) {
+			if (m_keys.get(i).m_key.equals(key)) {
 				m_keys.remove(i);
 				return true;
 			}
@@ -219,42 +216,57 @@ public class Model extends GameModel {
 			System.exit(-1);
 		}
 	}
-	
-	long old = 0;
-	
+
+	long m_old_courant = 0;
+	long m_old_tree = 0;
+
 	@Override
 	public void step(long now) {
-		if(now - old > 100) {
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				try {
+					if(m_courant.m_carte[i][j] != null)
+						m_courant.m_carte[i][j].update(now);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		// Mise à jour des éléments
+		if (now - m_old_courant > Options.PC_SPEED) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus))
+						if (m_courant.m_carte[i][j] != null)
 							m_courant.m_carte[i][j].step(now);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
+			m_old_courant = now;
+		}
+		if (now - m_old_tree > Options.PC_SPEED * 4) {
 			for (int i = 0; i < m_virus.size(); i++) {
 				Virus v = m_virus.get(i);
-				if (v.isDiscovered()) {
-					try {
-						v.step(now);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (v.m_courant != m_courant) {
+					if (v.isDiscovered()) {
+						try {
+							v.step(now);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
-			old = now;
+			m_old_tree = now;
 		}
-
+		m_joueur.update(now);
 		try {
 			m_joueur.step(now);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		
 
 	}
 

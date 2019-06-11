@@ -44,11 +44,6 @@ public class Virus extends Element {
 		return m_decouvert;
 	}
 
-	public void step(long now) throws Exception {
-		if (m_auto != null)
-			m_auto.step(this);
-	}
-
 	public void Hit(IDirection direction) {
 		Move(direction);
 	}
@@ -87,19 +82,23 @@ public class Virus extends Element {
 		if (m_courant == m_model.m_courant) {
 			switch (m_type) {
 			case 0:
-				g.drawImage(m_model.m_virus1Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus1Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 				break;
 			case 1:
-				g.drawImage(m_model.m_virus2Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus2Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 				break;
 			case 2:
-				g.drawImage(m_model.m_virus3Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus3Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 				break;
 			case 3:
-				g.drawImage(m_model.m_virus4Sprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus4Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
 				break;
 			}
 		}
 	}
 
+	public boolean equals(Virus v) {
+		return this==v;
+	}
+	
 }
