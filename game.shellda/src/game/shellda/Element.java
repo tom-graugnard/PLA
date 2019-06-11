@@ -2,8 +2,6 @@ package game.shellda;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 
 import interpreter.IAutomaton;
 import interpreter.IDirection;
@@ -233,6 +231,9 @@ public class Element {
 			// Si on a déjà parcourue toute la ligne/colonne alors on renvoie faux
 			if (coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1 || coordonnees[0] < 0 || coordonnees[1] < 0)
 				return false;
+		}
+		if(element.m_kind == null) {
+			return false;
 		}
 		return element.m_kind.equals(kind);
 	}

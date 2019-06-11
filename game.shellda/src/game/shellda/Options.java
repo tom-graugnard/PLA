@@ -16,5 +16,6 @@ public class Options {
 	public static float BoutonExitScale=0.05F;
 	
 	public static int DEGATS_VIRUS = 25;
+	public static int CORROMPU_DEFAITE = 20;
 	
 }

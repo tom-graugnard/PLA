@@ -1,6 +1,5 @@
 package game.shellda;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
@@ -54,6 +53,7 @@ public class Virus extends Element {
 			Fichier f = (Fichier) e;
 			f.m_infection -= Options.DEGATS_VIRUS;
 			if (f.m_infection <= 0) {
+				f.goCorbeille();
 				Move(direction);
 			}
 		}

@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +24,9 @@ public class Model extends GameModel {
 	Balle m_balle;
 
 	Noeud m_courant;
+	
+	int m_pourcentage_defaite;
+	int m_nb_fichier_corbeille;
 
 	Clink m_joueur;
 	Noeud corb_parent;
@@ -45,6 +47,7 @@ public class Model extends GameModel {
 	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
 	BufferedImage m_fichierSprite;
+	BufferedImage m_fichierCorrompuSprite;
 	BufferedImage m_backgroundSprite;
 	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_archiveSprite;
@@ -109,6 +112,11 @@ public class Model extends GameModel {
 			}
 		}
 		return false;
+	}
+	
+	public void pourcentageDefaite() {
+		m_pourcentage_defaite = m_nb_fichier_corbeille * (100/Options.CORROMPU_DEFAITE);
+		
 	}
 
 	private void loadSprites() {
@@ -187,6 +195,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/fichier.png");
 		try {
 			m_fichierSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_corbeille.png");
+		try {
+			m_fichierCorrompuSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -303,10 +318,15 @@ public class Model extends GameModel {
 			e.printStackTrace();
 		}
 
+		pourcentageDefaite();
+		if(m_pourcentage_defaite >= 100) {
+			shutdown();
+		}
 	}
 
 	@Override
 	public void shutdown() {
+		System.out.println("Perdu");
 		System.exit(0);
 	}
 

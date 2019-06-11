@@ -33,6 +33,11 @@ public class Balle extends Element {
 	public void Hit(IDirection direction) {
 		if (!(m_courant.m_carte[m_x + 1][m_y] instanceof Balle)) {
 			m_courant.m_carte[m_x][m_y] = null;
+			Element e = m_courant.m_carte[m_x + 1][m_y];
+			if (e instanceof Fichier) {
+				Fichier f = (Fichier) e;
+				f.retour();
+			}
 			m_courant.m_carte[m_x + 1][m_y] = null;
 			((ClinkCorb)m_model.m_joueur).m_lasers.remove(this);
 		}
