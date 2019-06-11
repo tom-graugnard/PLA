@@ -23,7 +23,6 @@ public class Model extends GameModel {
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
-	int limitBalle;
 
 	Noeud m_courant;
 
@@ -254,7 +253,6 @@ public class Model extends GameModel {
 				}
 			}
 		}
-		
 		// Mise à jour des éléments
 		if (now - m_old_courant > Options.PC_SPEED) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
@@ -262,14 +260,6 @@ public class Model extends GameModel {
 					try {
 						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Virus) &&!(m_courant.m_carte[i][j] instanceof Balle))
 							m_courant.m_carte[i][j].step(now);
-						if (m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j] instanceof Balle) {
-							m_courant.m_carte[i][j].step(now);
-							if(m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j].m_x+1>=Options.LARGEUR_CARTE) {
-								m_courant.m_carte[m_courant.m_carte[i][j].m_x][m_courant.m_carte[i][j].m_y]=null;
-								this.limitBalle--;
-							}
-
-						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

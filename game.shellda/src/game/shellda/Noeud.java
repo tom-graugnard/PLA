@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
 
+import game.shellda.Clink.ClinkCorb;
+
 public class Noeud {
 
 	Element m_carte[][]; // Terrain de jeu du joueur
@@ -159,5 +161,9 @@ public class Noeud {
 			}
 		}
 		m_model.m_joueur.paint(g);
+		if(m_model.m_joueur instanceof ClinkCorb) {
+			for(int i = 0; i < ((ClinkCorb)m_model.m_joueur).m_lasers.size(); i++)
+				((ClinkCorb)m_model.m_joueur).m_lasers.get(i).paint(g);
+		}
 	}
 }

@@ -1,14 +1,13 @@
 package game.shellda;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.util.LinkedList;
 
 public class Corbeille extends Dossier {
-
+	
 	public Corbeille(Noeud courant, Model model, int x, int y, Noeud contenu)  {
 		super(courant, model, x, y, "Corbeille", contenu);
-		
 	}
 
 	public void paint(Graphics g) {
