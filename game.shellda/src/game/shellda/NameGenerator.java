@@ -162,7 +162,7 @@ public class NameGenerator {
 				vowelInARow = 0;
 				consonantInARow = 1;
 			}
-			else if(consonantInARow > 2){
+			else if(consonantInARow > 1){
 				do{
 					next = get_next_letter(old);
 				}while(is_consonant(next) == true);

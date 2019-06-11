@@ -52,7 +52,35 @@ public class Fichier extends Element {
 			r_y = r.nextInt(9);
 			r_x += 3;
 		}
-		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, "%&%%", m_x, m_y,
+		Random rand = new Random();
+		int nameLength = rand.nextInt(6) + 3;
+		String corruptName = "";
+		for(int i = 0; i < nameLength; i++) {
+			switch(rand.nextInt(10)) {
+			case 0:
+			case 1:
+			case 2:
+				corruptName += "%";
+				break;
+			case 3:
+			case 4:
+			case 5:
+				corruptName += "&";
+				break;
+			case 6:
+				corruptName += "!";
+				break;
+			
+			case 7:
+				corruptName += "$";
+				break;
+			case 8:
+			case 9:
+				corruptName += "?";
+			}
+		}
+		
+		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, corruptName, m_x, m_y,
 				m_courant, m_name, this);
 		m_model.m_nb_fichier_corbeille++;
 	}
