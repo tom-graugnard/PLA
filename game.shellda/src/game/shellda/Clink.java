@@ -6,7 +6,6 @@ import game.shellda.Fichier.FichCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
-
 public class Clink extends Element {
 	Element inventaire = null;
 
@@ -70,9 +69,6 @@ public class Clink extends Element {
 
 				if (d instanceof Corbeille) {
 					m_model.m_joueur = new ClinkCorb(m_courant, m_model, 0, 4);
-					m_courant.m_carte[7][4] = new FichCorb(m_courant, m_model, 7, 4, "tmp1");
-					m_courant.m_carte[9][2] = new FichCorb(m_courant, m_model, 9, 2, "tmp2");
-
 				}
 			} else if (e instanceof Executable) {
 				((Executable) e).interaction();
