@@ -39,7 +39,7 @@ public class View extends GameView {
 		// erase background
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
-		
+
 		if (!m_model.gameStart)
 			if(!m_model.gameOption)
 				_menuPrincipal(g);
@@ -49,6 +49,7 @@ public class View extends GameView {
 			_FenetreJeu(g);
 
 	}
+
 	protected void _menuPrincipal(Graphics g) {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
@@ -64,7 +65,8 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_courant.paint(g);
-		//m_model.m_boutonexit.paint(g);
+		g.drawString("" + m_model.m_pourcentage_defaite,
+				Options.WIDTH / 2 - 8 * 3, Options.HEIGHT / 2 - 100);
 	}
 	
 	protected void _FenetreOption(Graphics g) {
@@ -98,7 +100,6 @@ public class View extends GameView {
 		
 
 	public void step(long now) {
-		// TODO Auto-generated method stub
 	}
 
 }

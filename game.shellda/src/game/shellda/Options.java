@@ -10,11 +10,13 @@ public class Options {
 	
 	public static int PROFONDEUR_ARBORESCENCE = 4;
 	
+	public static int PC_SPEED = 1000;
+	
 	public static float BoutonPlayScale=0.1F;
 	public static float BoutonExitScale=0.05F;
 	public static float BoutonOptionScale=1.5F;
 	
 	public static int DEGATS_VIRUS = 25;
+	public static int CORROMPU_DEFAITE = 20;
 	
-	public static float TEMPS_ACTUALISATION = 500;
 }

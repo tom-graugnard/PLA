@@ -67,6 +67,9 @@ public class Controller extends GameController implements ActionListener {
 			m_model.removeKey("p");
 			m_model.m_keys.add(new IKey("p"));
 			break;
+		case KeyEvent.VK_A:
+			Options.PC_SPEED = 100;
+			break;
 		default:
 			break;
 		}
@@ -96,6 +99,9 @@ public class Controller extends GameController implements ActionListener {
 			break;
 		case KeyEvent.VK_P:
 			m_model.removeKey("p");
+			break;
+		case KeyEvent.VK_A:
+			Options.PC_SPEED = 1000;
 			break;
 		default:
 			break;

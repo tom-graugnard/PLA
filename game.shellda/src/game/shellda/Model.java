@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,9 +22,11 @@ public class Model extends GameModel {
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
-	int limitBalle;
-	
+
 	Noeud m_courant;
+	
+	int m_pourcentage_defaite;
+	int m_nb_fichier_corbeille;
 
 	Clink m_joueur;
 	Noeud corb_parent;
@@ -50,6 +51,7 @@ public class Model extends GameModel {
 	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
 	BufferedImage m_fichierSprite;
+	BufferedImage m_fichierCorrompuSprite;
 	BufferedImage m_backgroundSprite;
 	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_archiveSprite;
@@ -98,7 +100,6 @@ public class Model extends GameModel {
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
 
-
 		m_boutonplay = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
 				Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2,
@@ -119,6 +120,11 @@ public class Model extends GameModel {
 			}
 		}
 		return false;
+	}
+	
+	public void pourcentageDefaite() {
+		m_pourcentage_defaite = m_nb_fichier_corbeille * (100/Options.CORROMPU_DEFAITE);
+		
 	}
 
 	private void loadSprites() {
@@ -201,6 +207,13 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		imageFile = new File("ressources/fichier_corbeille.png");
+		try {
+			m_fichierCorrompuSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		imageFile = new File("ressources/corbeille.png");
 		try {
 			m_corbeilleSprite = ImageIO.read(imageFile);
@@ -254,25 +267,29 @@ public class Model extends GameModel {
 		}
 	}
 
-	long old = 0;
+	long m_old_courant = 0;
+	long m_old_tree = 0;
 
 	@Override
 	public void step(long now) {
-		if(now - old > Options.TEMPS_ACTUALISATION) {
+		
+		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				try {
+					if(m_courant.m_carte[i][j] != null)
+						m_courant.m_carte[i][j].update(now);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		// Mise à jour des éléments
+		if (now - m_old_courant > Options.PC_SPEED) {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus)
-								&& !(m_courant.m_carte[i][j] instanceof Balle))
+						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Virus) &&!(m_courant.m_carte[i][j] instanceof Balle))
 							m_courant.m_carte[i][j].step(now);
-						if (m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j] instanceof Balle) {
-							m_courant.m_carte[i][j].step(now);
-							if(m_courant.m_carte[i][j] != null && m_courant.m_carte[i][j].m_x+1>=Options.LARGEUR_CARTE) {
-								m_courant.m_carte[m_courant.m_carte[i][j].m_x][m_courant.m_carte[i][j].m_y]=null;
-								this.limitBalle--;
-							}
-
-						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -280,28 +297,51 @@ public class Model extends GameModel {
 			}
 			for (int i = 0; i < m_virus.size(); i++) {
 				Virus v = m_virus.get(i);
-				if (v.isDiscovered()) {
-					try {
-						v.step(now);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (v.m_courant == m_courant) {
+					if (v.isDiscovered()) {
+						try {
+							v.step(now);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
-			
-			old = now;
+			m_old_courant = now;
 		}
-
+		
+		if (now - m_old_tree > Options.PC_SPEED * 4) {
+			for (int i = 0; i < m_virus.size(); i++) {
+				Virus v = m_virus.get(i);
+				if (v.m_courant != m_courant) {
+					if (v.isDiscovered()) {
+						try {
+							v.step(now);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			m_old_tree = now;
+		}
+		
+		m_joueur.update(now);
 		try {
 			m_joueur.step(now);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		pourcentageDefaite();
+		if(m_pourcentage_defaite >= 100) {
+			shutdown();
+		}
 	}
 
 	@Override
 	public void shutdown() {
+		System.out.println("Perdu");
 		System.exit(0);
 	}
 
