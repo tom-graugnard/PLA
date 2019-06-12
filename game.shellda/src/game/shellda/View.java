@@ -85,52 +85,54 @@ public class View extends GameView {
 		choix = true;
 		m_model.m_boutonexit.paint(g);
 		g.setColor(new Color(72, 72, 72));
-		for(int i=0;i<5;i++) {
-			g.fillRect(25, 15 + i*80, 110, 60);
+		for (int i = 0; i < 6; i++) {
+			g.fillRect(20, 10 + i * 70, 90, 50);
 		}
-		g.setColor(new Color(88,174,238));
-		for(int i=0;i<5;i++) {
-			g.fillRect(30, 20 + i*80, 100, 50);
+		g.setColor(new Color(88, 174, 238));
+		for (int i = 0; i < 6; i++) {
+			g.fillRect(25, 15 + i * 70, 80, 40);
 		}
 		g.setColor(new Color(72, 72, 72));
-		g.drawString("Virus", 30+30, 20+30);
-		g.drawString("Joueur1", 60, 50+80);
-		g.drawString("Joueur2",60,50+160);
-		g.drawString("Fichier", 60, 50+240);
-		g.drawString("Balle", 60, 50+320);
-		
+		g.drawString("Virus", 25 + 20, 15 + 25);
+		g.drawString("Joueur1", 45, 40 + 70);
+		g.drawString("Joueur2", 45, 40 + 140);
+		g.drawString("Fichier", 45, 40 + 210);
+		g.drawString("Balle", 45, 40 + 280);
+		g.drawString("Archive", 45, 40 + 350);
+
 		g.setColor(new Color(72, 72, 72));
-		for(int i=0;i<5;i++) {
-			for(int j=0;j<5;j++) {
-				g.fillRect(195 + j*100, 15 + i*80, 90, 60);
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 6; j++) {
+				g.fillRect(145 + j * 90, 10 + i * 70, 90, 50);
 			}
-			
+
 			g.setColor(new Color(72, 72, 72));
-			for(int k=0;k<5;k++) {
-				g.fillRect(195 + m_model.m_autoChoix[i]*100, 15 + i*80, 90, 60);
+			for (int k = 0; k < 6; k++) {
+				g.fillRect(145 + m_model.m_autoChoix[i] * 90, 10 + i * 70, 90, 50);
 			}
 
 			g.setColor(new Color(72, 72, 72));
 		}
-		
-		g.setColor(new Color(231,89,82));
-		for(int i=0;i<5;i++) {
-			for(int j=0;j<5;j++) {
-				g.fillRect(200 + j*100, 20 + i*80, 80, 50);
+
+		g.setColor(new Color(231, 89, 82));
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 6; j++) {
+				g.fillRect(150 + j * 90, 15 + i * 70, 80, 40);
 			}
-			
-			g.setColor(new Color(68,197,91));
-			for(int k=0;k<5;k++) {
-				g.fillRect(200 + m_model.m_autoChoix[i]*100, 20+i*80, 80, 50);
+
+			g.setColor(new Color(68, 197, 91));
+			for (int k = 0; k < 6; k++) {
+				g.fillRect(150 + m_model.m_autoChoix[i] * 90, 15 + i * 70, 80, 40);
 			}
 			g.setColor(new Color(72, 72, 72));
-			g.drawString("Virus", 200+20, 20+30+i*80);
-			g.drawString("Joueur1", 220+100, 20+30+i*80);
-			g.drawString("Joueur2",220+200,20+30+i*80);
-			g.drawString("Fichier", 220+300, 20+30+i*80);
-			g.drawString("Balle", 220+400, 20+30+i*80);
+			g.drawString("Virus", 150 + 20, 15 + 25 + i * 70);
+			g.drawString("Joueur1", 170 + 90, 15 + 25 + i * 70);
+			g.drawString("Joueur2", 170 + 180, 15 + 25 + i * 70);
+			g.drawString("Fichier", 170 + 270, 15 + 25 + i * 70);
+			g.drawString("Balle", 170 + 360, 15 + 25 + i * 70);
+			g.drawString("Archive", 170 + 450, 15 + 25 + i * 70);
 
-			g.setColor(new Color(231,89,82));
+			g.setColor(new Color(231, 89, 82));
 		}
 
 	}
