@@ -146,45 +146,40 @@ public class Clink extends Element {
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
 		
-		public void Wizz(IDirection direction) {//pour tirer le projectile
-			if(projectile==null) {
-				projectile=new Projectile(this.m_courant,this.m_model,this.m_x+1,this.m_y);
-				m_courant.m_carte[m_x+1][m_y]=projectile;
-			}
-			else {
-				if(projectile.m_x==Options.LARGEUR_CARTE) {
-					die(projectile);
-				}
-			}
-		}
+//		public void Wizz(IDirection direction) {//pour tirer le projectile
+//			if(projectile==null) {
+//				projectile=new Projectile(this.m_courant,this.m_model,this.m_x+1,this.m_y);
+//				m_courant.m_carte[m_x+1][m_y]=projectile;
+//			}
+//			else {
+//				if(projectile.m_x==Options.LARGEUR_CARTE) {
+//					die(projectile);
+//				}
+//			}
+//		}
 
 		
-		public void die(Projectile projectile) {
-			
-			projectile=null;
-		}
 		
 		
 		
 		
-		
-		
-		
-		
-		
-		
-	}
-
-		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
-		}
-
 		public void Pop(IDirection direction) {
 			if (m_lasers.size() < 5) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
 			}
 		}
-
+		
+		
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
+		}
+			
 	}
+
+		
+
+		
+
+	
 
 }

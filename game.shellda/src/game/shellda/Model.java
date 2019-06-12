@@ -30,12 +30,15 @@ public class Model extends GameModel {
 
 	Clink m_joueur;
 	Noeud corb_parent;
-
+    
+	BoutonFin m_boutonFin;
+	BoutonYes m_boutonYes;
 	BufferedImage m_boutonplaySprite;
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
 	boolean gameStart = false;
+	int m_etat=0;
 
 	Font m_font;
 
@@ -106,6 +109,13 @@ public class Model extends GameModel {
 				Options.BoutonPlayScale);
 		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
 				Options.BoutonExitScale);
+		
+		m_boutonYes = new BoutonYes(this, 0, m_boutonplaySprite, 1, 1,
+				(Options.WIDTH /2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonYesScale) / 2)+110,
+				(Options.HEIGHT /2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonYesScale) / 2),
+				Options.BoutonYesScale);
+		m_boutonFin = new BoutonFin(this, 0, m_boutonexitSprite, 1, 1, (Options.WIDTH /2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonYesScale) / 2)-100, (Options.HEIGHT /2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonYesScale) / 2)-30,
+				Options.BoutonFinScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -263,13 +273,7 @@ public class Model extends GameModel {
 			System.exit(-1);
 		}
 		
-		imageFile = new File("ressources/flamme.jpg");
-		try {
-			m_projectileSprite = ImageIO.read(imageFile);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(-1);
-		}
+		
 		
 	}
 
@@ -340,15 +344,31 @@ public class Model extends GameModel {
 		}
 
 		pourcentageDefaite();
-		if(m_pourcentage_defaite >= 100) {
-			shutdown();
-		}
+//		if(m_pourcentage_defaite >= 100) {
+//			etat=2;
+////			shutdown();
+//		}
 	}
 
 	@Override
 	public void shutdown() {
 		System.out.println("Perdu");
 		System.exit(0);
+	}
+	
+	public void ReInit() {
+		m_virus = new LinkedList<Virus>();
+		m_corbeille = new Noeud(this, "Corbeille");
+		m_joueur = new ClinkNorm(null, this, 3, 3);
+		m_tree = new Tree(this);
+		m_courant = m_tree.m_root;
+		m_joueur.m_courant = m_courant;
+        m_etat=0;
+        gameStart = false;
+        m_keys=new LinkedList<IKey>() ;
+        m_pourcentage_defaite=0;
+        m_nb_fichier_corbeille=0;
+
 	}
 
 }

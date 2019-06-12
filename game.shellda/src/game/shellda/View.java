@@ -42,11 +42,19 @@ public class View extends GameView {
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
 
-		if (!m_model.gameStart)
+		if (!m_model.gameStart ) {
 			_menuPrincipal(g);
-		else
+		}
+		else if(m_model.gameStart && m_model.m_etat<2) {
 			_FenetreJeu(g);
+			if(m_model.m_pourcentage_defaite >= 100) 
+				m_model.m_etat=2;
+	    }
+		else if(m_model.gameStart && m_model.m_etat==2) {
 
+			_FenetreFin(g);
+		}
+		
 	}
 
 	protected void _menuPrincipal(Graphics g) {
@@ -58,6 +66,19 @@ public class View extends GameView {
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
 	}
+	
+	
+	protected void _FenetreFin(Graphics g) {
+		g.setColor(Color.green);
+		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
+		String s = "VOULEZ VOUS REJOUER?";
+		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 100);
+
+		m_model.m_boutonYes.paint(g);
+		m_model.m_boutonFin.paint(g);
+	}
+	
+	
 
 	protected void _FenetreJeu(Graphics g) {
 		g.setColor(Color.BLACK);
