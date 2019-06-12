@@ -178,6 +178,7 @@ public class Virus extends Element {
 		}
 		if (m_auto != null)
 			m_auto.step(this);
+		update(now);
 	}
 	
 }

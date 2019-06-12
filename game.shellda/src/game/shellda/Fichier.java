@@ -11,6 +11,7 @@ public class Fichier extends Element {
 	String m_name;
 
 	int m_infection;
+	int auto;
 
 	int m_x_ancien, m_y_ancien;
 	Noeud m_courant_ancien;
@@ -21,6 +22,8 @@ public class Fichier extends Element {
 		m_kind = new IKind("P");
 		m_name = name;
 		m_infection = 100;
+		m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
+		auto = m_model.m_autoChoix[3];
 	}
 
 	public void paint(Graphics g) {
@@ -31,14 +34,14 @@ public class Fichier extends Element {
 		g.drawString(m_name, m_x_visu + (48 - f.stringWidth(m_name)) / 2, m_y_visu + 32 + (16 / 2));
 	}
 
-	long w = 0;
-
 	public void step(long now) throws Exception {
-		if (now - w > 1000) {
-			if (m_auto != null)
-				m_auto.step(this);
-			w = now;
+		if (auto != m_model.m_autoChoix[3]) {
+			m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
+			auto = m_model.m_autoChoix[3];
 		}
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
 	}
 
 	public void goCorbeille() {
@@ -52,7 +55,7 @@ public class Fichier extends Element {
 			r_x += 3;
 		}
 		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, "%&%%", m_x, m_y,
-				m_courant,m_name);
+				m_courant, m_name);
 		m_model.m_nb_fichier_corbeille++;
 	}
 
@@ -80,7 +83,7 @@ public class Fichier extends Element {
 			m_name_ancien = old_name;
 			m_auto = m_model.m_automate[3].copy();
 		}
-		
+
 		public void paint(Graphics g) {
 			g.drawImage(m_model.m_fichierCorrompuSprite, m_x * 48 + 8, m_y * 48, 32, 32, null);
 
