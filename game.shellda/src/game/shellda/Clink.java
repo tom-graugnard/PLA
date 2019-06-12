@@ -1,21 +1,11 @@
 package game.shellda;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
-import java.util.List;
 
-import interpreter.IAutomaton;
-import interpreter.IBehaviour;
-import interpreter.ICondition;
+import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
-import interpreter.IState;
-import interpreter.ITransition;
-import interpreter.IAction.Hit;
-import interpreter.IAction.Move;
-import interpreter.IAction.Pop;
-import interpreter.IAction.Wizz;
 
 public class Clink extends Element {
 	Element inventaire = null; 
@@ -24,11 +14,6 @@ public class Clink extends Element {
 		super(courant, model, x, y);
 		m_kind = new IKind("@");
 		m_auto = m_model.m_automateJoueur1.copy();
-	}
-
-	public void step(long now) throws Exception {
-		if (m_auto != null)
-			m_auto.step(this);
 	}
 
 	public void Move(IDirection direction) {
@@ -77,8 +62,10 @@ public class Clink extends Element {
 				m_y = 0;
 				m_model.m_courant = d.m_contenu;
 				m_courant = d.m_contenu;
-				if (d instanceof Corbeille)
+
+				if (d instanceof Corbeille) {
 					m_model.m_joueur = new ClinkCorb(m_courant, m_model, 0, 4);
+				}
 			} else if (e instanceof Executable) {
 				((Executable) e).interaction();
 			}
@@ -113,51 +100,62 @@ public class Clink extends Element {
 				}
 			}
 			Element element = m_courant.remove_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-			element.m_x = m_x + coordonnees[0] * 2;
-			element.m_y = m_y + coordonnees[1] * 2;
-			m_courant.set_element(element);
+			if (element != null) {
+				element.m_x = m_x + coordonnees[0] * 2;
+				element.m_y = m_y + coordonnees[1] * 2;
+				m_courant.set_element(element);
+			}
+		}
+
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 	}
 
 	public static class ClinkCorb extends Clink {
-		Projectile projectile;
-		
-		
+		LinkedList<Balle> m_lasers;
+		long m_old_corbeille = 0;
 
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			// TODO Auto-generated constructor stub
 			m_auto = m_model.m_automateJoueur2.copy();
+			m_lasers = new LinkedList<Balle>();
+		}
+
+		public void step(long now) throws Exception {
+			if (m_auto != null)
+				m_auto.step(this);
+			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
+				for (int i = 0; i < m_lasers.size(); i++)
+					m_lasers.get(i).step(now);
+				m_old_corbeille = now;
+			}
+			update(now);
 		}
 
 		public void Hit(IDirection direction) {
+			int taille = m_lasers.size();
+			for(int i = 0; i < taille; i++) {
+				Element e = m_lasers.getFirst();
+				m_courant.m_carte[e.m_x][e.m_y] = null;
+				m_lasers.removeFirst();
+			}
 			m_model.m_courant = m_model.corb_parent;
 			m_courant = m_model.corb_parent;
+			m_lasers.clear();
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
-		
-		public void Wizz(IDirection direction) {//pour tirer le projectile
-			if(projectile==null) {
-				projectile=new Projectile(this.m_courant,this.m_model,this.m_x+1,this.m_y);
-				m_courant.m_carte[m_x+1][m_y]=projectile;
-			}
-			else {
-				if(projectile.m_x==Options.LARGEUR_CARTE) {
-					die(projectile);
-				}
+
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
+		}
+
+		public void Pop(IDirection direction) {
+			if (m_lasers.size() < 5) {
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
 			}
 		}
 
-		
-		public void die(Projectile projectile) {
-			
-			projectile=null;
-		}
-		
-	}
-
-	public void paint(Graphics g) {
-		g.drawImage(m_model.m_clinkSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
 	}
 
 }
