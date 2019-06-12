@@ -14,7 +14,7 @@ public class View extends GameView {
 	 */
 	private static final long serialVersionUID = 1L;
 	Model m_model;
-	Color m_background = Color.gray;
+	Color m_background = new Color(212, 212, 212);//Color.gray;
 	long m_last;
 	int m_npaints;
 	int m_fps;

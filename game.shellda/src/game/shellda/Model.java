@@ -56,6 +56,7 @@ public class Model extends GameModel {
 	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_archiveSprite;
 	BufferedImage[] m_balleSprite;
+	BufferedImage m_executableCorbeilleSprite;
 
 	BufferedImage m_virus1Sprite;
 	BufferedImage m_virus2Sprite;
@@ -98,7 +99,7 @@ public class Model extends GameModel {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this, "Corbeille");
-		m_joueur = new ClinkNorm(null, this, 3, 3);
+		m_joueur = new ClinkNorm(null, this, 0, 0);
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
@@ -254,6 +255,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/executable.png");
 		try {
 			m_executableSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/executable_corbeille.png");
+		try {
+			m_executableCorbeilleSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
