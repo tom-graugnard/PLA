@@ -2,8 +2,6 @@ package game.shellda;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 
 import interpreter.IAutomaton;
 import interpreter.IDirection;
@@ -18,6 +16,8 @@ public class Element {
 	Model m_model; // Reférence vers le model global au jeu, permettant d'accéder au sprites
 
 	int m_x, m_y; // Coordonnée locale dans un dossier
+	
+	int m_x_visu, m_y_visu; // Coordonnée de l'image de l'élément
 
 	IDirection m_direction; // Direction relative vers où l'élément pointe
 
@@ -29,7 +29,9 @@ public class Element {
 		m_model = model;
 		m_courant = courant;
 		m_x = x;
+		m_x_visu = m_x*48;
 		m_y = y;
+		m_y_visu = m_y*48;
 		m_direction = new IDirection("N");
 		m_kind = new IKind("V");
 	}
@@ -39,7 +41,46 @@ public class Element {
 		g.fillRect(m_x * 48 + 8, m_y * 48, 32, 32);
 	}
 
+	long m_anim = 0;
+	
+	public void update(long now) {
+		if(now - m_anim > 2 && (m_x*48 != m_x_visu || m_y != m_y_visu)) {
+			int speed_x = Math.abs(m_x*48 - m_x_visu)/48*2 + 1;
+			int speed_y = Math.abs(m_y*48 - m_y_visu)/48*2 + 1;
+			if(Math.abs(m_x*48 - m_x_visu) > 48*6) {
+				m_x_visu = m_x*48;
+			}
+			if(Math.abs(m_y*48 - m_y_visu) > 48*6) {
+				m_y_visu = m_y*48;
+			}
+			if(m_x*48 > m_x_visu) {
+				m_x_visu += speed_x;
+				if(m_x*48 < m_x_visu)
+					m_x_visu = m_x;
+			}
+			else if(m_x*48 < m_x_visu){
+				m_x_visu -= speed_x;
+				if(m_x*48 > m_x_visu)
+					m_x_visu = m_x;
+			}
+			if(m_y*48 > m_y_visu) {
+				m_y_visu += speed_y;
+				if(m_y*48 < m_y_visu)
+					m_y_visu = m_y;
+			}
+			else if(m_y*48 < m_y_visu){
+				m_y_visu -= speed_y;
+				if(m_y*48 > m_y_visu)
+					m_y_visu = m_y;
+			}
+			m_anim = now;
+		}
+	}
+	
 	public void step(long now) throws Exception {
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
 	}
 
 	public Noeud noeud() {
@@ -69,17 +110,16 @@ public class Element {
 		if (direction.absolue()) {
 			coordonnees = direction.coordonnees();
 			m_direction = direction;
-		}
-		else {
-			if(direction.front()) {
+		} else {
+			if (direction.front()) {
 				coordonnees = m_direction.coordonnees();
-			} else if(direction.back()) {
+			} else if (direction.back()) {
 				m_direction = m_direction.absolue_back();
 				coordonnees = m_direction.coordonnees();
-			} else if(direction.right()) {
+			} else if (direction.right()) {
 				m_direction = m_direction.absolue_right();
 				coordonnees = m_direction.coordonnees();
-			} else /*direction.left()*/ {
+			} else /* direction.left() */ {
 				m_direction = m_direction.absolue_left();
 				coordonnees = m_direction.coordonnees();
 			}
@@ -183,14 +223,18 @@ public class Element {
 		int[] coordonnees_incr = new int[2];
 		coordonnees_incr[0] = coordonnees[0];
 		coordonnees_incr[1] = coordonnees[1];
+
 		Element element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
 		while (element == null) {
 			coordonnees[0] += coordonnees_incr[0];
 			coordonnees[1] += coordonnees_incr[1];
 			element = m_courant.get_element(m_x + coordonnees[0], m_y + coordonnees[1]);
 			// Si on a déjà parcourue toute la ligne/colonne alors on renvoie faux
-			if (coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1)
+			if (coordonnees[0] > Options.LARGEUR_CARTE - 1 || coordonnees[1] > Options.HAUTEUR_CARTE - 1 || coordonnees[0] < 0 || coordonnees[1] < 0)
 				return false;
+		}
+		if(element.m_kind == null) {
+			return false;
 		}
 		return element.m_kind.equals(kind);
 	}

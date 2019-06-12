@@ -1,5 +1,6 @@
 package game.shellda;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import edu.ricm3.game.GameController;
+import edu.ricm3.game.GameUI;
 import interpreter.IKey;
 
 public class Controller extends GameController implements ActionListener {
@@ -67,6 +69,9 @@ public class Controller extends GameController implements ActionListener {
 			m_model.removeKey("p");
 			m_model.m_keys.add(new IKey("p"));
 			break;
+		case KeyEvent.VK_A:
+			Options.PC_SPEED = 100;
+			break;
 		default:
 			break;
 		}
@@ -97,6 +102,9 @@ public class Controller extends GameController implements ActionListener {
 		case KeyEvent.VK_P:
 			m_model.removeKey("p");
 			break;
+		case KeyEvent.VK_A:
+			Options.PC_SPEED = 1000;
+			break;
 		default:
 			break;
 		}
@@ -106,10 +114,22 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false) {
 			m_model.gameStart = true;
-		if (m_model.m_boutonexit.inside(e.getX(), e.getY()))
+		    m_model.m_etat=1;
+		}
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY())) {
 			m_model.shutdown();
+		}
+		if (m_model.m_boutonYes.inside(e.getX(), e.getY()) ) {
+               m_model.ReInit();
+               m_view=new View(m_model);
+
+
+		}
+		if (m_model.m_boutonFin.inside(e.getX(), e.getY())) {
+			m_model.shutdown();
+		}
 	}
 
 	@Override
