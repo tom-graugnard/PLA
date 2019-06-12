@@ -35,7 +35,11 @@ public class Model extends GameModel {
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
+	BufferedImage m_boutonOptionSprite;
+	BoutonOption m_boutonoption;
+	
 	boolean gameStart = false;
+	boolean gameOption = false;
 
 	Font m_font;
 
@@ -105,6 +109,10 @@ public class Model extends GameModel {
 				Options.BoutonPlayScale);
 		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
 				Options.BoutonExitScale);
+		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
+				Options.HEIGHT - 200,
+				Options.BoutonOptionScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -249,6 +257,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/exit.png");
 		try {
 			m_boutonexitSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/boutonoption.png");
+		try {
+			m_boutonOptionSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

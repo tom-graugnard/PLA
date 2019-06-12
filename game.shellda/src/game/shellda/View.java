@@ -43,7 +43,10 @@ public class View extends GameView {
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
 
 		if (!m_model.gameStart)
-			_menuPrincipal(g);
+			if(!m_model.gameOption)
+				_menuPrincipal(g);
+			else
+				_FenetreOption(g);
 		else
 			_FenetreJeu(g);
 
@@ -57,6 +60,7 @@ public class View extends GameView {
 
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
+		m_model.m_boutonoption.paint(g);
 	}
 
 	protected void _FenetreJeu(Graphics g) {
@@ -66,6 +70,36 @@ public class View extends GameView {
 		g.setColor(Color.MAGENTA);
 		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
+	
+	protected void _FenetreOption(Graphics g) {
+		m_model.m_boutonexit.paint(g);
+		g.setColor(Color.RED);
+		for(int i=0;i<5;i++) {
+			g.drawRect(30, 20 + i*80, 100, 50);
+		}
+		g.setColor(Color.green);
+		g.drawString("Clink", 30+30, 20+30);
+		g.drawString("Virus", 60, 50+80);
+		g.drawString("Fichier",60,50+160);
+		g.drawString("Dossier", 60, 50+240);
+		g.drawString("Archive", 60, 50+320);
+		
+		g.setColor(Color.CYAN);
+		for(int i=0;i<5;i++) {
+			for(int j=0;j<5;j++) {
+				g.drawRect(200 + j*100, 20 + i*80, 80, 50);
+			}
+			g.setColor(Color.green);
+			g.drawString("Clink", 200+20, 20+30+i*80);
+			g.drawString("Virus", 220+100, 20+30+i*80);
+			g.drawString("Fichier",220+200,20+30+i*80);
+			g.drawString("Dossier", 220+300, 20+30+i*80);
+			g.drawString("Archive", 220+400, 20+30+i*80);
+			
+			g.setColor(Color.cyan);
+		}
+	}
+		
 
 	public void step(long now) {
 	}

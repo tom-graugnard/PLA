@@ -3,6 +3,7 @@ package game.shellda;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
@@ -107,7 +108,7 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 	}
 
@@ -133,18 +134,35 @@ public class Clink extends Element {
 		}
 
 		public void Hit(IDirection direction) {
+			int taille = m_lasers.size();
+			for(int i = 0; i < taille; i++) {
+				Element e = m_lasers.getFirst();
+				m_courant.m_carte[e.m_x][e.m_y] = null;
+				m_lasers.removeFirst();
+			}
 			m_model.m_courant = m_model.corb_parent;
 			m_courant = m_model.corb_parent;
+			m_lasers.clear();
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
 			if (m_lasers.size() < 5) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
+			}
+		}
+
+		public void Wizz(IDirection direction) {
+			if (m_lasers.size() < 5 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 2, m_y));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y - 1));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y + 1));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 0, m_y - 2));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 0, m_y + 2));
 			}
 		}
 

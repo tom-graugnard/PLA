@@ -59,3 +59,21 @@ Tâches réalisées :
  
  - Automate du joueur monde 2
  - Automate des virus
+ 
+  ## Mardi 11/06
+ 
+ Tâches réalisées :
+  
+  - Interpretation Virus
+  - Interpretation Joueur dans la corbeille
+  - Implémentation d'une condition de défaite
+  - Animation fluide
+  - Executables
+  - Fin de la corbeille (2eme univers)
+  
+ Tâches en cours :
+ 
+ - Menu de jeu (changer les automates)
+ - Dossiers et fichiers dans des archives
+ - Peaufiner les automates
+
