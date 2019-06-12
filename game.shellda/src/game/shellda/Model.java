@@ -22,7 +22,7 @@ public class Model extends GameModel {
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
-
+	
 	Noeud m_courant;
 
 	int m_pourcentage_defaite;
@@ -67,7 +67,10 @@ public class Model extends GameModel {
 	IAutomaton m_automateJoueur2;
 	IAutomaton m_automateFichier;
 	IAutomaton m_automateBalle;
-
+	IAutomaton[] m_automate=new IAutomaton[5];
+	
+	int[] m_autoChoix= {0,1,2,3,4};
+	
 	public LinkedList<IKey> m_keys;
 
 	NameGenerator m_generator;
@@ -85,15 +88,15 @@ public class Model extends GameModel {
 		}
 		for (int i = 0; i < automates.size(); i++) {
 			if (automates.get(i).m_name.equals("Virus")) {
-				m_automateVirus = automates.get(i);
+				m_automate[0] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Joueur1")) {
-				m_automateJoueur1 = automates.get(i);
+				m_automate[1] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Joueur2")) {
-				m_automateJoueur2 = automates.get(i);
+				m_automate[2] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Fichier")) {
-				m_automateFichier = automates.get(i);
+				m_automate[3] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Balle")) {
-				m_automateBalle = automates.get(i);
+				m_automate[4] = automates.get(i);
 			}
 		}
 

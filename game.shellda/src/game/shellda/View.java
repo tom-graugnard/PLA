@@ -18,6 +18,7 @@ public class View extends GameView {
 	long m_last;
 	int m_npaints;
 	int m_fps;
+	boolean choix=false;
 
 	public View(Model model) {
 		m_model = model;
@@ -61,6 +62,7 @@ public class View extends GameView {
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
 		m_model.m_boutonoption.paint(g);
+		
 	}
 
 	protected void _FenetreJeu(Graphics g) {
@@ -72,17 +74,18 @@ public class View extends GameView {
 	}
 	
 	protected void _FenetreOption(Graphics g) {
+		choix=true;
 		m_model.m_boutonexit.paint(g);
 		g.setColor(Color.RED);
 		for(int i=0;i<5;i++) {
 			g.drawRect(30, 20 + i*80, 100, 50);
 		}
 		g.setColor(Color.green);
-		g.drawString("Clink", 30+30, 20+30);
-		g.drawString("Virus", 60, 50+80);
-		g.drawString("Fichier",60,50+160);
-		g.drawString("Dossier", 60, 50+240);
-		g.drawString("Archive", 60, 50+320);
+		g.drawString("Virus", 30+30, 20+30);
+		g.drawString("Joueur1", 60, 50+80);
+		g.drawString("Joueur2",60,50+160);
+		g.drawString("Fichier", 60, 50+240);
+		g.drawString("Balle", 60, 50+320);
 		
 		g.setColor(Color.CYAN);
 		for(int i=0;i<5;i++) {
@@ -90,18 +93,25 @@ public class View extends GameView {
 				g.drawRect(200 + j*100, 20 + i*80, 80, 50);
 			}
 			g.setColor(Color.green);
-			g.drawString("Clink", 200+20, 20+30+i*80);
-			g.drawString("Virus", 220+100, 20+30+i*80);
-			g.drawString("Fichier",220+200,20+30+i*80);
-			g.drawString("Dossier", 220+300, 20+30+i*80);
-			g.drawString("Archive", 220+400, 20+30+i*80);
-			
+			g.drawString("Virus", 200+20, 20+30+i*80);
+			g.drawString("Joueur1", 220+100, 20+30+i*80);
+			g.drawString("Joueur2",220+200,20+30+i*80);
+			g.drawString("Fichier", 220+300, 20+30+i*80);
+			g.drawString("Balle", 220+400, 20+30+i*80);
+
 			g.setColor(Color.cyan);
 		}
 	}
-		
+	
+	protected boolean inside(int i,int j,int x,int y, int w, int h) {
+		if(i>=x && i<x+w && j>=y && j<y+h)
+			return true;
+		else
+			return false;
+	}
 
 	public void step(long now) {
+		
 	}
 
 }
