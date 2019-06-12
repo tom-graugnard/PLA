@@ -105,8 +105,6 @@ public class Fichier extends Element {
 				}
 			}
 		}
-		ClinkCorb m = (ClinkCorb) m_model.m_joueur;
-		m.m_lasers.clear(); // Probleme faut les clear de la carte
 		m_model.m_nb_fichier_corbeille--;
 	}
 

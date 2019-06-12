@@ -3,6 +3,7 @@ package game.shellda;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
@@ -133,8 +134,15 @@ public class Clink extends Element {
 		}
 
 		public void Hit(IDirection direction) {
+			int taille = m_lasers.size();
+			for(int i = 0; i < taille; i++) {
+				Element e = m_lasers.getFirst();
+				m_courant.m_carte[e.m_x][e.m_y] = null;
+				m_lasers.removeFirst();
+			}
 			m_model.m_courant = m_model.corb_parent;
 			m_courant = m_model.corb_parent;
+			m_lasers.clear();
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
 
