@@ -157,13 +157,7 @@ public class Clink extends Element {
 			m_lasers.clear();
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
-
-		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite[6 - m_lasers.size()], m_x_visu + 8, m_y_visu + 18, 32, 32, null);
-		}
-			
-	}
-
+		
 		public void Pop(IDirection direction) {
 			if (m_lasers.size() < 6) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
@@ -180,7 +174,15 @@ public class Clink extends Element {
 			}
 		}
 
+		public void paint(Graphics g) {
+			g.drawImage(m_model.m_clink_cSprite[6 - m_lasers.size()], m_x_visu + 8, m_y_visu + 18, 32, 32, null);
+		}
+			
 	}
+
+		
+
+	
 
 	
 

@@ -23,7 +23,7 @@ public class Model extends GameModel {
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
 
-
+    int m_etat=0;
 	Noeud m_courant;
 
 	int m_pourcentage_defaite;
@@ -32,8 +32,8 @@ public class Model extends GameModel {
 	Clink m_joueur;
 	Noeud corb_parent;
     
-	BoutonFin m_boutonFin;
-	BoutonYes m_boutonYes;
+//	BoutonFin m_boutonFin;
+//	BoutonYes m_boutonYes;
 	BufferedImage m_boutonplaySprite;
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
