@@ -124,7 +124,7 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false)
 			m_model.gameStart = true;
 		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false
 				&& m_model.gameOption == false)
