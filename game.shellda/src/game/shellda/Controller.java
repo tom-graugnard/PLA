@@ -140,7 +140,7 @@ public class Controller extends GameController implements ActionListener {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
 					if(m_view.inside(e.getX(), e.getY(),200 + j*100,20+i*80,80,50)) {
-						System.out.println(j + " " + i);
+						//System.out.println(j + " " + i);
 						m_model.m_autoChoix[i]=j;
 					}
 				}
