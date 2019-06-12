@@ -79,7 +79,7 @@ public class Model extends GameModel {
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {
-			automates = AutomataParser.automatas_from_file("examples/demo.txt");
+			automates = AutomataParser.automatas_from_file("examples/shellda.txt");
 		} catch (Exception e) {
 			System.out.println("Erreur dans la récupération d'automates");
 		}
@@ -127,7 +127,14 @@ public class Model extends GameModel {
 	}
 
 	public void pourcentageDefaite() {
-		m_pourcentage_defaite = m_nb_fichier_corbeille * (100 / Options.CORROMPU_DEFAITE);
+		int i, j, total = 0;
+		for(i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for(j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				if(m_corbeille.m_carte[i][j] instanceof Fichier)
+					total++;
+			}
+		}
+		m_pourcentage_defaite = total * (100 / Options.CORROMPU_DEFAITE);
 
 	}
 
@@ -379,14 +386,6 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		if(m_projectile.isDiscovered() ) {
-//			try {
-//			  m_projectile.step(now);
-//			} catch (Exception e) {
-//			 System.out.println("BAAAAAAAM");
-//			 e.printStackTrace();
-//		 }
-//		}
 
 		pourcentageDefaite();
 		if (m_pourcentage_defaite >= 100) {

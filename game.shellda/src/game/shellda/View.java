@@ -69,16 +69,15 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_courant.paint(g);
-		if(m_model.m_pourcentage_defaite > 75) {
+		if(m_model.m_pourcentage_defaite > 66) {
 			g.setColor(new Color(231, 89, 82));
 		}
-		else if(m_model.m_pourcentage_defaite > 50) {
+		else if(m_model.m_pourcentage_defaite > 33) {
 			g.setColor(new Color(149, 105, 200));
 		}
 		else {
 			g.setColor(new Color(195, 167, 225));
 		}
-		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
 
