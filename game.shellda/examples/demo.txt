@@ -18,7 +18,9 @@ Joueur1(Init){
 }
 Joueur2(Init){
   * (Init):
-  | True ? Wizz :(Init)
+  | True ? Wizz :(Autre)
+  * (Autre):
+  | True ? Pop :(Init)
 }
 
 Balle(Init){

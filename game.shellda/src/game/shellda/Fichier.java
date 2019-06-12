@@ -3,6 +3,7 @@ package game.shellda;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
+import interpreter.IDirection;
 import interpreter.IKind;
 import java.util.Random;
 
@@ -43,6 +44,13 @@ public class Fichier extends Element {
 		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
 	}
 
+	public void Wizz(IDirection direction) {
+		m_courant.m_carte[m_x][m_y] = new Archive(m_courant, m_model, m_x, m_y, m_name);
+	}
+
+	public void Pop(IDirection direction) {
+		m_courant.m_carte[m_x][m_y] = new Fichier(m_courant, m_model, m_x, m_y, m_name);
+	}
 
 	public void goCorbeille() {
 		Random r = new Random();
@@ -89,7 +97,7 @@ public class Fichier extends Element {
 
 	public void retour() {
 		Element e = m_courant_ancien.m_carte[m_x_ancien][m_y_ancien];
-		if(e instanceof Virus) {
+		if (e instanceof Virus) {
 			Virus v = (Virus) e;
 			v.die(m_model.m_virus);
 			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = null;
@@ -98,7 +106,6 @@ public class Fichier extends Element {
 		if (m_courant_ancien != null && m_courant_ancien != m_model.m_corbeille)
 			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model, m_x_ancien,
 					m_y_ancien, m_name_ancien);
-
 
 		m_model.m_nb_fichier_corbeille--;
 	}
@@ -111,9 +118,9 @@ public class Fichier extends Element {
 	}
 
 	public static class FichCorb extends Fichier {
-		
+
 		int auto;
-		
+
 		public FichCorb(Noeud courant, Model model, int x, int y, String name, int old_x, int old_y, Noeud old_noeud,
 				String old_name, Element type) {
 			super(courant, model, x, y, name);
@@ -133,7 +140,7 @@ public class Fichier extends Element {
 			FontMetrics f = g.getFontMetrics();
 			g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
 		}
-		
+
 		public void step(long now) throws Exception {
 			if (auto != m_model.m_autoChoix[3]) {
 				m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
@@ -144,6 +151,5 @@ public class Fichier extends Element {
 			update(now);
 		}
 	}
-	
 
 }

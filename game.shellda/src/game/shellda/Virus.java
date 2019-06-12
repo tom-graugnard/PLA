@@ -50,7 +50,7 @@ public class Virus extends Element {
 		if (m_y_ < 0) {
 			m_y_ = Options.HAUTEUR_CARTE - 1;
 		}
-		Element e = m_model.m_courant.m_carte[m_x_][m_y_];
+		Element e = m_courant.m_carte[m_x_][m_y_];
 		if (e instanceof Fichier) {
 			Fichier f = (Fichier) e;
 			f.m_infection -= Options.DEGATS_VIRUS;
