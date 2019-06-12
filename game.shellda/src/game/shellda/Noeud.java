@@ -91,7 +91,7 @@ public class Noeud {
 		String s;
 		Random rand = new Random();
 		if (profondeur > 0) {
-			int nombre_dossier = rand.nextInt(3);
+			int nombre_dossier = rand.nextInt(2);
 			Noeud tmp;
 			for (i = 1; i < profondeur + nombre_dossier + 1; i++) {
 				s = m_model.m_generator.generate_folder();
@@ -109,33 +109,12 @@ public class Noeud {
 		}
 		int nombre_fichier = rand.nextInt(4);
 		// On ajoute des fichiers dans notre dossier
-		for (j = i + 1; j <= (profondeur + 1) * 2 + i + nombre_fichier; j++) {
+		for (j = i + 1; j <= (profondeur + 1) * 2 + i + nombre_fichier + 1; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
 			s = m_model.m_generator.generate_file();
 			set_element(new Fichier(this, m_model, x, y, s));
 		}
-
-		/*
-		 * x = (int) rand.nextInt(Options.LARGEUR_CARTE); y = (int)
-		 * rand.nextInt(Options.HAUTEUR_CARTE); if (get_element(x, y) == null)
-		 * set_element(new Decompresseur(this, m_model, x, y));
-		 * 
-		 * x = (int) rand.nextInt(Options.LARGEUR_CARTE); y = (int)
-		 * rand.nextInt(Options.HAUTEUR_CARTE); if (get_element(x, y) == null)
-		 * set_element(new AntiVirus(this, m_model, x, y));
-		 * 
-		 * // On genere au maximum un nombre de virus égal à la profondeur dans //
-		 * l'arborescence (voir moins) // Cela permet de rendre le jeu de plus en plus
-		 * difficile for (i = 0; i < (Options.PROFONDEUR_ARBORESCENCE - profondeur) * 2
-		 * + 1; i++) { x = (int) rand.nextInt(Options.LARGEUR_CARTE); y = (int)
-		 * rand.nextInt(Options.HAUTEUR_CARTE); if (get_element(x, y) == null)
-		 * set_element(new Virus(this, m_model, x, y)); } // Generation d'archive for (i
-		 * = 0; i < 16; i++) { x = (int) rand.nextInt(Options.LARGEUR_CARTE); y = (int)
-		 * rand.nextInt(Options.HAUTEUR_CARTE); if (get_element(x, y) == null) { s =
-		 * m_model.m_generator.generate_compressed(); set_element(new Archive(this,
-		 * m_model, x, y, s)); } }
-		 */
 	}
 
 	public void generer_contenue(int profondeur) {
