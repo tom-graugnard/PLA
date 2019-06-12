@@ -1,0 +1,36 @@
+Joueur1(Init){
+  * (Init):
+  | True ? Wizz :(Init)
+}
+Joueur2(Init){
+  * (Init):
+  | True ? Pop :(Init)
+}
+
+Balle(Init){
+  * (Init):
+  | True ? Hit(N) :(Sud)
+  * (Sud):
+  | True ? Hit(S) :(Est)
+  * (Est):
+  | True ? Hit(E) :(Ouest)
+  * (Ouest):
+  | True ? Hit(O) :(Init)
+}
+
+Virus(Est){
+  *(Est):
+  | True ? Egg :(Sud)
+}
+
+Fichier(Zero){
+  * (Zero):
+  | True ? Move(N) :(Sud)
+  * (Sud):
+  | True ? Move(S) :(Est)
+  * (Est):
+  | True ? Move(E) :(Ouest)
+  * (Ouest):
+  | True ? Move(O) :(Zero)
+}
+
