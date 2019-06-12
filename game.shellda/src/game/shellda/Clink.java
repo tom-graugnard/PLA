@@ -1,8 +1,9 @@
 package game.shellda;
 
 import java.awt.Graphics;
+import java.util.LinkedList;
 
-import game.shellda.Fichier.FichCorb;
+import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
@@ -99,29 +100,49 @@ public class Clink extends Element {
 				}
 			}
 			Element element = m_courant.remove_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-			element.m_x = m_x + coordonnees[0] * 2;
-			element.m_y = m_y + coordonnees[1] * 2;
-			m_courant.set_element(element);
+			if (element != null) {
+				element.m_x = m_x + coordonnees[0] * 2;
+				element.m_y = m_y + coordonnees[1] * 2;
+				m_courant.set_element(element);
+			}
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 	}
 
 	public static class ClinkCorb extends Clink {
-		Projectile projectile;
-		
-		
+		LinkedList<Balle> m_lasers;
+		long m_old_corbeille = 0;
 
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
 			m_auto = m_model.m_automateJoueur2.copy();
+			m_lasers = new LinkedList<Balle>();
+		}
+
+		public void step(long now) throws Exception {
+			if (m_auto != null)
+				m_auto.step(this);
+			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
+				for (int i = 0; i < m_lasers.size(); i++)
+					m_lasers.get(i).step(now);
+				m_old_corbeille = now;
+			}
+			update(now);
 		}
 
 		public void Hit(IDirection direction) {
+			int taille = m_lasers.size();
+			for(int i = 0; i < taille; i++) {
+				Element e = m_lasers.getFirst();
+				m_courant.m_carte[e.m_x][e.m_y] = null;
+				m_lasers.removeFirst();
+			}
 			m_model.m_courant = m_model.corb_parent;
 			m_courant = m_model.corb_parent;
+			m_lasers.clear();
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
 		
@@ -155,13 +176,12 @@ public class Clink extends Element {
 	}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
-			if (m_model.limitBalle < 3 && m_courant.m_carte[m_x + 1][m_y]==null) {
-				m_courant.m_carte[m_x + 1][m_y] = new Balle(m_courant, m_model, m_x + 1, m_y);
-				m_model.limitBalle++;
+			if (m_lasers.size() < 5) {
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
 			}
 		}
 

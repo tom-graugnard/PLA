@@ -1,6 +1,8 @@
 package game.shellda;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 
 import edu.ricm3.game.GameView;
@@ -39,13 +41,14 @@ public class View extends GameView {
 		// erase background
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
-		
+
 		if (!m_model.gameStart)
 			_menuPrincipal(g);
 		else
 			_FenetreJeu(g);
 
 	}
+
 	protected void _menuPrincipal(Graphics g) {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
@@ -60,6 +63,8 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_courant.paint(g);
+		g.setColor(Color.MAGENTA);
+		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
 
 	public void step(long now) {

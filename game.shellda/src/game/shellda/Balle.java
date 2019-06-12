@@ -2,6 +2,7 @@ package game.shellda;
 
 import java.awt.Graphics;
 
+import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
@@ -13,17 +14,20 @@ public class Balle extends Element {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(m_model.m_balleSprite, m_x * 48 + 8, m_y * 48 + 8, 32, 32, null);
+		g.drawImage(m_model.m_balleSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 	}
 
 	long w = 0;
 
 	public void step(long now) throws Exception {
-		if (now - w > 200) {
-			if (m_auto != null)
-				m_auto.step(this);
-			w = now;
+		if(m_x >= Options.LARGEUR_CARTE - 1) {
+			((ClinkCorb)m_model.m_joueur).m_lasers.remove(this);
+			m_courant.m_carte[m_x][m_y] = null;
+			return;
 		}
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
 	}
 
 	public void Hit(IDirection direction) {
@@ -35,8 +39,12 @@ public class Balle extends Element {
 				f.retour();
 			}
 			m_courant.m_carte[m_x + 1][m_y] = null;
-			m_model.limitBalle--;
+			((ClinkCorb)m_model.m_joueur).m_lasers.remove(this);
 		}
+	}
+	
+	public boolean equals(Balle b) {
+		return b == this;
 	}
 
 }
