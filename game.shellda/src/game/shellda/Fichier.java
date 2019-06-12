@@ -27,7 +27,20 @@ public class Fichier extends Element {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(m_model.m_fichierSprite, m_x_visu + 8, m_y_visu + 10, 32, 32, null);
+		int i;
+		if(m_infection > 75) {
+			i = 0;
+		}
+		else if (m_infection > 50) {
+			i = 1;
+		}
+		else if(m_infection > 25) {
+			i = 2;
+		}
+		else {
+			i = 3;
+		}
+		g.drawImage(m_model.m_fichierSprite[i], m_x_visu + 8, m_y_visu + 10, 32, 32, null);
 
 		g.setFont(m_model.m_font);
 		FontMetrics f = g.getFontMetrics();

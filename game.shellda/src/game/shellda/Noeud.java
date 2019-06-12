@@ -96,7 +96,7 @@ public class Noeud {
 			int nombre_dossier = rand.nextInt(4);
 			Noeud tmp;
 			for (i = 1; i < profondeur + nombre_dossier + 1; i++) {
-				s = m_model.m_generator.generate();
+				s = m_model.m_generator.generate_folder();
 				tmp = new Noeud(m_model, this, s);
 				x = i / Options.HAUTEUR_CARTE;
 				y = i % Options.HAUTEUR_CARTE;
@@ -112,7 +112,7 @@ public class Noeud {
 		for (j = i; j < (profondeur + 1) * 2 + i + nombre_fichier; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
-			s = m_model.m_generator.generate();
+			s = m_model.m_generator.generate_file();
 			set_element(new Fichier(this, m_model, x, y, s));
 		}
 		
@@ -140,7 +140,7 @@ public class Noeud {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			if (get_element(x, y) == null) {
-				s = m_model.m_generator.generate();
+				s = m_model.m_generator.generate_compressed();
 				set_element(new Archive(this, m_model, x, y, s));
 			}
 		}
