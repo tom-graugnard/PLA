@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.LinkedList;
 
 import edu.ricm3.game.GameController;
@@ -12,11 +13,21 @@ import interpreter.IKey;
 public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
+	
+	Music m_player;
+	boolean m_music_on;
 
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
 		m_model.m_keys = new LinkedList<IKey>();
+		
+		File file;
+		file = new File("ressources/music.wav");
+		try {
+			m_player = new Music(file);
+		} catch (Exception ex) {
+		}
 	}
 
 	@Override
@@ -33,6 +44,17 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		char c = e.getKeyChar();
+		switch (c) {
+		case 'm':
+			if(m_music_on) {
+				m_player.stop();
+			}else {
+				m_player.start();
+			}
+			m_music_on = !m_music_on;
+		}
+
 	}
 
 	@Override
