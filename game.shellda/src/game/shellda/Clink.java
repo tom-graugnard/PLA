@@ -154,15 +154,6 @@ public class Clink extends Element {
 			projectile=null;
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 
 	public void paint(Graphics g) {
