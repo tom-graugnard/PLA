@@ -11,11 +11,15 @@ public class Archive extends Element {
 	String m_name;
 
 	LinkedList<Element> m_contenu;
-
+	
+	int auto;
+	
 	public Archive(Noeud courant, Model model, int x, int y, String name) {
 		super(courant, model, x, y);
 		m_name = name;
 		m_kind = new IKind("G");
+		m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+		auto = m_model.m_autoChoix[5];
 	}
 
 	public Element decompression() {
@@ -28,5 +32,14 @@ public class Archive extends Element {
 		g.setFont(m_model.m_font);
 		FontMetrics f = g.getFontMetrics();
 		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
+	}
+	public void step(long now) throws Exception {
+		if (auto != m_model.m_autoChoix[5]) {
+			m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+			auto = m_model.m_autoChoix[5];
+		}
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
 	}
 }

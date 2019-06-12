@@ -104,15 +104,28 @@ public class Fichier extends Element {
 	}
 
 	public static class FichNorm extends Fichier {
-
+		int auto1;
+		
 		public FichNorm(Noeud courant, Model model, int x, int y, String name) {
 			super(courant, model, x, y, name);
+			m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+			auto1 = m_model.m_autoChoix[5];
 		}
+		public void step(long now) throws Exception {
+			if (auto1 != m_model.m_autoChoix[5]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+				auto1 = m_model.m_autoChoix[5];
+			}
+			if (m_auto != null)
+				m_auto.step(this);
+			update(now);
+		}
+		
 	}
 
 	public static class FichCorb extends Fichier {
 		
-		int auto;
+		int auto2;
 		
 		public FichCorb(Noeud courant, Model model, int x, int y, String name, int old_x, int old_y, Noeud old_noeud,
 				String old_name, Element type) {
@@ -123,7 +136,7 @@ public class Fichier extends Element {
 			m_name_ancien = old_name;
 			m_type = type;
 			m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
-			auto = m_model.m_autoChoix[3];
+			auto2 = m_model.m_autoChoix[3];
 		}
 
 		public void paint(Graphics g) {
@@ -135,9 +148,9 @@ public class Fichier extends Element {
 		}
 		
 		public void step(long now) throws Exception {
-			if (auto != m_model.m_autoChoix[3]) {
+			if (auto2 != m_model.m_autoChoix[3]) {
 				m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
-				auto = m_model.m_autoChoix[3];
+				auto2 = m_model.m_autoChoix[3];
 			}
 			if (m_auto != null)
 				m_auto.step(this);
