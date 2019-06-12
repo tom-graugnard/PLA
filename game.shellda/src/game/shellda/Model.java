@@ -79,7 +79,7 @@ public class Model extends GameModel {
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {
-			automates = AutomataParser.automatas_from_file("examples/shellda.txt");
+			automates = AutomataParser.automatas_from_file("examples/demo.txt");
 		} catch (Exception e) {
 			System.out.println("Erreur dans la récupération d'automates");
 		}
