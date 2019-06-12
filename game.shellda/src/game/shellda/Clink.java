@@ -156,6 +156,16 @@ public class Clink extends Element {
 			}
 		}
 
+		public void Wizz(IDirection direction) {
+			if (m_lasers.size() < 5 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 2, m_y));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y - 1));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y + 1));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 0, m_y - 2));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 0, m_y + 2));
+			}
+		}
+
 	}
 
 }
