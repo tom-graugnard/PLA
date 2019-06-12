@@ -102,7 +102,7 @@ public abstract class Executable extends Fichier {
 			m_courant_ancien = old_noeud;
 			m_name_ancien = old_name;
 			m_type = type;
-			m_auto = m_model.m_automateFichier.copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
 		}
 
 		public void paint(Graphics g) {
