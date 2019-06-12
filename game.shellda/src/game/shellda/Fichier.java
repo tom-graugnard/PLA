@@ -40,11 +40,11 @@ public class Fichier extends Element {
 		else {
 			i = 3;
 		}
-		g.drawImage(m_model.m_fichierSprite[i], m_x_visu + 8, m_y_visu + 10, 32, 32, null);
+		g.drawImage(m_model.m_fichierSprite[i], m_x * 48 + 8, m_y * 48 + 10, 32, 32, null);
 
 		g.setFont(m_model.m_font);
 		FontMetrics f = g.getFontMetrics();
-		g.drawString(m_name, m_x_visu + (48 - f.stringWidth(m_name)) / 2, m_y_visu + 42 + (16 / 2));
+		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
 	}
 
 	long w = 0;

@@ -191,12 +191,12 @@ public class NameGenerator {
 			break;
 		case 4:
 		case 5:
-			s = generate(4);
+			s = generate(3);
 			s += ".pdf";
 			break;
 		case 6:
 		case 7:
-			s = generate(4);
+			s = generate(3);
 			s += ".png";
 			break;
 		case 8:

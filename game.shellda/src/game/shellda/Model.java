@@ -100,7 +100,7 @@ public class Model extends GameModel {
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this, "Corbeille");
-		m_joueur = new ClinkNorm(null, this, 3, 3);
+		m_joueur = new ClinkNorm(null, this, 0, 0);
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
