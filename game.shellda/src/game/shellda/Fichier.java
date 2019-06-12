@@ -57,8 +57,8 @@ public class Fichier extends Element {
 		Random rand = new Random();
 		int nameLength = rand.nextInt(6) + 3;
 		String corruptName = "";
-		for(int i = 0; i < nameLength; i++) {
-			switch(rand.nextInt(10)) {
+		for (int i = 0; i < nameLength; i++) {
+			switch (rand.nextInt(10)) {
 			case 0:
 			case 1:
 			case 2:
@@ -72,7 +72,7 @@ public class Fichier extends Element {
 			case 6:
 				corruptName += "!";
 				break;
-			
+
 			case 7:
 				corruptName += "$";
 				break;
@@ -81,9 +81,9 @@ public class Fichier extends Element {
 				corruptName += "?";
 			}
 		}
-		
-		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, corruptName, m_x, m_y,
-				m_courant, m_name, this);
+
+		m_model.m_corbeille.m_carte[r_x][r_y] = new FichCorb(m_model.m_corbeille, m_model, r_x, r_y, corruptName, m_x,
+				m_y, m_courant, m_name, this);
 		m_model.m_nb_fichier_corbeille++;
 	}
 
@@ -93,15 +93,16 @@ public class Fichier extends Element {
 					m_y_ancien);
 		} else {
 			if (m_type instanceof AntiVirus) {
-				m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new AntiVirus(m_courant_ancien, m_model,
-						m_x_ancien, m_y_ancien);
+				m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new AntiVirus(m_courant_ancien, m_model, m_x_ancien,
+						m_y_ancien);
 			} else {
 				if (m_type instanceof Shellda) {
 					m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new Shellda(m_courant_ancien, m_model,
 							m_x_ancien, m_y_ancien);
 				} else {
-					m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model,
-							m_x_ancien, m_y_ancien, m_name_ancien);
+					if (m_courant_ancien != null)
+						m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model,
+								m_x_ancien, m_y_ancien, m_name_ancien);
 				}
 			}
 		}
