@@ -8,11 +8,10 @@ import interpreter.IKind;
 
 public class Clink extends Element {
 	Element inventaire = null;
-
+	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		m_kind = new IKind("@");
-		m_auto = m_model.m_automateJoueur1.copy();
 	}
 
 	public void Move(IDirection direction) {
@@ -47,11 +46,20 @@ public class Clink extends Element {
 	}
 
 	public static class ClinkNorm extends Clink {
+		int auto1=m_model.m_autoChoix[1];
+		
 		public ClinkNorm(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			m_auto = m_model.m_automateJoueur1.copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[1]].copy();
 		}
-
+		public void step(long now) throws Exception {
+			if(auto1!=m_model.m_autoChoix[1]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[1]].copy();
+				auto1=m_model.m_autoChoix[1];
+			}
+			if (m_auto != null)
+				m_auto.step(this);
+		}
 		public void Hit(IDirection direction) {
 			Element e = m_model.m_courant.m_carte[m_x][m_y];
 			if (e instanceof Dossier) {
@@ -112,14 +120,18 @@ public class Clink extends Element {
 	public static class ClinkCorb extends Clink {
 		LinkedList<Balle> m_lasers;
 		long m_old_corbeille = 0;
-
+		int auto2=m_model.m_autoChoix[2];
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			m_auto = m_model.m_automateJoueur2.copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[2]].copy();
 			m_lasers = new LinkedList<Balle>();
 		}
 
 		public void step(long now) throws Exception {
+			if(auto2!=m_model.m_autoChoix[2]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[2]].copy();
+				auto2=m_model.m_autoChoix[2];
+			}
 			if (m_auto != null)
 				m_auto.step(this);
 			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
@@ -147,6 +159,7 @@ public class Clink extends Element {
 		}
 
 		public void Wizz(IDirection direction) {
+			System.out.println("tire spé");
 			if (m_lasers.size() < 5 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 2, m_y));
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y - 1));

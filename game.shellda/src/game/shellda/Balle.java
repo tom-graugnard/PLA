@@ -10,7 +10,7 @@ public class Balle extends Element {
 	public Balle(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		m_kind = new IKind("B");
-		m_auto = m_model.m_automateBalle.copy();
+		m_auto = m_model.m_automate[4].copy();
 	}
 
 	public void paint(Graphics g) {

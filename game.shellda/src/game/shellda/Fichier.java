@@ -78,7 +78,7 @@ public class Fichier extends Element {
 			m_y_ancien = old_y;
 			m_courant_ancien = old_noeud;
 			m_name_ancien = old_name;
-			m_auto = m_model.m_automateFichier.copy();
+			m_auto = m_model.m_automate[3].copy();
 		}
 		
 		public void paint(Graphics g) {
