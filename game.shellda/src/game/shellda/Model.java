@@ -23,8 +23,9 @@ public class Model extends GameModel {
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
 
+
 	Noeud m_courant;
-	
+
 	int m_pourcentage_defaite;
 	int m_nb_fichier_corbeille;
 
@@ -37,68 +38,71 @@ public class Model extends GameModel {
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
+	BufferedImage m_boutonOptionSprite;
+	BoutonOption m_boutonoption;
+
 	boolean gameStart = false;
-	int m_etat=0;
+	boolean gameOption = false;
 
 	Font m_font;
 
 	BufferedImage m_executableSprite;
 
 	BufferedImage m_clink_nSprite;
-	BufferedImage m_clink_cSprite;
+	BufferedImage[] m_clink_cSprite;
 	BufferedImage m_dossierSprite;
 	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
-	BufferedImage m_fichierSprite;
+	BufferedImage[] m_fichierSprite;
 	BufferedImage m_fichierCorrompuSprite;
 	BufferedImage m_backgroundSprite;
 	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_archiveSprite;
-	BufferedImage m_balleSprite;
+	BufferedImage[] m_balleSprite;
+	BufferedImage m_executableCorbeilleSprite;
 
 	BufferedImage m_virus1Sprite;
 	BufferedImage m_virus2Sprite;
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
-	IAutomaton m_automateVirus;
-	IAutomaton m_automateJoueur1;
-	IAutomaton m_automateJoueur2;
-	IAutomaton m_automateFichier;
-	IAutomaton m_automateBalle;
-
+	IAutomaton[] m_automate = new IAutomaton[5];
+	int[] m_autoChoix = { 0, 1, 2, 3, 4 };
 
 	public LinkedList<IKey> m_keys;
 
 	NameGenerator m_generator;
-	
+
 	public Model() {
+		m_clink_cSprite = new BufferedImage[7];
+		m_fichierSprite = new BufferedImage[4];
+		m_balleSprite = new BufferedImage[6];
 		m_generator = new NameGenerator();
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {
-			automates = AutomataParser.automatas_from_file("examples/shellda.txt");
+			automates = AutomataParser.automatas_from_file("examples/demo.txt");
 		} catch (Exception e) {
 			System.out.println("Erreur dans la récupération d'automates");
 		}
 		for (int i = 0; i < automates.size(); i++) {
 			if (automates.get(i).m_name.equals("Virus")) {
-				m_automateVirus = automates.get(i);
+				m_automate[0] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Joueur1")) {
-				m_automateJoueur1 = automates.get(i);
+				m_automate[1] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Joueur2")) {
-				m_automateJoueur2 = automates.get(i);
+				m_automate[2] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Fichier")) {
-				m_automateFichier = automates.get(i);
+				m_automate[3] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Balle")) {
-				m_automateBalle = automates.get(i);
+				m_automate[4] = automates.get(i);
 			}
 		}
 
 		loadSprites();
 		m_virus = new LinkedList<Virus>();
 		m_corbeille = new Noeud(this, "Corbeille");
-		m_joueur = new ClinkNorm(null, this, 3, 3);
+		m_joueur = new ClinkNorm(null, this, 0, 0);
 		m_tree = new Tree(this);
 		m_courant = m_tree.m_root;
 		m_joueur.m_courant = m_courant;
@@ -109,13 +113,9 @@ public class Model extends GameModel {
 				Options.BoutonPlayScale);
 		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
 				Options.BoutonExitScale);
-		
-		m_boutonYes = new BoutonYes(this, 0, m_boutonplaySprite, 1, 1,
-				(Options.WIDTH /2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonYesScale) / 2)+110,
-				(Options.HEIGHT /2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonYesScale) / 2),
-				Options.BoutonYesScale);
-		m_boutonFin = new BoutonFin(this, 0, m_boutonexitSprite, 1, 1, (Options.WIDTH /2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonYesScale) / 2)-100, (Options.HEIGHT /2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonYesScale) / 2)-30,
-				Options.BoutonFinScale);
+		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
+				Options.HEIGHT - 200, Options.BoutonOptionScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -127,13 +127,14 @@ public class Model extends GameModel {
 		}
 		return false;
 	}
-	
+
 	public void pourcentageDefaite() {
-		m_pourcentage_defaite = m_nb_fichier_corbeille * (100/Options.CORROMPU_DEFAITE);
-		
+		m_pourcentage_defaite = m_nb_fichier_corbeille * (100 / Options.CORROMPU_DEFAITE);
+
 	}
 
 	private void loadSprites() {
+		int i;
 		m_font = new Font("Arial", 0, 9);
 		File imageFile;
 		imageFile = new File("ressources/virus_1.png");
@@ -171,12 +172,14 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/clink_corbeille.png");
-		try {
-			m_clink_cSprite = ImageIO.read(imageFile);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(-1);
+		for (i = 0; i < 7; i++) {
+			imageFile = new File("ressources/clink_corbeille_"+i+".png");
+			try {
+				m_clink_cSprite[i] = ImageIO.read(imageFile);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-1);
+			}
 		}
 		imageFile = new File("ressources/background.png");
 		try {
@@ -208,7 +211,28 @@ public class Model extends GameModel {
 		}
 		imageFile = new File("ressources/fichier.png");
 		try {
-			m_fichierSprite = ImageIO.read(imageFile);
+			m_fichierSprite[0] = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_25.png");
+		try {
+			m_fichierSprite[1] = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_50.png");
+		try {
+			m_fichierSprite[2] = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_75.png");
+		try {
+			m_fichierSprite[3] = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -241,12 +265,21 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/Fireball.png");
+		imageFile = new File("ressources/executable_corbeille.png");
 		try {
-			m_balleSprite = ImageIO.read(imageFile);
+			m_executableCorbeilleSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
+		}
+		for (i = 1; i < 7; i++) {
+			imageFile = new File("ressources/code_" + i + ".png");
+			try {
+				m_balleSprite[i - 1] = ImageIO.read(imageFile);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-1);
+			}
 		}
 
 		// ===== Menu =====
@@ -264,6 +297,13 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		imageFile = new File("ressources/boutonoption.png");
+		try {
+			m_boutonOptionSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		
 		imageFile = new File("ressources/exit.png");
 		try {
@@ -272,21 +312,19 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		
-		
-		
 	}
 
 	long m_old_courant = 0;
 	long m_old_tree = 0;
+	long m = 0;
 
 	@Override
 	public void step(long now) {
-		
+
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
-					if(m_courant.m_carte[i][j] != null)
+					if (m_courant.m_carte[i][j] != null)
 						m_courant.m_carte[i][j].update(now);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -298,7 +336,8 @@ public class Model extends GameModel {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Virus) &&!(m_courant.m_carte[i][j] instanceof Balle))
+						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus)
+								&& !(m_courant.m_carte[i][j] instanceof Balle))
 							m_courant.m_carte[i][j].step(now);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -319,7 +358,7 @@ public class Model extends GameModel {
 			}
 			m_old_courant = now;
 		}
-		
+
 		if (now - m_old_tree > Options.PC_SPEED * 4) {
 			for (int i = 0; i < m_virus.size(); i++) {
 				Virus v = m_virus.get(i);
@@ -335,19 +374,26 @@ public class Model extends GameModel {
 			}
 			m_old_tree = now;
 		}
-		
+
 		m_joueur.update(now);
 		try {
 			m_joueur.step(now);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+//		if(m_projectile.isDiscovered() ) {
+//			try {
+//			  m_projectile.step(now);
+//			} catch (Exception e) {
+//			 System.out.println("BAAAAAAAM");
+//			 e.printStackTrace();
+//		 }
+//		}
 
 		pourcentageDefaite();
-//		if(m_pourcentage_defaite >= 100) {
-//			etat=2;
-////			shutdown();
-//		}
+		if (m_pourcentage_defaite >= 100) {
+			shutdown();
+		}
 	}
 
 	@Override

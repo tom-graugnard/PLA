@@ -68,12 +68,6 @@ public class ICondition {
 		}
 
 		boolean eval(Element e) {
-			if(m_distance == 0) {
-				System.out.println("Yo mes frr");
-			}
-			else if(m_distance == 2) {
-				System.out.println("Slt mes frr");
-			}
 			return e.Cell(m_direction, m_kind, m_distance);
 		}
 	}

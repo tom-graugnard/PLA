@@ -12,7 +12,8 @@ public class Decompresseur extends Executable{
 		for(i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for(j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				if(m_courant.get_element(i, j) instanceof Archive) {
-					m_courant.m_carte[i][j] = null;
+					Archive a = (Archive) m_courant.m_carte[i][j];
+					m_courant.m_carte[i][j] = a.decompression();
 				}
 			}
 		}

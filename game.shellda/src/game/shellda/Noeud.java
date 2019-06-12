@@ -1,6 +1,5 @@
 package game.shellda;
 
-
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
@@ -39,7 +38,7 @@ public class Noeud {
 
 	}
 
-	public void set_element(Element e) {
+	public boolean set_element(Element e) {
 		while (e.m_x < 0) {
 			e.m_x += Options.LARGEUR_CARTE;
 		}
@@ -48,7 +47,9 @@ public class Noeud {
 			e.m_y += Options.HAUTEUR_CARTE;
 		}
 		e.m_y %= Options.HAUTEUR_CARTE;
+		boolean result = m_carte[e.m_x][e.m_y] == null;
 		m_carte[e.m_x][e.m_y] = e;
+		return result;
 	}
 
 	public Element get_element(int x, int y) {
@@ -89,14 +90,11 @@ public class Noeud {
 		int x, y;
 		String s;
 		Random rand = new Random();
-		if (profondeur == 0) {
-			set_element(new Shellda(this, m_model, Options.LARGEUR_CARTE * 3 / 4, Options.HAUTEUR_CARTE * 3 / 4));
-		}
-		else if (profondeur > 0) {
-			int nombre_dossier = rand.nextInt(4);
+		if (profondeur > 0) {
+			int nombre_dossier = rand.nextInt(2);
 			Noeud tmp;
 			for (i = 1; i < profondeur + nombre_dossier + 1; i++) {
-				s = m_model.m_generator.generate();
+				s = m_model.m_generator.generate_folder();
 				tmp = new Noeud(m_model, this, s);
 				x = i / Options.HAUTEUR_CARTE;
 				y = i % Options.HAUTEUR_CARTE;
@@ -106,26 +104,25 @@ public class Noeud {
 			for (i = 0; i < m_enfants.size(); i++) {
 				m_enfants.get(i).generer_noeud(profondeur - 1);
 			}
+		} else {
+			i = 0;
 		}
 		int nombre_fichier = rand.nextInt(4);
 		// On ajoute des fichiers dans notre dossier
-		for (j = i; j < (profondeur + 1) * 2 + i + nombre_fichier; j++) {
+		for (j = i + 1; j <= (profondeur + 1) * 2 + i + nombre_fichier + 1; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
-			s = m_model.m_generator.generate();
+			s = m_model.m_generator.generate_file();
 			set_element(new Fichier(this, m_model, x, y, s));
 		}
-		
-		x = (int) rand.nextInt(Options.LARGEUR_CARTE);
-		y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
-		if (get_element(x, y) == null)
-			set_element(new Decompresseur(this, m_model, x, y));
-		
-		x = (int) rand.nextInt(Options.LARGEUR_CARTE);
-		y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
-		if (get_element(x, y) == null)
-			set_element(new AntiVirus(this, m_model, x, y));
+	}
 
+	public void generer_contenue(int profondeur) {
+		Random rand = new Random();
+		int x;
+		int y;
+		int i;
+		String s;
 		// On genere au maximum un nombre de virus égal à la profondeur dans
 		// l'arborescence (voir moins)
 		// Cela permet de rendre le jeu de plus en plus difficile
@@ -140,9 +137,12 @@ public class Noeud {
 			x = (int) rand.nextInt(Options.LARGEUR_CARTE);
 			y = (int) rand.nextInt(Options.HAUTEUR_CARTE);
 			if (get_element(x, y) == null) {
-				s = m_model.m_generator.generate();
+				s = m_model.m_generator.generate_compressed();
 				set_element(new Archive(this, m_model, x, y, s));
 			}
+		}
+		for(i = 0; i < m_enfants.size(); i++) {
+			m_enfants.get(i).generer_contenue(profondeur - 1);
 		}
 	}
 
@@ -165,9 +165,9 @@ public class Noeud {
 			}
 		}
 		m_model.m_joueur.paint(g);
-		if(m_model.m_joueur instanceof ClinkCorb) {
-			for(int i = 0; i < ((ClinkCorb)m_model.m_joueur).m_lasers.size(); i++)
-				((ClinkCorb)m_model.m_joueur).m_lasers.get(i).paint(g);
+		if (m_model.m_joueur instanceof ClinkCorb) {
+			for (int i = 0; i < ((ClinkCorb) m_model.m_joueur).m_lasers.size(); i++)
+				((ClinkCorb) m_model.m_joueur).m_lasers.get(i).paint(g);
 		}
 	}
 }

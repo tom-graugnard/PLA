@@ -1,0 +1,50 @@
+Joueur1(Init){
+  * (Init):
+  | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Init)
+  | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Init)
+  | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Init)
+  | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Init)
+  | (Key(h)) ? Hit :(Init)
+  | Key(w) & Cell(E,P,0) ? Wizz : (Attrap)
+  | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Init)
+  * (Attrap)
+  | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Attrap)
+  | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Attrap)
+  | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Attrap)
+  | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Attrap)
+  | (Key(h)) ? Hit :(Attrap)
+  | Key(w) & !Cell(E,_,0) ? Wizz : (Init)
+  | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Attrap)
+}
+Joueur2(Init){
+  * (Init):
+  | True ? Wizz :(Init)
+}
+
+Balle(Init){
+  * (Init):
+  | True ? Hit(N) :(Est)
+  * (Sud):
+  | True ? Hit(S) :(Ouest)
+  * (Est):
+  | True ? Hit(E) :(Sud)
+  * (Ouest):
+  | True ? Hit(O) :(Init)
+}
+
+Virus(Est){
+  *(Est):
+  | True ? Egg :(Est)
+}
+
+Fichier(Zero){
+  * (Zero):
+  | True ? Move(N) :(Sud)
+  * (Sud):
+  | True ? Move(S) :(Est)
+  * (Est):
+  | True ? Move(E) :(Ouest)
+  * (Ouest):
+  | True ? Move(O) :(Zero)
+}
+

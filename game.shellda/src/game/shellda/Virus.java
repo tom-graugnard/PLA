@@ -14,14 +14,16 @@ public class Virus extends Element {
 
 	int m_type;
 	boolean m_worked;
+	int auto;
 
 	public Virus(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		display = 0;
 		model.m_virus.add(this);
-		m_auto = m_model.m_automateVirus.copy();
+		m_auto = m_model.m_automate[m_model.m_autoChoix[0]].copy();
 		Random rand = new Random();
 		m_type = rand.nextInt(4);
+		auto=m_model.m_autoChoix[0];
 	}
 
 	public boolean isDiscovered() {
@@ -171,6 +173,16 @@ public class Virus extends Element {
 
 	public boolean equals(Virus v) {
 		return this==v;
+	}
+	
+	public void step(long now) throws Exception {
+		if(auto!=m_model.m_autoChoix[0]) {
+			m_auto = m_model.m_automate[m_model.m_autoChoix[0]].copy();
+			auto=m_model.m_autoChoix[0];
+		}
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
 	}
 	
 }

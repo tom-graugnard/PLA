@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.LinkedList;
 
 import edu.ricm3.game.GameController;
@@ -14,11 +15,21 @@ import interpreter.IKey;
 public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
+	
+	Music m_player;
+	boolean m_music_on;
 
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
 		m_model.m_keys = new LinkedList<IKey>();
+		
+		File file;
+		file = new File("ressources/music.wav");
+		try {
+			m_player = new Music(file);
+		} catch (Exception ex) {
+		}
 	}
 
 	@Override
@@ -35,8 +46,19 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		char c = e.getKeyChar();
+		switch (c) {
+		case 'm':
+			if(m_music_on) {
+				m_player.stop();
+			}else {
+				m_player.start();
+			}
+			m_music_on = !m_music_on;
+		}
+
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
@@ -114,22 +136,7 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false) {
-			m_model.gameStart = true;
-		    m_model.m_etat=1;
-		}
-		if (m_model.m_boutonexit.inside(e.getX(), e.getY())) {
-			m_model.shutdown();
-		}
-		if (m_model.m_boutonYes.inside(e.getX(), e.getY()) ) {
-               m_model.ReInit();
-               m_view=new View(m_model);
-
-
-		}
-		if (m_model.m_boutonFin.inside(e.getX(), e.getY())) {
-			m_model.shutdown();
-		}
+		
 	}
 
 	@Override
@@ -141,6 +148,28 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false)
+			m_model.gameStart = true;
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false
+				&& m_model.gameOption == false)
+			m_model.shutdown();
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption == true) {
+			m_model.gameOption = false;
+			m_view.choix=false;
+		}
+		if (m_model.m_boutonoption.inside(e.getX(), e.getY()) && m_model.gameStart == false
+				&& m_model.gameOption == false)
+			m_model.gameOption = true;
+		if (m_view.choix == true) {
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if(m_view.inside(e.getX(), e.getY(),200 + j*100,20+i*80,80,50)) {
+						//System.out.println(j + " " + i);
+						m_model.m_autoChoix[i]=j;
+					}
+				}
+			}
+		}
 
 	}
 
