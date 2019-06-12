@@ -1,0 +1,20 @@
+Virus(Init){
+
+	*(Init):
+	| Cell(R,V) ? Move(E) : (Est)
+	| Cell(L,V) ? Move(O) : (Ouest)
+	
+	
+	*(Ouest) :
+	| Cell(R,V) ? Move(O) : (Ouest)
+	| True ? Wait : (Init)	
+	
+	*(Est) :
+	|Cell(L,V) ? Move(E) : (Est)
+	|True ? Wait : (Init)
+	
+	
+	}
+	
+	
+	

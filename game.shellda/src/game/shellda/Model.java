@@ -22,7 +22,8 @@ public class Model extends GameModel {
 	Noeud m_corbeille;
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
-	
+
+
 	Noeud m_courant;
 
 	int m_pourcentage_defaite;
@@ -63,10 +64,9 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
+	IAutomaton[] m_automate = new IAutomaton[5];
+	int[] m_autoChoix = { 0, 1, 2, 3, 4 };
 
-	IAutomaton[] m_automate=new IAutomaton[5];	
-	int[] m_autoChoix= {0,1,2,3,4};
-	
 	public LinkedList<IKey> m_keys;
 
 	NameGenerator m_generator;
@@ -266,7 +266,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		for(int i = 1; i < 7; i++) {
+		for (int i = 1; i < 7; i++) {
 			imageFile = new File("ressources/code_" + i + ".png");
 			try {
 				m_balleSprite[i - 1] = ImageIO.read(imageFile);
@@ -298,12 +298,20 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
+		imageFile = new File("ressources/exit.png");
+		try {
+			m_boutonexitSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 	long m_old_courant = 0;
 	long m_old_tree = 0;
-	long m=0;
-	
+	long m = 0;
+
 	@Override
 	public void step(long now) {
 
@@ -360,7 +368,6 @@ public class Model extends GameModel {
 			}
 			m_old_tree = now;
 		}
-		
 
 		m_joueur.update(now);
 		try {
@@ -368,7 +375,14 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+//		if(m_projectile.isDiscovered() ) {
+//			try {
+//			  m_projectile.step(now);
+//			} catch (Exception e) {
+//			 System.out.println("BAAAAAAAM");
+//			 e.printStackTrace();
+//		 }
+//		}
 
 		pourcentageDefaite();
 		if (m_pourcentage_defaite >= 100) {

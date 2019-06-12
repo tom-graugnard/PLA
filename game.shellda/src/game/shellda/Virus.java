@@ -127,6 +127,13 @@ public class Virus extends Element {
 	public void die(LinkedList<Virus> virus) {
 		virus.remove(this);
 	}
+	
+	public void move() {
+		
+	}
+	
+	
+	
 
 	public void paint(Graphics g) {
 		if (m_courant == m_model.m_courant) {

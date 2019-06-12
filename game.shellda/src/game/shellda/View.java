@@ -1,8 +1,6 @@
 package game.shellda;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 
 import edu.ricm3.game.GameView;
@@ -14,11 +12,11 @@ public class View extends GameView {
 	 */
 	private static final long serialVersionUID = 1L;
 	Model m_model;
-	Color m_background = new Color(212, 212, 212);//Color.gray;
+	Color m_background = new Color(212, 212, 212);// Color.gray;
 	long m_last;
 	int m_npaints;
 	int m_fps;
-	boolean choix=false;
+	boolean choix = false;
 
 	public View(Model model) {
 		m_model = model;
@@ -42,14 +40,13 @@ public class View extends GameView {
 		// erase background
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
-		
-		
+
 		if (!m_model.gameStart)
-			if(!m_model.gameOption)
+			if (!m_model.gameOption)
 				_menuPrincipal(g);
 			else {
 				_FenetreOption(g);
-				
+
 			}
 		else
 			_FenetreJeu(g);
@@ -65,7 +62,7 @@ public class View extends GameView {
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
 		m_model.m_boutonoption.paint(g);
-		
+
 	}
 
 	protected void _FenetreJeu(Graphics g) {
@@ -75,9 +72,9 @@ public class View extends GameView {
 		g.setColor(Color.MAGENTA);
 		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
-	
+
 	protected void _FenetreOption(Graphics g) {
-		choix=true;
+		choix = true;
 		m_model.m_boutonexit.paint(g);
 		g.setColor(new Color(72, 72, 72));
 		for(int i=0;i<5;i++) {
@@ -127,21 +124,18 @@ public class View extends GameView {
 
 			g.setColor(new Color(231,89,82));
 		}
-		
-		
-		
+
 	}
-	
-	
-	protected boolean inside(int i,int j,int x,int y, int w, int h) {
-		if(i>=x && i<x+w && j>=y && j<y+h)
+
+	protected boolean inside(int i, int j, int x, int y, int w, int h) {
+		if (i >= x && i < x + w && j >= y && j < y + h)
 			return true;
 		else
 			return false;
 	}
 
 	public void step(long now) {
-		
+
 	}
 
 }
