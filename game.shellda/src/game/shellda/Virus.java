@@ -113,9 +113,6 @@ public class Virus extends Element {
 				m_courant = d.m_contenu;
 				// m_decouvert = false; // A VOIR
 			}
-		} else {
-			// System.out.print(m_x_ + " ");
-			// System.out.println(m_y_);
 		}
 	}
 
@@ -152,16 +149,16 @@ public class Virus extends Element {
 			
 			switch (m_type) {
 			case 0:
-				g.drawImage(m_model.m_virus1Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus1Sprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 				break;
 			case 1:
-				g.drawImage(m_model.m_virus2Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus2Sprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 				break;
 			case 2:
-				g.drawImage(m_model.m_virus3Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus3Sprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 				break;
 			case 3:
-				g.drawImage(m_model.m_virus4Sprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+				g.drawImage(m_model.m_virus4Sprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 				break;
 			}
 		}

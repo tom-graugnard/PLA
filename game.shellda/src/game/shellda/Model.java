@@ -24,7 +24,7 @@ public class Model extends GameModel {
 	Balle m_balle;
 	
 	Noeud m_courant;
-	
+
 	int m_pourcentage_defaite;
 	int m_nb_fichier_corbeille;
 
@@ -37,7 +37,7 @@ public class Model extends GameModel {
 	BoutonExit m_boutonexit;
 	BufferedImage m_boutonOptionSprite;
 	BoutonOption m_boutonoption;
-	
+
 	boolean gameStart = false;
 	boolean gameOption = false;
 
@@ -50,12 +50,12 @@ public class Model extends GameModel {
 	BufferedImage m_dossierSprite;
 	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
-	BufferedImage m_fichierSprite;
+	BufferedImage[] m_fichierSprite;
 	BufferedImage m_fichierCorrompuSprite;
 	BufferedImage m_backgroundSprite;
 	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_archiveSprite;
-	BufferedImage m_balleSprite;
+	BufferedImage[] m_balleSprite;
 
 	BufferedImage m_virus1Sprite;
 	BufferedImage m_virus2Sprite;
@@ -73,7 +73,12 @@ public class Model extends GameModel {
 	
 	public LinkedList<IKey> m_keys;
 
+	NameGenerator m_generator;
+
 	public Model() {
+		m_fichierSprite = new BufferedImage[4];
+		m_balleSprite = new BufferedImage[6];
+		m_generator = new NameGenerator();
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {
@@ -111,8 +116,7 @@ public class Model extends GameModel {
 				Options.BoutonExitScale);
 		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
-				Options.HEIGHT - 200,
-				Options.BoutonOptionScale);
+				Options.HEIGHT - 200, Options.BoutonOptionScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -124,10 +128,10 @@ public class Model extends GameModel {
 		}
 		return false;
 	}
-	
+
 	public void pourcentageDefaite() {
-		m_pourcentage_defaite = m_nb_fichier_corbeille * (100/Options.CORROMPU_DEFAITE);
-		
+		m_pourcentage_defaite = m_nb_fichier_corbeille * (100 / Options.CORROMPU_DEFAITE);
+
 	}
 
 	private void loadSprites() {
@@ -205,7 +209,28 @@ public class Model extends GameModel {
 		}
 		imageFile = new File("ressources/fichier.png");
 		try {
-			m_fichierSprite = ImageIO.read(imageFile);
+			m_fichierSprite[0] = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_25.png");
+		try {
+			m_fichierSprite[1] = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_50.png");
+		try {
+			m_fichierSprite[2] = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/fichier_75.png");
+		try {
+			m_fichierSprite[3] = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -238,12 +263,14 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/Fireball.png");
-		try {
-			m_balleSprite = ImageIO.read(imageFile);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(-1);
+		for(int i = 1; i < 7; i++) {
+			imageFile = new File("ressources/code_" + i + ".png");
+			try {
+				m_balleSprite[i - 1] = ImageIO.read(imageFile);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-1);
+			}
 		}
 
 		// ===== Menu =====
@@ -275,11 +302,11 @@ public class Model extends GameModel {
 
 	@Override
 	public void step(long now) {
-		
+
 		for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 				try {
-					if(m_courant.m_carte[i][j] != null)
+					if (m_courant.m_carte[i][j] != null)
 						m_courant.m_carte[i][j].update(now);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -291,7 +318,8 @@ public class Model extends GameModel {
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null	&& !(m_courant.m_carte[i][j] instanceof Virus) &&!(m_courant.m_carte[i][j] instanceof Balle))
+						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus)
+								&& !(m_courant.m_carte[i][j] instanceof Balle))
 							m_courant.m_carte[i][j].step(now);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -312,7 +340,7 @@ public class Model extends GameModel {
 			}
 			m_old_courant = now;
 		}
-		
+
 		if (now - m_old_tree > Options.PC_SPEED * 4) {
 			for (int i = 0; i < m_virus.size(); i++) {
 				Virus v = m_virus.get(i);
@@ -328,7 +356,7 @@ public class Model extends GameModel {
 			}
 			m_old_tree = now;
 		}
-		
+
 		m_joueur.update(now);
 		try {
 			m_joueur.step(now);
@@ -337,7 +365,7 @@ public class Model extends GameModel {
 		}
 
 		pourcentageDefaite();
-		if(m_pourcentage_defaite >= 100) {
+		if (m_pourcentage_defaite >= 100) {
 			shutdown();
 		}
 	}

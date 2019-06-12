@@ -3,6 +3,7 @@ package game.shellda;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
@@ -108,13 +109,15 @@ public class Clink extends Element {
 				}
 			}
 			Element element = m_courant.remove_element(m_x + coordonnees[0], m_y + coordonnees[1]);
-			element.m_x = m_x + coordonnees[0] * 2;
-			element.m_y = m_y + coordonnees[1] * 2;
-			m_courant.set_element(element);
+			if (element != null) {
+				element.m_x = m_x + coordonnees[0] * 2;
+				element.m_y = m_y + coordonnees[1] * 2;
+				m_courant.set_element(element);
+			}
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_nSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 	}
 
@@ -135,7 +138,7 @@ public class Clink extends Element {
 			}
 			if (m_auto != null)
 				m_auto.step(this);
-			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
+			if (now - m_old_corbeille > Options.PC_SPEED / 3) {
 				for (int i = 0; i < m_lasers.size(); i++)
 					m_lasers.get(i).step(now);
 				m_old_corbeille = now;
@@ -144,24 +147,30 @@ public class Clink extends Element {
 		}
 
 		public void Hit(IDirection direction) {
+			int taille = m_lasers.size();
+			for(int i = 0; i < taille; i++) {
+				Element e = m_lasers.getFirst();
+				m_courant.m_carte[e.m_x][e.m_y] = null;
+				m_lasers.removeFirst();
+			}
 			m_model.m_courant = m_model.corb_parent;
 			m_courant = m_model.corb_parent;
+			m_lasers.clear();
 			m_model.m_joueur = new ClinkNorm(m_courant, m_model, 0, 0);
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 8, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
-			if (m_lasers.size() < 5) {
+			if (m_lasers.size() <= 5) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
 			}
 		}
 
 		public void Wizz(IDirection direction) {
-			System.out.println("tire spé");
-			if (m_lasers.size() < 5 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
+			if (m_lasers.size() <= 1 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 2, m_y));
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y - 1));
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y + 1));
