@@ -3,7 +3,6 @@ package game.shellda;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 

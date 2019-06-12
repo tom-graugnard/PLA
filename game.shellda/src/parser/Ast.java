@@ -1,8 +1,11 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import interpreter.IAction;
 import interpreter.IAutomaton;
@@ -13,6 +16,7 @@ import interpreter.IKey;
 import interpreter.IKind;
 import interpreter.IState;
 import interpreter.ITransition;
+//import parser.Ast.AI_Definitions;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
  *
@@ -452,6 +456,7 @@ public class Ast {
 			this.expression = expression;
 		}
 
+
 		// TODO: Changer pour obtenir la bonne condition à partir de l'expression
 		public ICondition make() {
 			return (ICondition) expression.make();
@@ -464,6 +469,9 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
+//		public ICondition make() {
+//			return new ICondition();
+//		}
 	}
 
 	public static class Action extends Ast {
@@ -487,6 +495,10 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
+//		public IAction make() {
+//			return new IAction();
+//			
+//		}
 	}
 
 	public static class State extends Ast {
@@ -497,7 +509,6 @@ public class Ast {
 			this.kind = "State";
 			this.name = new Terminal(string);
 		}
-
 		public IState make() {
 			return new IState(name.make());
 		}
@@ -513,6 +524,9 @@ public class Ast {
 		public String as_state_of(Automaton automaton) {
 			return Dot.declare_node(this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4");
 		}
+//		public IState make() {
+//			return new IState(name.value);
+//		}
 	}
 
 	public static class AI_Definitions extends Ast {
@@ -523,6 +537,9 @@ public class Ast {
 			this.kind = "AI_Definitions";
 			this.automata = list;
 		}
+		
+
+		
 
 		public List<IAutomaton> make() {
 			LinkedList<IAutomaton> result = new LinkedList<IAutomaton>();
@@ -616,6 +633,8 @@ public class Ast {
 			this.source = state;
 			this.transitions = transitions;
 		}
+		
+		
 
 		public IBehaviour make() {
 			LinkedList<ITransition> _transitions = new LinkedList<ITransition>();
@@ -645,6 +664,14 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string;
 		}
+//		public IBehaviour make() {
+//			List<ITransition> itransitions=new LinkedList<ITransition>();
+//			Iterator<Transition> iter=transitions.iterator();
+//			while(iter.hasNext()) {
+//				
+//				itransitions.add(iter.next().make());
+//			}return new IBehaviour(source.make(),itransitions);
+//		}
 	}
 
 	public static class Transition extends Ast {
@@ -681,3 +708,5 @@ public class Ast {
 		}
 	}
 }
+
+

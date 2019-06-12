@@ -23,6 +23,7 @@ public class Model extends GameModel {
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
 
+
 	Noeud m_courant;
 
 	int m_pourcentage_defaite;
@@ -301,6 +302,14 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
+		imageFile = new File("ressources/exit.png");
+		try {
+			m_boutonexitSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 	long m_old_courant = 0;
@@ -370,6 +379,14 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+//		if(m_projectile.isDiscovered() ) {
+//			try {
+//			  m_projectile.step(now);
+//			} catch (Exception e) {
+//			 System.out.println("BAAAAAAAM");
+//			 e.printStackTrace();
+//		 }
+//		}
 
 		pourcentageDefaite();
 		if (m_pourcentage_defaite >= 100) {
