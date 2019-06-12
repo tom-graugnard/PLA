@@ -18,9 +18,7 @@ Joueur1(Init){
 }
 Joueur2(Init){
   * (Init):
-  | True ? Wizz :(Autre)
-  * (Autre):
-  | True ? Pop :(Init)
+  | True ? Wizz :(Init)
 }
 
 Balle(Init){
@@ -50,3 +48,6 @@ Fichier(Zero){
   | True ? Move(O) :(Zero)
 }
 
+Archive(Init){
+	*(Init):
+}

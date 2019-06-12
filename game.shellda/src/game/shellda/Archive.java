@@ -4,6 +4,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import game.shellda.Fichier.FichNorm;
+import interpreter.IDirection;
 import interpreter.IKind;
 
 public class Archive extends Element {
@@ -20,6 +22,14 @@ public class Archive extends Element {
 		m_kind = new IKind("G");
 		m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
 		auto = m_model.m_autoChoix[5];
+	}
+	
+	public void Wizz(IDirection direction) {
+		m_courant.m_carte[m_x][m_y] = new FichNorm(m_courant, m_model, m_x, m_y, m_name);
+	}
+
+	public void Pop(IDirection direction) {
+		m_courant.m_carte[m_x][m_y] = new Archive(m_courant, m_model, m_x, m_y, m_name);
 	}
 
 	public Element decompression() {

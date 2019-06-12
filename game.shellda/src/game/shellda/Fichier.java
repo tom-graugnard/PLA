@@ -49,7 +49,7 @@ public class Fichier extends Element {
 	}
 
 	public void Pop(IDirection direction) {
-		m_courant.m_carte[m_x][m_y] = new Fichier(m_courant, m_model, m_x, m_y, m_name);
+		m_courant.m_carte[m_x][m_y] = new FichNorm(m_courant, m_model, m_x, m_y, m_name);
 	}
 
 	public void goCorbeille() {
@@ -112,12 +112,13 @@ public class Fichier extends Element {
 
 	public static class FichNorm extends Fichier {
 		int auto1;
-		
+
 		public FichNorm(Noeud courant, Model model, int x, int y, String name) {
 			super(courant, model, x, y, name);
 			m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
 			auto1 = m_model.m_autoChoix[5];
 		}
+
 		public void step(long now) throws Exception {
 			if (auto1 != m_model.m_autoChoix[5]) {
 				m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
@@ -127,13 +128,13 @@ public class Fichier extends Element {
 				m_auto.step(this);
 			update(now);
 		}
-		
+
 	}
 
 	public static class FichCorb extends Fichier {
-		
+
 		int auto2;
-		
+
 		public FichCorb(Noeud courant, Model model, int x, int y, String name, int old_x, int old_y, Noeud old_noeud,
 				String old_name, Element type) {
 			super(courant, model, x, y, name);
