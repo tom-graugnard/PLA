@@ -4,8 +4,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.Random;
 
-import game.shellda.Fichier.FichCorb;
-import game.shellda.Fichier.FichNorm;
 
 public abstract class Executable extends Fichier {
 
