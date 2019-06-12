@@ -125,7 +125,7 @@ public class Clink extends Element {
 		public void step(long now) throws Exception {
 			if (m_auto != null)
 				m_auto.step(this);
-			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
+			if (now - m_old_corbeille > Options.PC_SPEED / 3) {
 				for (int i = 0; i < m_lasers.size(); i++)
 					m_lasers.get(i).step(now);
 				m_old_corbeille = now;
@@ -151,13 +151,13 @@ public class Clink extends Element {
 		}
 
 		public void Pop(IDirection direction) {
-			if (m_lasers.size() < 5) {
+			if (m_lasers.size() <= 5) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
 			}
 		}
 
 		public void Wizz(IDirection direction) {
-			if (m_lasers.size() < 5 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
+			if (m_lasers.size() <= 1 && m_y>=2 && m_y<Options.HAUTEUR_CARTE-2) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 2, m_y));
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y - 1));
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y + 1));
