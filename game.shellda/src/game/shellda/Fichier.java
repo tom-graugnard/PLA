@@ -28,16 +28,13 @@ public class Fichier extends Element {
 
 	public void paint(Graphics g) {
 		int i;
-		if(m_infection > 75) {
+		if (m_infection > 75) {
 			i = 0;
-		}
-		else if (m_infection > 50) {
+		} else if (m_infection > 50) {
 			i = 1;
-		}
-		else if(m_infection > 25) {
+		} else if (m_infection > 25) {
 			i = 2;
-		}
-		else {
+		} else {
 			i = 3;
 		}
 		g.drawImage(m_model.m_fichierSprite[i], m_x * 48 + 8, m_y * 48 + 10, 32, 32, null);
@@ -101,24 +98,18 @@ public class Fichier extends Element {
 	}
 
 	public void retour() {
-		if (m_type instanceof Decompresseur) {
-			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new Decompresseur(m_courant_ancien, m_model, m_x_ancien,
-					m_y_ancien);
-		} else {
-			if (m_type instanceof AntiVirus) {
-				m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new AntiVirus(m_courant_ancien, m_model, m_x_ancien,
-						m_y_ancien);
-			} else {
-				if (m_type instanceof Shellda) {
-					m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new Shellda(m_courant_ancien, m_model,
-							m_x_ancien, m_y_ancien);
-				} else {
-					if (m_courant_ancien != null && m_courant_ancien != m_model.m_corbeille)
-						m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model,
-								m_x_ancien, m_y_ancien, m_name_ancien);
-				}
-			}
+		Element e = m_courant_ancien.m_carte[m_x_ancien][m_y_ancien];
+		if(e instanceof Virus) {
+			Virus v = (Virus) e;
+			v.die(m_model.m_virus);
+			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = null;
 		}
+
+		if (m_courant_ancien != null && m_courant_ancien != m_model.m_corbeille)
+			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model, m_x_ancien,
+					m_y_ancien, m_name_ancien);
+
+
 		m_model.m_nb_fichier_corbeille--;
 	}
 

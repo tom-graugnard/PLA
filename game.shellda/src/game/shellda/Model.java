@@ -56,6 +56,7 @@ public class Model extends GameModel {
 	BufferedImage m_backgroundSelectedSprite;
 	BufferedImage m_archiveSprite;
 	BufferedImage[] m_balleSprite;
+	BufferedImage m_executableCorbeilleSprite;
 
 	BufferedImage m_virus1Sprite;
 	BufferedImage m_virus2Sprite;
@@ -256,6 +257,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/executable.png");
 		try {
 			m_executableSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/executable_corbeille.png");
+		try {
+			m_executableCorbeilleSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
