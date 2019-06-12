@@ -93,7 +93,8 @@ public abstract class Executable extends Fichier {
 	}
 
 	public static class ExecutableCorbeille extends Executable {
-
+		int auto;
+		
 		public ExecutableCorbeille(Noeud courant, Model model, int x, int y, String name, int old_x, int old_y,
 				Noeud old_noeud, String old_name, Executable type) {
 			super(courant, model, x, y, name);
@@ -102,7 +103,8 @@ public abstract class Executable extends Fichier {
 			m_courant_ancien = old_noeud;
 			m_name_ancien = old_name;
 			m_type = type;
-			m_auto = m_model.m_automateFichier.copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
+			auto = m_model.m_autoChoix[3];
 		}
 
 		public void paint(Graphics g) {
@@ -115,6 +117,15 @@ public abstract class Executable extends Fichier {
 
 		@Override
 		public void interaction() {
+		}
+		public void step(long now) throws Exception {
+			if (auto != m_model.m_autoChoix[3]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
+				auto = m_model.m_autoChoix[3];
+			}
+			if (m_auto != null)
+				m_auto.step(this);
+			update(now);
 		}
 
 	}
