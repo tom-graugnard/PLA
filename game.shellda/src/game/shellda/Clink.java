@@ -140,6 +140,7 @@ public class Clink extends Element {
 			if(projectile==null) {
 				projectile=new Projectile(this.m_courant,this.m_model,this.m_x+1,this.m_y);
 				m_courant.m_carte[m_x+1][m_y]=projectile;
+				
 			}
 			else {
 				if(projectile.m_x==Options.LARGEUR_CARTE) {

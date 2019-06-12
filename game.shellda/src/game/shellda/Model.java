@@ -278,6 +278,14 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+//		if(m_projectile.isDiscovered() ) {
+//			try {
+//			  m_projectile.step(now);
+//			} catch (Exception e) {
+//			 System.out.println("BAAAAAAAM");
+//			 e.printStackTrace();
+//		 }
+//		}
 
 		
 

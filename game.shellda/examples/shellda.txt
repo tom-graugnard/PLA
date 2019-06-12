@@ -105,8 +105,10 @@ Fichier(Init){
 
 Projectile(Init){
 *(Init) :
-|!(Cell(E,_)) ? Move(E) : (Init)
-|(True)      ? Wait    : (Arret)
-*(Arret) :
+|!(Cell(E,_)) ? Move(E) : (Attente)
+
+*(Attente): 
+|(True) ? Wait : (Init)
+
 }
 
