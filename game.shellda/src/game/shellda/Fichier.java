@@ -113,7 +113,7 @@ public class Fichier extends Element {
 					m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new Shellda(m_courant_ancien, m_model,
 							m_x_ancien, m_y_ancien);
 				} else {
-					if (m_courant_ancien != null)
+					if (m_courant_ancien != null && m_courant_ancien != m_model.m_corbeille)
 						m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model,
 								m_x_ancien, m_y_ancien, m_name_ancien);
 				}

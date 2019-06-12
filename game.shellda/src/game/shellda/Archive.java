@@ -19,7 +19,7 @@ public class Archive extends Element {
 	}
 
 	public Element decompression() {
-		return new Fichier(m_courant,m_model,m_x,m_y,m_model.m_generator.generate());
+		return new Fichier(m_courant,m_model,m_x,m_y,m_model.m_generator.generate_file());
 	}
 
 	public void paint(Graphics g) {
