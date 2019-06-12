@@ -159,9 +159,9 @@ public class Controller extends GameController implements ActionListener {
 				&& m_model.gameOption == false)
 			m_model.gameOption = true;
 		if (m_view.choix == true) {
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 5; j++) {
-					if(m_view.inside(e.getX(), e.getY(),200 + j*100,20+i*80,80,50)) {
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 6; j++) {
+					if(m_view.inside(e.getX(), e.getY(),150 + j*90,15+i*70,80,40)) {
 						//System.out.println(j + " " + i);
 						m_model.m_autoChoix[i]=j;
 					}

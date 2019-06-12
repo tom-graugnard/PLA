@@ -64,8 +64,8 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
-	IAutomaton[] m_automate = new IAutomaton[5];
-	int[] m_autoChoix = { 0, 1, 2, 3, 4 };
+	IAutomaton[] m_automate = new IAutomaton[6];
+	int[] m_autoChoix = { 0, 1, 2, 3, 4, 5 };
 
 	public LinkedList<IKey> m_keys;
 
@@ -94,7 +94,10 @@ public class Model extends GameModel {
 				m_automate[3] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Balle")) {
 				m_automate[4] = automates.get(i);
+			} else if (automates.get(i).m_name.equals("Archive")) {
+				m_automate[5] = automates.get(i);
 			}
+			
 		}
 
 		loadSprites();
