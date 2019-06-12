@@ -299,7 +299,8 @@ public class Model extends GameModel {
 
 	long m_old_courant = 0;
 	long m_old_tree = 0;
-
+	long m=0;
+	
 	@Override
 	public void step(long now) {
 
@@ -356,6 +357,7 @@ public class Model extends GameModel {
 			}
 			m_old_tree = now;
 		}
+		
 
 		m_joueur.update(now);
 		try {
@@ -363,6 +365,7 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 
 		pourcentageDefaite();
 		if (m_pourcentage_defaite >= 100) {

@@ -112,17 +112,7 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
-			m_model.gameStart = true;
-		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false
-				&& m_model.gameOption == false)
-			m_model.shutdown();
-		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption == true)
-			m_model.gameOption = false;
-		if (m_model.m_boutonoption.inside(e.getX(), e.getY()) && m_model.gameStart == false
-				&& m_model.gameOption == false)
-			m_model.gameOption = true;
-
+		
 	}
 
 	@Override
@@ -134,7 +124,19 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_view.choix = true) {
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
+			m_model.gameStart = true;
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false
+				&& m_model.gameOption == false)
+			m_model.shutdown();
+		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption == true) {
+			m_model.gameOption = false;
+			m_view.choix=false;
+		}
+		if (m_model.m_boutonoption.inside(e.getX(), e.getY()) && m_model.gameStart == false
+				&& m_model.gameOption == false)
+			m_model.gameOption = true;
+		if (m_view.choix == true) {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
 					if(m_view.inside(e.getX(), e.getY(),200 + j*100,20+i*80,80,50)) {
