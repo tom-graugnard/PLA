@@ -60,6 +60,7 @@ public class Clink extends Element {
 			}
 			if (m_auto != null)
 				m_auto.step(this);
+			update(now);
 		}
 		public void Hit(IDirection direction) {
 			Element e = m_model.m_courant.m_carte[m_x][m_y];

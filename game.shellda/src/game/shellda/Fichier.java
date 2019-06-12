@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import interpreter.IKind;
 import java.util.Random;
 
-import game.shellda.Clink.ClinkCorb;
-
 public class Fichier extends Element {
 
 	String m_name;
@@ -24,6 +22,7 @@ public class Fichier extends Element {
 		m_kind = new IKind("P");
 		m_name = name;
 		m_infection = 100;
+
 	}
 
 	public void paint(Graphics g) {
@@ -44,15 +43,6 @@ public class Fichier extends Element {
 		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
 	}
 
-	long w = 0;
-
-	public void step(long now) throws Exception {
-		if (now - w > 1000) {
-			if (m_auto != null)
-				m_auto.step(this);
-			w = now;
-		}
-	}
 
 	public void goCorbeille() {
 		Random r = new Random();
@@ -121,7 +111,9 @@ public class Fichier extends Element {
 	}
 
 	public static class FichCorb extends Fichier {
-
+		
+		int auto;
+		
 		public FichCorb(Noeud courant, Model model, int x, int y, String name, int old_x, int old_y, Noeud old_noeud,
 				String old_name, Element type) {
 			super(courant, model, x, y, name);
@@ -130,7 +122,8 @@ public class Fichier extends Element {
 			m_courant_ancien = old_noeud;
 			m_name_ancien = old_name;
 			m_type = type;
-			m_auto = m_model.m_automate[3].copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
+			auto = m_model.m_autoChoix[3];
 		}
 
 		public void paint(Graphics g) {
@@ -140,7 +133,17 @@ public class Fichier extends Element {
 			FontMetrics f = g.getFontMetrics();
 			g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
 		}
-
+		
+		public void step(long now) throws Exception {
+			if (auto != m_model.m_autoChoix[3]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[3]].copy();
+				auto = m_model.m_autoChoix[3];
+			}
+			if (m_auto != null)
+				m_auto.step(this);
+			update(now);
+		}
 	}
+	
 
 }

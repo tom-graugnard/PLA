@@ -63,13 +63,8 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
-	IAutomaton m_automateVirus;
-	IAutomaton m_automateJoueur1;
-	IAutomaton m_automateJoueur2;
-	IAutomaton m_automateFichier;
-	IAutomaton m_automateBalle;
-	IAutomaton[] m_automate=new IAutomaton[5];
-	
+
+	IAutomaton[] m_automate=new IAutomaton[5];	
 	int[] m_autoChoix= {0,1,2,3,4};
 	
 	public LinkedList<IKey> m_keys;
@@ -307,7 +302,8 @@ public class Model extends GameModel {
 
 	long m_old_courant = 0;
 	long m_old_tree = 0;
-
+	long m=0;
+	
 	@Override
 	public void step(long now) {
 
@@ -364,6 +360,7 @@ public class Model extends GameModel {
 			}
 			m_old_tree = now;
 		}
+		
 
 		m_joueur.update(now);
 		try {
@@ -371,6 +368,7 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 
 		pourcentageDefaite();
 		if (m_pourcentage_defaite >= 100) {

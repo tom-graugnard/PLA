@@ -42,12 +42,15 @@ public class View extends GameView {
 		// erase background
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
-
+		
+		
 		if (!m_model.gameStart)
 			if(!m_model.gameOption)
 				_menuPrincipal(g);
-			else
+			else {
 				_FenetreOption(g);
+				
+			}
 		else
 			_FenetreJeu(g);
 
@@ -78,7 +81,7 @@ public class View extends GameView {
 		m_model.m_boutonexit.paint(g);
 		g.setColor(Color.RED);
 		for(int i=0;i<5;i++) {
-			g.drawRect(30, 20 + i*80, 100, 50);
+			g.fillRect(30, 20 + i*80, 100, 50);
 		}
 		g.setColor(Color.green);
 		g.drawString("Virus", 30+30, 20+30);
@@ -90,9 +93,14 @@ public class View extends GameView {
 		g.setColor(Color.CYAN);
 		for(int i=0;i<5;i++) {
 			for(int j=0;j<5;j++) {
-				g.drawRect(200 + j*100, 20 + i*80, 80, 50);
+				g.fillRect(200 + j*100, 20 + i*80, 80, 50);
 			}
-			g.setColor(Color.green);
+			
+			g.setColor(Color.red);
+			for(int k=0;k<5;k++) {
+				g.fillRect(200 + m_model.m_autoChoix[i]*100, 20+i*80, 80, 50);
+			}
+			g.setColor(Color.yellow);
 			g.drawString("Virus", 200+20, 20+30+i*80);
 			g.drawString("Joueur1", 220+100, 20+30+i*80);
 			g.drawString("Joueur2",220+200,20+30+i*80);
@@ -101,7 +109,11 @@ public class View extends GameView {
 
 			g.setColor(Color.cyan);
 		}
+		
+		
+		
 	}
+	
 	
 	protected boolean inside(int i,int j,int x,int y, int w, int h) {
 		if(i>=x && i<x+w && j>=y && j<y+h)
