@@ -46,7 +46,7 @@ public class Model extends GameModel {
 	BufferedImage m_executableSprite;
 
 	BufferedImage m_clink_nSprite;
-	BufferedImage m_clink_cSprite;
+	BufferedImage[] m_clink_cSprite;
 	BufferedImage m_dossierSprite;
 	BufferedImage m_dossierRetourSprite;
 	BufferedImage m_corbeilleSprite;
@@ -71,6 +71,7 @@ public class Model extends GameModel {
 	NameGenerator m_generator;
 
 	public Model() {
+		m_clink_cSprite = new BufferedImage[7];
 		m_fichierSprite = new BufferedImage[4];
 		m_balleSprite = new BufferedImage[6];
 		m_generator = new NameGenerator();
@@ -130,6 +131,7 @@ public class Model extends GameModel {
 	}
 
 	private void loadSprites() {
+		int i;
 		m_font = new Font("Arial", 0, 9);
 		File imageFile;
 		imageFile = new File("ressources/virus_1.png");
@@ -167,12 +169,14 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		imageFile = new File("ressources/clink_corbeille.png");
-		try {
-			m_clink_cSprite = ImageIO.read(imageFile);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(-1);
+		for (i = 0; i < 7; i++) {
+			imageFile = new File("ressources/clink_corbeille_"+i+".png");
+			try {
+				m_clink_cSprite[i] = ImageIO.read(imageFile);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				System.exit(-1);
+			}
 		}
 		imageFile = new File("ressources/background.png");
 		try {
@@ -265,7 +269,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		for (int i = 1; i < 7; i++) {
+		for (i = 1; i < 7; i++) {
 			imageFile = new File("ressources/code_" + i + ".png");
 			try {
 				m_balleSprite[i - 1] = ImageIO.read(imageFile);
