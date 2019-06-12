@@ -62,13 +62,8 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
-	IAutomaton m_automateVirus;
-	IAutomaton m_automateJoueur1;
-	IAutomaton m_automateJoueur2;
-	IAutomaton m_automateFichier;
-	IAutomaton m_automateBalle;
-	IAutomaton[] m_automate=new IAutomaton[5];
-	
+
+	IAutomaton[] m_automate=new IAutomaton[5];	
 	int[] m_autoChoix= {0,1,2,3,4};
 	
 	public LinkedList<IKey> m_keys;
