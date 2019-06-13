@@ -3,6 +3,7 @@ package game.shellda;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
+import game.shellda.Fichier.FichNorm;
 
 import game.shellda.Clink.ClinkCorb;
 
@@ -107,13 +108,13 @@ public class Noeud {
 		} else {
 			i = 0;
 		}
-		int nombre_fichier = rand.nextInt(4);
-		// On ajoute des fichiers dans notre dossier
-		for (j = i + 1; j <= (profondeur + 1) * 2 + i + nombre_fichier + 1; j++) {
+		int nombre_FichNorm = rand.nextInt(4);
+		// On ajoute des FichNorms dans notre dossier
+		for (j = i + 1; j <= (profondeur + 1) * 2 + i + nombre_FichNorm + 1; j++) {
 			x = j / Options.HAUTEUR_CARTE;
 			y = j % Options.HAUTEUR_CARTE;
 			s = m_model.m_generator.generate_file();
-			set_element(new Fichier(this, m_model, x, y, s));
+			set_element(new FichNorm(this, m_model, x, y, s));
 		}
 	}
 

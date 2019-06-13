@@ -40,6 +40,9 @@ public class Model extends GameModel {
 	BoutonExit m_boutonexit;
 	BufferedImage m_boutonOptionSprite;
 	BoutonOption m_boutonoption;
+	
+	BufferedImage m_logoSprite;
+	Logo m_logo;
 
 	boolean gameStart = false;
 	boolean gameOption = false;
@@ -66,8 +69,8 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
-	IAutomaton[] m_automate = new IAutomaton[5];
-	int[] m_autoChoix = { 0, 1, 2, 3, 4 };
+	IAutomaton[] m_automate = new IAutomaton[6];
+	int[] m_autoChoix = { 0, 1, 2, 3, 4, 5 };
 
 	public LinkedList<IKey> m_keys;
 
@@ -81,7 +84,7 @@ public class Model extends GameModel {
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {
-			automates = AutomataParser.automatas_from_file("examples/demo.txt");
+			automates = AutomataParser.automatas_from_file("examples/shellda.txt");
 		} catch (Exception e) {
 			System.out.println("Erreur dans la récupération d'automates");
 		}
@@ -96,7 +99,10 @@ public class Model extends GameModel {
 				m_automate[3] = automates.get(i);
 			} else if (automates.get(i).m_name.equals("Balle")) {
 				m_automate[4] = automates.get(i);
+			} else if (automates.get(i).m_name.equals("Archive")) {
+				m_automate[5] = automates.get(i);
 			}
+			
 		}
 
 		loadSprites();
@@ -116,15 +122,9 @@ public class Model extends GameModel {
 		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
 				Options.HEIGHT - 200, Options.BoutonOptionScale);
-		m_boutonYes= new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
-				(Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2)+110,
-				Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2,
-				Options.BoutonPlayScale+0.1F);
-		m_boutonFin=new BoutonExit(this, 0, m_boutonexitSprite, 1, 1,
-				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
-				(Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2)-30,
-				Options.BoutonPlayScale+0.1F);
-		
+		m_logo= new Logo(this, 0, m_logoSprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_logoSprite.getWidth() * Options.LogoScale) / 2,
+				Options.HEIGHT / 2 - 150 - (int) (m_logoSprite.getHeight() * Options.LogoScale) / 2, Options.LogoScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -138,7 +138,14 @@ public class Model extends GameModel {
 	}
 
 	public void pourcentageDefaite() {
-		m_pourcentage_defaite = m_nb_fichier_corbeille * (100 / Options.CORROMPU_DEFAITE);
+		int i, j, total = 0;
+		for(i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for(j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				if(m_corbeille.m_carte[i][j] instanceof Fichier)
+					total++;
+			}
+		}
+		m_pourcentage_defaite = total * (100 / Options.CORROMPU_DEFAITE);
 
 	}
 
@@ -317,6 +324,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/exit.png");
 		try {
 			m_boutonexitSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/logo.png");
+		try {
+			m_logoSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

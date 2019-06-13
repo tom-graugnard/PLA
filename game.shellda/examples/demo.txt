@@ -48,3 +48,7 @@ Fichier(Zero){
   | True ? Move(O) :(Zero)
 }
 
+Archive(Init){
+  * (Init):
+  | True ? Pop :(Init)
+}

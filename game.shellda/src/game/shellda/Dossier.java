@@ -3,12 +3,13 @@ package game.shellda;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
+import interpreter.IDirection;
 import interpreter.IKind;
 
 public class Dossier extends Element {
 
 	String m_name;
-
+	int auto;
 	Noeud m_contenu;
 
 	public Dossier(Noeud courant, Model model, int x, int y, String name, Noeud contenu) {
@@ -16,6 +17,26 @@ public class Dossier extends Element {
 		m_contenu = contenu;
 		m_name = name;
 		m_kind = new IKind("D");
+		m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+		auto = m_model.m_autoChoix[5];
+	}
+	
+	public void Wizz(IDirection direction) {
+		m_courant.m_carte[m_x][m_y] = new Corbeille(m_courant, m_model, m_x, m_y, m_contenu);
+	}
+
+	public void Pop(IDirection direction) {
+		m_name = m_model.m_generator.generate_folder();
+	}
+	
+	public void step(long now) throws Exception {
+		if (auto != m_model.m_autoChoix[5]) {
+			m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+			auto = m_model.m_autoChoix[5];
+		}
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
 	}
 
 	public void paint(Graphics g) {

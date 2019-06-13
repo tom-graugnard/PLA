@@ -1,10 +1,12 @@
 package game.shellda;
 
+
 public class AntiVirus extends Executable {
 	
 	AntiVirus(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y, "Anti-Virus");
 	}
+	
 
 	public void interaction() {
 		int i = 0;

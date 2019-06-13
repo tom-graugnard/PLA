@@ -156,3 +156,7 @@ Fichier(Zero){
 	| !(Cell(E,_)) ? Move(E) : (Zero)
 }
 
+Archive(Init){
+	*(Init):
+}
+
