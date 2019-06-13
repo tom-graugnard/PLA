@@ -1,10 +1,12 @@
 package game.shellda;
 
+
 public class Decompresseur extends Executable{
 	
 	Decompresseur(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y, "Dezippeur");
 	}
+	
 
 	public void interaction() {
 		int i = 0;

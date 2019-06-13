@@ -4,13 +4,17 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.Random;
 
+import interpreter.IDirection;
 
 public abstract class Executable extends Fichier {
 
 	Executable m_type;
+	int auto;
 
 	public Executable(Noeud courant, Model model, int x, int y, String name) {
 		super(courant, model, x, y, name);
+		m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+		auto = m_model.m_autoChoix[5];
 	}
 
 	public abstract void interaction();
@@ -21,6 +25,37 @@ public abstract class Executable extends Fichier {
 		g.setFont(m_model.m_font);
 		FontMetrics f = g.getFontMetrics();
 		g.drawString(m_name, m_x * 48 + (48 - f.stringWidth(m_name)) / 2, m_y * 48 + 42 + (16 / 2));
+	}
+
+	public void step(long now) throws Exception {
+		if (auto != m_model.m_autoChoix[5]) {
+			m_auto = m_model.m_automate[m_model.m_autoChoix[5]].copy();
+			auto = m_model.m_autoChoix[5];
+		}
+		if (m_auto != null)
+			m_auto.step(this);
+		update(now);
+	}
+
+	public void Wizz(IDirection direction) {
+		Element e = m_courant.m_carte[m_x][m_y];
+		if (e instanceof ExecutableCorbeille) {
+			retour();
+		} else {
+			m_courant.m_carte[m_x][m_y] = new ExecutableCorbeille(m_courant, m_model, m_x, m_y, m_name, m_x, m_y,
+					m_courant, m_name, this);
+		}
+
+	}
+
+	public void Pop(IDirection direction) {
+		if (m_name.equals("Anti-Virus")) {
+			m_name = "Dezippeur";
+		} else if (m_name.equals("Dezippeur")) {
+			m_name = "Shellda";
+		} else {
+			m_name = "Anti-Virus";
+		}
 	}
 
 	public void goCorbeille() {

@@ -49,5 +49,6 @@ Fichier(Zero){
 }
 
 Archive(Init){
-	*(Init):
+  * (Init):
+  | True ? Pop :(Init)
 }

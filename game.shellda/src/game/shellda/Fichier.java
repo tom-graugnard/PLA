@@ -49,7 +49,7 @@ public class Fichier extends Element {
 	}
 
 	public void Pop(IDirection direction) {
-		m_courant.m_carte[m_x][m_y] = new FichNorm(m_courant, m_model, m_x, m_y, m_name);
+		m_name = m_model.m_generator.generate_file();
 	}
 
 	public void goCorbeille() {

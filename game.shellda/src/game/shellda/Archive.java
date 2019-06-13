@@ -29,7 +29,7 @@ public class Archive extends Element {
 	}
 
 	public void Pop(IDirection direction) {
-		m_courant.m_carte[m_x][m_y] = new Archive(m_courant, m_model, m_x, m_y, m_name);
+		m_name = m_model.m_generator.generate_compressed();
 	}
 
 	public Element decompression() {
