@@ -148,6 +148,50 @@ public class Fichier extends Element {
 			auto2 = m_model.m_autoChoix[3];
 		}
 
+		public void Pop(IDirection direction) {
+			System.out.println("POP");;
+		}
+		
+		public void Move(IDirection direction) {
+			System.out.println(m_name);
+			if(direction.nord()) {
+				System.out.println("Move au nord");
+			}
+			else if (direction.sud()) {
+				System.out.println("Move au sud");
+			}
+			int[] coordonnees;
+			if (direction.absolue()) {
+				coordonnees = direction.coordonnees();
+				m_direction = direction;
+			} else {
+				if (direction.front()) {
+					coordonnees = m_direction.coordonnees();
+				} else if (direction.back()) {
+					m_direction = m_direction.absolue_back();
+					coordonnees = m_direction.coordonnees();
+				} else if (direction.right()) {
+					m_direction = m_direction.absolue_right();
+					coordonnees = m_direction.coordonnees();
+				} else /* direction.left() */ {
+					m_direction = m_direction.absolue_left();
+					coordonnees = m_direction.coordonnees();
+				}
+			}
+			m_courant.m_carte[m_x][m_y] = null;
+			m_x += coordonnees[0];
+			m_y += coordonnees[1];
+			while (m_x < 0) {
+				m_x += Options.LARGEUR_CARTE;
+			}
+			m_x %= Options.LARGEUR_CARTE;
+			while (m_y < 0) {
+				m_y += Options.HAUTEUR_CARTE;
+			}
+			m_y %= Options.HAUTEUR_CARTE;
+			m_courant.m_carte[m_x][m_y] = this;
+		}
+		
 		public void paint(Graphics g) {
 			g.drawImage(m_model.m_fichierCorrompuSprite, m_x * 48 + 8, m_y * 48 + 10, 32, 32, null);
 

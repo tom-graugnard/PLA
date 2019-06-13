@@ -8,9 +8,9 @@ public class Options {
 	public static int WIDTH = LARGEUR_CARTE*(48);
 	public static int HEIGHT = HAUTEUR_CARTE*(48) + 55; // + 55 pour l'affichage des FPS, etc
 	
-	public static int PROFONDEUR_ARBORESCENCE = 3;
+	public static int PROFONDEUR_ARBORESCENCE = 1;
 	
-	public static int PC_SPEED = 1000;
+	public static int PC_SPEED = 100;
 	
 	public static float BoutonPlayScale=0.1F;
 	public static float BoutonExitScale=0.05F;

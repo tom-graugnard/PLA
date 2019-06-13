@@ -23,7 +23,6 @@ public class Model extends GameModel {
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
 
-
 	Noeud m_courant;
 
 	int m_pourcentage_defaite;
@@ -38,7 +37,7 @@ public class Model extends GameModel {
 	BoutonExit m_boutonexit;
 	BufferedImage m_boutonOptionSprite;
 	BoutonOption m_boutonoption;
-	
+
 	BufferedImage m_logoSprite;
 	Logo m_logo;
 
@@ -100,7 +99,7 @@ public class Model extends GameModel {
 			} else if (automates.get(i).m_name.equals("Archive")) {
 				m_automate[5] = automates.get(i);
 			}
-			
+
 		}
 
 		loadSprites();
@@ -120,7 +119,7 @@ public class Model extends GameModel {
 		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
 				Options.HEIGHT - 200, Options.BoutonOptionScale);
-		m_logo= new Logo(this, 0, m_logoSprite, 1, 1,
+		m_logo = new Logo(this, 0, m_logoSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_logoSprite.getWidth() * Options.LogoScale) / 2,
 				Options.HEIGHT / 2 - 150 - (int) (m_logoSprite.getHeight() * Options.LogoScale) / 2, Options.LogoScale);
 	}
@@ -137,9 +136,9 @@ public class Model extends GameModel {
 
 	public void pourcentageDefaite() {
 		int i, j, total = 0;
-		for(i = 0; i < Options.LARGEUR_CARTE; i++) {
-			for(j = 0; j < Options.HAUTEUR_CARTE; j++) {
-				if(m_corbeille.m_carte[i][j] instanceof Fichier)
+		for (i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for (j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				if (m_corbeille.m_carte[i][j] instanceof Fichier)
 					total++;
 			}
 		}
@@ -187,7 +186,7 @@ public class Model extends GameModel {
 			System.exit(-1);
 		}
 		for (i = 0; i < 7; i++) {
-			imageFile = new File("ressources/clink_corbeille_"+i+".png");
+			imageFile = new File("ressources/clink_corbeille_" + i + ".png");
 			try {
 				m_clink_cSprite[i] = ImageIO.read(imageFile);
 			} catch (IOException ex) {
@@ -318,7 +317,7 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
-		
+
 		imageFile = new File("ressources/exit.png");
 		try {
 			m_boutonexitSprite = ImageIO.read(imageFile);
@@ -354,12 +353,16 @@ public class Model extends GameModel {
 		}
 		// Mise à jour des éléments
 		if (now - m_old_courant > Options.PC_SPEED) {
+			LinkedList<Element> elems = new LinkedList<Element>();
 			for (int i = 0; i < Options.LARGEUR_CARTE; i++) {
 				for (int j = 0; j < Options.HAUTEUR_CARTE; j++) {
 					try {
-						if (m_courant.m_carte[i][j] != null && !(m_courant.m_carte[i][j] instanceof Virus)
-								&& !(m_courant.m_carte[i][j] instanceof Balle))
+						if (m_courant.m_carte[i][j] != null && !elems.contains(m_courant.m_carte[i][j])
+								&& !(m_courant.m_carte[i][j] instanceof Virus)
+								&& !(m_courant.m_carte[i][j] instanceof Balle)) {
+							elems.add(m_courant.m_carte[i][j]);
 							m_courant.m_carte[i][j].step(now);
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
