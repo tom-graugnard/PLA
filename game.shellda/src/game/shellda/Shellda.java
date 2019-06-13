@@ -9,6 +9,7 @@ public class Shellda extends Executable{
 
 	public void interaction() {
 		System.out.println("Bravo tu as gagné gros bg!");
-		m_model.shutdown();
+		m_model.m_etat=3;
+//		m_model.shutdown();
 	}
 }

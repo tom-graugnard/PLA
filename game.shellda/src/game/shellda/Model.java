@@ -125,6 +125,13 @@ public class Model extends GameModel {
 		m_logo= new Logo(this, 0, m_logoSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_logoSprite.getWidth() * Options.LogoScale) / 2,
 				Options.HEIGHT / 2 - 150 - (int) (m_logoSprite.getHeight() * Options.LogoScale) / 2, Options.LogoScale);
+		
+		m_boutonYes = new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
+				(Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2)+110,
+				Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2,
+				Options.BoutonPlayScale+0.1F);
+		m_boutonFin = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, (Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2)-150, (Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2)-30,
+				Options.BoutonExitScale+0.15F);
 	}
 
 	public boolean removeKey(String key) {
@@ -407,9 +414,9 @@ public class Model extends GameModel {
 
 
 		pourcentageDefaite();
-//		if (m_pourcentage_defaite >= 100) {
-//			m_etat=2;
-//		}
+		if(m_pourcentage_defaite >= 100) {
+			m_etat=2;
+         }
 	}
 
 	@Override
