@@ -49,8 +49,8 @@ public class NameGenerator {
 		m_rand = new Random();
 	}
 	
-	public int get_random_name_length() {
-		return averageNameLength + (m_rand.nextInt(6) - 3);
+	public int get_random_name_length(int mean) {
+		return mean + (m_rand.nextInt(6) - 3);
 	}
 	
 	public double get_random_percent() {
@@ -111,15 +111,15 @@ public class NameGenerator {
 		return false;
 	}
 	
-	public String generate(){
-		int size =0;
+	public String generate(int given_size){
 		String result = "";
 		char old, next;
 		int inARow = 1;
 		int vowelInARow = 0;
 		int consonantInARow = 0;
+		int size = get_random_name_length(given_size);
 		while(size <= 1){
-			size = get_random_name_length();
+			size = get_random_name_length(given_size);
 		}
 		if(m_rand.nextInt(2) == 0){
 			old = get_vowel(get_random_percent());
@@ -174,5 +174,71 @@ public class NameGenerator {
 			size--;
 		}
 		return result;
+	}
+	
+	public String generate_folder() {
+		return generate(6);
+	}
+	
+	public String generate_file() {
+		String s;
+		switch(m_rand.nextInt(10)) {
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+			s = generate(6);
+			break;
+		case 4:
+		case 5:
+			s = generate(3);
+			s += ".pdf";
+			break;
+		case 6:
+		case 7:
+			s = generate(3);
+			s += ".png";
+			break;
+		case 8:
+			s = generate(3);
+			s += ".java";
+			break;
+		case 9:
+		default:
+			s = generate(5);
+			s += ".c";
+			break;
+		}
+		return s;
+	}
+	
+	public String generate_compressed() {
+		String s;
+		switch(m_rand.nextInt(10)) {
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			s = generate(4);
+			s+= ".zip";
+			break;
+		case 5:
+		case 6:
+			s = generate(4);
+			s += ".tar";
+			break;
+		case 7:
+		case 8:
+			s = generate(5);
+			s += ".7z";
+			break;
+		case 9:
+		default:
+			s = generate(4);
+			s += ".rar";
+			break;
+		}
+		return s;
 	}
 }

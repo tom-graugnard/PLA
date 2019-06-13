@@ -8,6 +8,7 @@ import interpreter.IDirection;
 import interpreter.IKey;
 import interpreter.IKind;
 
+
 public class Element {
 
 	IAutomaton m_auto; // Automate du comportement de l'automate

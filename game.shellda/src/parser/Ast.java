@@ -16,6 +16,7 @@ import interpreter.IKey;
 import interpreter.IKind;
 import interpreter.IState;
 import interpreter.ITransition;
+//import parser.Ast.AI_Definitions;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
  *
@@ -468,6 +469,9 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
+//		public ICondition make() {
+//			return new ICondition();
+//		}
 	}
 
 	public static class Action extends Ast {
@@ -491,6 +495,10 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
+//		public IAction make() {
+//			return new IAction();
+//			
+//		}
 	}
 
 	public static class State extends Ast {
@@ -516,6 +524,9 @@ public class Ast {
 		public String as_state_of(Automaton automaton) {
 			return Dot.declare_node(this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4");
 		}
+//		public IState make() {
+//			return new IState(name.value);
+//		}
 	}
 
 	public static class AI_Definitions extends Ast {
@@ -653,6 +664,14 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string;
 		}
+//		public IBehaviour make() {
+//			List<ITransition> itransitions=new LinkedList<ITransition>();
+//			Iterator<Transition> iter=transitions.iterator();
+//			while(iter.hasNext()) {
+//				
+//				itransitions.add(iter.next().make());
+//			}return new IBehaviour(source.make(),itransitions);
+//		}
 	}
 
 	public static class Transition extends Ast {
@@ -689,3 +708,5 @@ public class Ast {
 		}
 	}
 }
+
+

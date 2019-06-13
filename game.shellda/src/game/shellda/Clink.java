@@ -3,17 +3,17 @@ package game.shellda;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-import game.shellda.Clink.ClinkCorb;
 import interpreter.IDirection;
 import interpreter.IKind;
 
 public class Clink extends Element {
-	Element inventaire = null; 
-
+	Element inventaire = null;
+	
+	long old=0; 
+	
 	public Clink(Noeud courant, Model model, int x, int y) {
 		super(courant, model, x, y);
 		m_kind = new IKind("@");
-		m_auto = m_model.m_automateJoueur1.copy();
 	}
 
 	public void Move(IDirection direction) {
@@ -48,9 +48,31 @@ public class Clink extends Element {
 	}
 
 	public static class ClinkNorm extends Clink {
+		int auto1 = m_model.m_autoChoix[1];
+
 		public ClinkNorm(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			m_auto = m_model.m_automateJoueur1.copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[1]].copy();
+		}
+
+		public void step(long now) throws Exception {
+			if (auto1 != m_model.m_autoChoix[1]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[1]].copy();
+				auto1 = m_model.m_autoChoix[1];
+			}
+			if(m_model.m_autoChoix[1]==1) {
+			if (m_auto != null)
+				m_auto.step(this);
+			}
+			else {
+				if(now-old > Options.PC_SPEED) {
+					if (m_auto != null)
+						m_auto.step(this);
+					old=now;
+				}
+			}
+			update(now);
+			
 		}
 
 		public void Hit(IDirection direction) {
@@ -115,17 +137,32 @@ public class Clink extends Element {
 	public static class ClinkCorb extends Clink {
 		LinkedList<Balle> m_lasers;
 		long m_old_corbeille = 0;
+		int auto2 = m_model.m_autoChoix[2];
 
 		public ClinkCorb(Noeud courant, Model model, int x, int y) {
 			super(courant, model, x, y);
-			m_auto = m_model.m_automateJoueur2.copy();
+			m_auto = m_model.m_automate[m_model.m_autoChoix[2]].copy();
 			m_lasers = new LinkedList<Balle>();
 		}
 
 		public void step(long now) throws Exception {
-			if (m_auto != null)
-				m_auto.step(this);
-			if (now - m_old_corbeille > Options.PC_SPEED / 4) {
+			if (auto2 != m_model.m_autoChoix[2]) {
+				m_auto = m_model.m_automate[m_model.m_autoChoix[2]].copy();
+				auto2 = m_model.m_autoChoix[2];
+			}
+			
+			if(m_model.m_autoChoix[2]==2) {
+				if (m_auto != null)
+					m_auto.step(this);
+				}
+				else {
+					if(now-old > Options.PC_SPEED/2) {
+						if (m_auto != null)
+							m_auto.step(this);
+						old=now;
+					}
+				}
+			if (now - m_old_corbeille > Options.PC_SPEED / 3) {
 				for (int i = 0; i < m_lasers.size(); i++)
 					m_lasers.get(i).step(now);
 				m_old_corbeille = now;
@@ -135,7 +172,7 @@ public class Clink extends Element {
 
 		public void Hit(IDirection direction) {
 			int taille = m_lasers.size();
-			for(int i = 0; i < taille; i++) {
+			for (int i = 0; i < taille; i++) {
 				Element e = m_lasers.getFirst();
 				m_courant.m_carte[e.m_x][e.m_y] = null;
 				m_lasers.removeFirst();
@@ -147,12 +184,22 @@ public class Clink extends Element {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(m_model.m_clink_cSprite, m_x_visu + 8, m_y_visu + 18, 32, 32, null);
+			g.drawImage(m_model.m_clink_cSprite[6 - m_lasers.size()], m_x_visu + 8, m_y_visu + 18, 32, 32, null);
 		}
 
 		public void Pop(IDirection direction) {
-			if (m_lasers.size() < 5) {
+			if (m_lasers.size() < 6) {
 				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y));
+			}
+		}
+
+		public void Wizz(IDirection direction) {
+			if (m_lasers.size() <= 1 && m_y >= 2 && m_y < Options.HAUTEUR_CARTE - 2) {
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 2, m_y));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y - 1));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 1, m_y + 1));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 0, m_y - 2));
+				m_lasers.add(new Balle(m_courant, m_model, m_x + 0, m_y + 2));
 			}
 		}
 

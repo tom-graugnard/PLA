@@ -77,3 +77,16 @@ Tâches réalisées :
  - Dossiers et fichiers dans des archives
  - Peaufiner les automates
 
+  ## Mercredi 12/06
+ 
+ Tâches réalisées :
+  
+  - Amélioration de la génération aléatoire
+  - Menu de jeu pour changer les automates au lancement
+  - Création de fichiers dans les archives
+  - Mise à jour du graphique
+  - Ajout de la musique
+  
+ Tâches en cours :
+ 
+ - Peaufiner les automates
