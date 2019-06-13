@@ -4,11 +4,13 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import interpreter.IDirection;
+import interpreter.IKind;
 
 public class Corbeille extends Dossier {
 	
 	public Corbeille(Noeud courant, Model model, int x, int y, Noeud contenu)  {
 		super(courant, model, x, y, "Corbeille", contenu);
+		m_kind = new IKind("O");
 	}
 	
 	public void Wizz(IDirection direction) {

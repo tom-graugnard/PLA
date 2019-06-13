@@ -414,7 +414,6 @@ public class Model extends GameModel {
 
 	@Override
 	public void shutdown() {
-		System.out.println("Perdu");
 		System.exit(0);
 	}
 
