@@ -78,7 +78,6 @@ public class Tree {
 	}
 
 	public boolean generer_decompresseur(Noeud n, int x, int y) {
-		System.out.println(n.m_name);
 		if (x <= 2 || x >= Options.LARGEUR_CARTE - 3)
 			return false;
 		if (y < 0 || y >= Options.HAUTEUR_CARTE - 3)
