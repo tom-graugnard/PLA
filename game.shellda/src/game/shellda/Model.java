@@ -38,6 +38,9 @@ public class Model extends GameModel {
 	BoutonExit m_boutonexit;
 	BufferedImage m_boutonOptionSprite;
 	BoutonOption m_boutonoption;
+	
+	BufferedImage m_logoSprite;
+	Logo m_logo;
 
 	boolean gameStart = false;
 	boolean gameOption = false;
@@ -117,6 +120,9 @@ public class Model extends GameModel {
 		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
 				Options.HEIGHT - 200, Options.BoutonOptionScale);
+		m_logo= new Logo(this, 0, m_logoSprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_logoSprite.getWidth() * Options.LogoScale) / 2,
+				Options.HEIGHT / 2 - 150 - (int) (m_logoSprite.getHeight() * Options.LogoScale) / 2, Options.LogoScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -130,7 +136,14 @@ public class Model extends GameModel {
 	}
 
 	public void pourcentageDefaite() {
-		m_pourcentage_defaite = m_nb_fichier_corbeille * (100 / Options.CORROMPU_DEFAITE);
+		int i, j, total = 0;
+		for(i = 0; i < Options.LARGEUR_CARTE; i++) {
+			for(j = 0; j < Options.HAUTEUR_CARTE; j++) {
+				if(m_corbeille.m_carte[i][j] instanceof Fichier)
+					total++;
+			}
+		}
+		m_pourcentage_defaite = total * (100 / Options.CORROMPU_DEFAITE);
 
 	}
 
@@ -313,6 +326,13 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		imageFile = new File("ressources/logo.png");
+		try {
+			m_logoSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 	long m_old_courant = 0;
@@ -382,14 +402,6 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		if(m_projectile.isDiscovered() ) {
-//			try {
-//			  m_projectile.step(now);
-//			} catch (Exception e) {
-//			 System.out.println("BAAAAAAAM");
-//			 e.printStackTrace();
-//		 }
-//		}
 
 		pourcentageDefaite();
 		if (m_pourcentage_defaite >= 100) {

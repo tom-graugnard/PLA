@@ -107,6 +107,7 @@ public class Fichier extends Element {
 			m_courant_ancien.m_carte[m_x_ancien][m_y_ancien] = new FichNorm(m_courant_ancien, m_model, m_x_ancien,
 					m_y_ancien, m_name_ancien);
 
+		m_infection = 0;
 		m_model.m_nb_fichier_corbeille--;
 	}
 

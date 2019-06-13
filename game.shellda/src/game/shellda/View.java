@@ -57,10 +57,12 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		String s = "The Legend of Shellda";
-		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 100);
-
+		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 60);
+		
+		m_model.m_logo.paint(g);
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
+		
 		m_model.m_boutonoption.paint(g);
 
 	}
@@ -69,7 +71,15 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_courant.paint(g);
-		g.setColor(new Color(149, 105, 200));
+		if(m_model.m_pourcentage_defaite > 66) {
+			g.setColor(new Color(231, 89, 82));
+		}
+		else if(m_model.m_pourcentage_defaite > 33) {
+			g.setColor(new Color(149, 105, 200));
+		}
+		else {
+			g.setColor(new Color(195, 167, 225));
+		}
 		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
 

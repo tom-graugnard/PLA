@@ -15,9 +15,10 @@ public class Options {
 	public static float BoutonPlayScale=0.1F;
 	public static float BoutonExitScale=0.05F;
 	public static float BoutonOptionScale=1.5F;
+	public static float LogoScale=2F;
 	
 	public static int DEGATS_VIRUS = 25;
-	public static int CORROMPU_DEFAITE = 20;
+	public static int CORROMPU_DEFAITE = 30;
 	
 	public static int DECALAGE_CORBEILLE = 3;
 	
