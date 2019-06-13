@@ -42,7 +42,7 @@ public class Model extends GameModel {
 	BufferedImage m_logoSprite;
 	Logo m_logo;
 
-	BoutonExit m_boutonexit1;
+	BoutonExit1 m_boutonexit1;
 	Boutonreplay m_boutonreplay;
 	BufferedImage m_boutonreplaySprite;
 	boolean gameStart = false;
@@ -136,7 +136,7 @@ public class Model extends GameModel {
 		m_boutonreplay = new Boutonreplay(this, 0, m_boutonreplaySprite, 1, 1,Options.WIDTH / 2 - (int) (m_boutonreplaySprite.getWidth()) / 2 -200,
 				Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()) / 2-100, Options.BoutonReplayScale);
 		
-		m_boutonexit1 = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH / 2 - (int) (m_boutonreplaySprite.getWidth()) / 2+100, Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()) / 2-100,
+		m_boutonexit1 = new BoutonExit1(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH / 2 - (int) (m_boutonexitSprite.getWidth()*Options.BoutonExitScale1) / 2+100, Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()*Options.BoutonExitScale1) / 2-100,
 				Options.BoutonExitScale1);
 		
 		

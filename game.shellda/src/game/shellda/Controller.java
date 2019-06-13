@@ -149,16 +149,7 @@ public class Controller extends GameController implements ActionListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) ) {
-			m_model.gameStart = true;
-    	}
-		else if (m_model.m_boutonexit.inside(e.getX(), e.getY())||(m_model.m_boutonexit1.inside(e.getX(), e.getY()))) {
-			m_model.shutdown();
-		}
-		else if (m_model.m_boutonreplay.inside(e.getX(), e.getY())) {
-			m_model.replay();
-			m_view=new View(m_model);
-		}
+		
 	}
 
 	@Override
@@ -194,6 +185,13 @@ public class Controller extends GameController implements ActionListener {
 					}
 				}
 			}
+		}
+		if (m_model.m_boutonreplay.inside(e.getX(), e.getY()) && (m_model.m_defaite || m_model.m_victoire)) {
+			m_model.replay();
+			m_view=new View(m_model);
+		}
+		if(m_model.m_boutonexit1.inside(e.getX(), e.getY()) && (m_model.m_defaite || m_model.m_victoire)){
+			m_model.shutdown();
 		}
 
 	}
