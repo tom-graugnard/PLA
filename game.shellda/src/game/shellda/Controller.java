@@ -19,6 +19,7 @@ public class Controller extends GameController implements ActionListener {
 	
 	Button m_vitesseplus;
 	Button m_vitessemoins;
+	Button m_music;
 	
 	Music m_player;
 	boolean m_music_on;
@@ -45,9 +46,12 @@ public class Controller extends GameController implements ActionListener {
 	    m_vitesseplus.addActionListener(this);
 	    m_vitessemoins = new Button ("-");
 	    m_vitessemoins.addActionListener(this);
+	    m_music= new Button("Music");
+	    m_music.addActionListener(this);
 	    
 	    cont.add(m_vitesseplus);
 	    cont.add(m_vitessemoins);
+	    cont.add(m_music);
 	    
 	    m_game.addSouth(cont);
 	    
@@ -63,16 +67,6 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		char c = e.getKeyChar();
-		switch (c) {
-		case 'm':
-			if(m_music_on) {
-				m_player.stop();
-			}else {
-				m_player.start();
-			}
-			m_music_on = !m_music_on;
-		}
 
 	}
 
@@ -223,6 +217,14 @@ public class Controller extends GameController implements ActionListener {
 		}
 		else if(s== m_vitessemoins && Options.PC_SPEED >=0) {
 			Options.PC_SPEED +=100;
+		}
+		else if(s==m_music) {
+			if(m_music_on) {
+				m_player.stop();
+			}else {
+				m_player.start();
+			}
+			m_music_on = !m_music_on;
 		}
 	}
 }
