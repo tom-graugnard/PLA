@@ -38,6 +38,9 @@ public class Model extends GameModel {
 	BoutonExit m_boutonexit;
 	BufferedImage m_boutonOptionSprite;
 	BoutonOption m_boutonoption;
+	
+	BufferedImage m_logoSprite;
+	Logo m_logo;
 
 	boolean gameStart = false;
 	boolean gameOption = false;
@@ -117,6 +120,9 @@ public class Model extends GameModel {
 		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
 				Options.HEIGHT - 200, Options.BoutonOptionScale);
+		m_logo= new Logo(this, 0, m_logoSprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_logoSprite.getWidth() * Options.LogoScale) / 2,
+				Options.HEIGHT / 2 - 150 - (int) (m_logoSprite.getHeight() * Options.LogoScale) / 2, Options.LogoScale);
 	}
 
 	public boolean removeKey(String key) {
@@ -316,6 +322,13 @@ public class Model extends GameModel {
 		imageFile = new File("ressources/exit.png");
 		try {
 			m_boutonexitSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("ressources/logo.png");
+		try {
+			m_logoSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

@@ -57,10 +57,12 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		String s = "The Legend of Shellda";
-		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 100);
-
+		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 60);
+		
+		m_model.m_logo.paint(g);
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
+		
 		m_model.m_boutonoption.paint(g);
 
 	}
