@@ -60,7 +60,7 @@ public class Clink extends Element {
 				m_auto = m_model.m_automate[m_model.m_autoChoix[1]].copy();
 				auto1 = m_model.m_autoChoix[1];
 			}
-			if(m_model.m_autoChoix[1]==1) {
+			if(m_model.m_autoChoix[1]==1 || m_model.m_autoChoix[1]==2) {
 			if (m_auto != null)
 				m_auto.step(this);
 			}
@@ -151,7 +151,7 @@ public class Clink extends Element {
 				auto2 = m_model.m_autoChoix[2];
 			}
 			
-			if(m_model.m_autoChoix[2]==2) {
+			if(m_model.m_autoChoix[2]==2 || m_model.m_autoChoix[2]==1) {
 				if (m_auto != null)
 					m_auto.step(this);
 				}
