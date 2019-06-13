@@ -90,3 +90,11 @@ Tâches réalisées :
  Tâches en cours :
  
  - Peaufiner les automates
+
+
+  ## Jeudi 13/06
+ 
+ Tâches réalisées :
+  
+  - Écran de fin
+  - Pop et Wizz pour tout les éléments du jeu.

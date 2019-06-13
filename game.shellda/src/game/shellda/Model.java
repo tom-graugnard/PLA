@@ -23,6 +23,7 @@ public class Model extends GameModel {
 	LinkedList<Virus> m_virus;
 	Balle m_balle;
 
+
 	Noeud m_courant;
 
 	int m_pourcentage_defaite;
@@ -41,6 +42,9 @@ public class Model extends GameModel {
 	BufferedImage m_logoSprite;
 	Logo m_logo;
 
+	BoutonExit m_boutonexit1;
+	Boutonreplay m_boutonreplay;
+	BufferedImage m_boutonreplaySprite;
 	boolean gameStart = false;
 	boolean gameOption = false;
 
@@ -60,11 +64,17 @@ public class Model extends GameModel {
 	BufferedImage m_archiveSprite;
 	BufferedImage[] m_balleSprite;
 	BufferedImage m_executableCorbeilleSprite;
+	BufferedImage m_winSprite;
+;
+
 
 	BufferedImage m_virus1Sprite;
 	BufferedImage m_virus2Sprite;
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
+	
+	public boolean m_defaite=false;
+	public boolean m_victoire=false;
 
 	IAutomaton[] m_automate = new IAutomaton[6];
 	int[] m_autoChoix = { 0, 1, 2, 3, 4, 5 };
@@ -122,6 +132,14 @@ public class Model extends GameModel {
 		m_logo = new Logo(this, 0, m_logoSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_logoSprite.getWidth() * Options.LogoScale) / 2,
 				Options.HEIGHT / 2 - 150 - (int) (m_logoSprite.getHeight() * Options.LogoScale) / 2, Options.LogoScale);
+		
+		m_boutonreplay = new Boutonreplay(this, 0, m_boutonreplaySprite, 1, 1,Options.WIDTH / 2 - (int) (m_boutonreplaySprite.getWidth()) / 2 -200,
+				Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()) / 2-100, Options.BoutonReplayScale);
+		
+		m_boutonexit1 = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH / 2 - (int) (m_boutonreplaySprite.getWidth()) / 2+100, Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()) / 2-100,
+				Options.BoutonExitScale1);
+		
+		
 	}
 
 	public boolean removeKey(String key) {
@@ -145,7 +163,7 @@ public class Model extends GameModel {
 		m_pourcentage_defaite = total * (100 / Options.CORROMPU_DEFAITE);
 
 	}
-
+	
 	private void loadSprites() {
 		int i;
 		m_font = new Font("Arial", 0, 9);
@@ -332,11 +350,32 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
+		imageFile = new File("ressources/Boutonreplay.png");
+		try {
+			m_boutonreplaySprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
+		imageFile = new File("ressources/win.jpg");
+		try {
+			m_winSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
+
+		
 	}
 
 	long m_old_courant = 0;
 	long m_old_tree = 0;
 	long m = 0;
+
+
 
 	@Override
 	public void step(long now) {
@@ -407,14 +446,33 @@ public class Model extends GameModel {
 		}
 
 		pourcentageDefaite();
-		if (m_pourcentage_defaite >= 100) {
-			shutdown();
+		if(m_pourcentage_defaite >= 100) {
+			this.m_defaite=true;
 		}
 	}
 
 	@Override
 	public void shutdown() {
 		System.exit(0);
+	}
+	
+	public void replay() {
+		m_virus=new LinkedList<Virus>();
+		m_corbeille=new Noeud(this, "Corbeille");
+		m_joueur= new ClinkNorm(null,this,3,3);
+		m_tree=new Tree(this);
+		m_courant=m_tree.m_root;
+		m_joueur.m_courant=m_courant;
+		m_defaite=false;
+		gameStart=false;
+		m_keys=new LinkedList<IKey>();
+		m_pourcentage_defaite=0;
+		m_nb_fichier_corbeille=0;
+		m_victoire=false;
+		
+		
+		
+		
 	}
 
 }

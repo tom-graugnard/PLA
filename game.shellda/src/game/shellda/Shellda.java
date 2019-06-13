@@ -8,7 +8,8 @@ public class Shellda extends Executable{
 	
 
 	public void interaction() {
-		System.out.println("Bravo tu as gagné gros bg!");
-		m_model.shutdown();
+		m_model.m_victoire=true;
 	}
+	
+	
 }
