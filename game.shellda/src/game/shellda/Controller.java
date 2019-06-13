@@ -55,6 +55,7 @@ public class Controller extends GameController implements ActionListener {
 	    
 	    m_game.addSouth(cont);
 	    
+	    
 	}
 
 	@Override
@@ -159,18 +160,21 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false)
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false) {
 			m_model.gameStart = true;
+		}
 		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false
-				&& m_model.gameOption == false)
+				&& m_model.gameOption == false) {
 			m_model.shutdown();
+		}
 		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption == true) {
 			m_model.gameOption = false;
 			m_view.choix=false;
 		}
 		if (m_model.m_boutonoption.inside(e.getX(), e.getY()) && m_model.gameStart == false
-				&& m_model.gameOption == false)
+				&& m_model.gameOption == false) {
 			m_model.gameOption = true;
+		}
 		if (m_view.choix == true) {
 			for (int i = 0; i < 6; i++) {
 				for (int j = 0; j < 6; j++) {
@@ -211,11 +215,13 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println(Options.PC_SPEED);
+
 		Object s = e.getSource();
-		if(s==m_vitesseplus && Options.PC_SPEED < 1500 ) {
+		if(s==m_vitesseplus && Options.PC_SPEED >0 ) {
 			Options.PC_SPEED -= 100;
 		}
-		else if(s== m_vitessemoins && Options.PC_SPEED >=0) {
+		else if(s== m_vitessemoins && Options.PC_SPEED <1500) {
 			Options.PC_SPEED +=100;
 		}
 		else if(s==m_music) {
