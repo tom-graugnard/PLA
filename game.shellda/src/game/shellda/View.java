@@ -1,6 +1,7 @@
 package game.shellda;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JButton;
@@ -45,19 +46,30 @@ public class View extends GameView {
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
 
-		if (!m_model.gameStart)
+		if (!m_model.gameStart) {
 			if (!m_model.gameOption)
 				_menuPrincipal(g);
 			else {
 				_FenetreOption(g);
 
 			}
-		else if(m_model.m_defaite) {
-			_FenetreDefaite(g);
+			
+		} 
+		
+
+		else if(m_model.m_victoire) {
+			_FenetreVictoire(g);
 		}
-		else if(m_model.gameStart){
+		
+		
+		else if (m_model.m_defaite) {
+			_FenetreDefaite(g);
+		} 
+		
+		else if (m_model.gameStart) {
 			_FenetreJeu(g);
 		}
+
 	}
 
 	protected void _menuPrincipal(Graphics g) {
@@ -65,11 +77,11 @@ public class View extends GameView {
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		String s = "The Legend of Shellda";
 		g.drawString(s, Options.WIDTH / 2 - s.length() * 3, Options.HEIGHT / 2 - 60);
-		
+
 		m_model.m_logo.paint(g);
 		m_model.m_boutonplay.paint(g);
 		m_model.m_boutonexit.paint(g);
-		
+
 		m_model.m_boutonoption.paint(g);
 
 	}
@@ -78,23 +90,36 @@ public class View extends GameView {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_courant.paint(g);
-		if(m_model.m_pourcentage_defaite > 66) {
+		if (m_model.m_pourcentage_defaite > 66) {
 			g.setColor(new Color(231, 89, 82));
-		}
-		else if(m_model.m_pourcentage_defaite > 33) {
+		} else if (m_model.m_pourcentage_defaite > 33) {
 			g.setColor(new Color(149, 105, 200));
-		}
-		else {
+		} else {
 			g.setColor(new Color(195, 167, 225));
 		}
 		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
-	
+
 	protected void _FenetreDefaite(Graphics g) {
 		g.setColor(Color.BLACK);
 		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
 		m_model.m_boutonreplay.paint(g);
 		m_model.m_boutonexit1.paint(g);
+	}
+	
+
+	protected void _FenetreVictoire(Graphics g) {
+		g.setColor(Color.BLACK);
+		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
+		m_model.m_boutonreplay.paint(g);
+		m_model.m_boutonexit1.paint(g);
+        g.setFont(new Font("impact", Font.BOLD, 30)); 
+		String s = "Victoire, veux tu rejouer ?";
+		g.drawString(s, Options.WIDTH / 2 - s.length() * 3-50, Options.HEIGHT / 2 - 60-100);
+
+	}
+	
+	
 
 	protected void _FenetreOption(Graphics g) {
 		choix = true;

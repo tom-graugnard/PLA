@@ -64,11 +64,17 @@ public class Model extends GameModel {
 	BufferedImage m_archiveSprite;
 	BufferedImage[] m_balleSprite;
 	BufferedImage m_executableCorbeilleSprite;
+	BufferedImage m_winSprite;
+;
+
 
 	BufferedImage m_virus1Sprite;
 	BufferedImage m_virus2Sprite;
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
+	
+	public boolean m_defaite=false;
+	public boolean m_victoire=false;
 
 	IAutomaton[] m_automate = new IAutomaton[6];
 	int[] m_autoChoix = { 0, 1, 2, 3, 4, 5 };
@@ -353,12 +359,23 @@ public class Model extends GameModel {
 			System.exit(-1);
 		}
 		
+		imageFile = new File("ressources/win.jpg");
+		try {
+			m_winSprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
+
 		
 	}
 
 	long m_old_courant = 0;
 	long m_old_tree = 0;
 	long m = 0;
+
+
 
 	@Override
 	public void step(long now) {
@@ -451,8 +468,7 @@ public class Model extends GameModel {
 		m_keys=new LinkedList<IKey>();
 		m_pourcentage_defaite=0;
 		m_nb_fichier_corbeille=0;
-		
-		
+		m_victoire=false;
 		
 		
 		
