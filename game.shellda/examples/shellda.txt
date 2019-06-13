@@ -140,10 +140,14 @@ Virus(Est){
 
 Fichier(Zero){
 	*(Zero):
-	| !(Cell(N,_)) ? Move(N) : (Un)
+	| !Cell(N,_) ? Move(N) : (Un)
 	*(Un):
-	| !(Cell(S,_)) ? Move(S) : (Deux)
+	| !Cell(N,_) ? Move(N) : (Deux)
 	*(Deux):
+	| !(Cell(S,_)) ? Move(S) : (Trois)
+	*(Trois):
+	| !(Cell(S,_)) ? Move(S) : (Quatre)
+	*(Quatre):
 	| !(Cell(S,_)) ? Move(S) : (Zero)
 }
 
