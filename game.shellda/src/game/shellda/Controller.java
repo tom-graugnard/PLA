@@ -150,6 +150,7 @@ public class Controller extends GameController implements ActionListener {
 		// TODO Auto-generated method stub
 		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false && m_model.gameOption==false)
 			m_model.gameStart = true;
+		    m_model.m_etat=1;
 		if (m_model.m_boutonexit.inside(e.getX(), e.getY()) && m_model.gameStart == false
 				&& m_model.gameOption == false)
 			m_model.shutdown();
@@ -169,7 +170,11 @@ public class Controller extends GameController implements ActionListener {
 					}
 				}
 			}
-		}
+		}if (m_model.m_boutonYes.inside(e.getX(), e.getY()) && m_model.gameStart == true && m_model.gameOption==false) {
+			m_model.ReInit();
+		    m_view=new View(m_model);
+	    
+	     }
 
 	}
 

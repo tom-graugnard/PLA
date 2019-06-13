@@ -32,8 +32,8 @@ public class Model extends GameModel {
 	Clink m_joueur;
 	Noeud corb_parent;
     
-//	BoutonFin m_boutonFin;
-//	BoutonYes m_boutonYes;
+	BoutonPlay m_boutonYes;
+	BoutonExit m_boutonFin;
 	BufferedImage m_boutonplaySprite;
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
@@ -116,6 +116,15 @@ public class Model extends GameModel {
 		m_boutonoption = new BoutonOption(this, 0, m_boutonOptionSprite, 1, 1,
 				Options.WIDTH / 2 - (int) (m_boutonOptionSprite.getWidth() * Options.BoutonOptionScale) / 2,
 				Options.HEIGHT - 200, Options.BoutonOptionScale);
+		m_boutonYes= new BoutonPlay(this, 0, m_boutonplaySprite, 1, 1,
+				(Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2)+110,
+				Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2,
+				Options.BoutonPlayScale+0.1F);
+		m_boutonFin=new BoutonExit(this, 0, m_boutonexitSprite, 1, 1,
+				Options.WIDTH / 2 - (int) (m_boutonplaySprite.getWidth() * Options.BoutonPlayScale) / 2,
+				(Options.HEIGHT / 2 - (int) (m_boutonplaySprite.getHeight() * Options.BoutonPlayScale) / 2)-30,
+				Options.BoutonPlayScale+0.1F);
+		
 	}
 
 	public boolean removeKey(String key) {
@@ -381,19 +390,12 @@ public class Model extends GameModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		if(m_projectile.isDiscovered() ) {
-//			try {
-//			  m_projectile.step(now);
-//			} catch (Exception e) {
-//			 System.out.println("BAAAAAAAM");
-//			 e.printStackTrace();
-//		 }
-//		}
+
 
 		pourcentageDefaite();
-		if (m_pourcentage_defaite >= 100) {
-			shutdown();
-		}
+//		if (m_pourcentage_defaite >= 100) {
+//			m_etat=2;
+//		}
 	}
 
 	@Override
@@ -414,6 +416,7 @@ public class Model extends GameModel {
         m_keys=new LinkedList<IKey>() ;
         m_pourcentage_defaite=0;
         m_nb_fichier_corbeille=0;
+        gameOption = false;
 
 	}
 
