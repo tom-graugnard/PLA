@@ -5,8 +5,8 @@ public class Options {
 	public 	static int LARGEUR_CARTE = 16;
 	public static int HAUTEUR_CARTE = 9;
 	
-	public static int WIDTH = LARGEUR_CARTE*(48);
-	public static int HEIGHT = HAUTEUR_CARTE*(48) + 55; // + 55 pour l'affichage des FPS, etc
+	public static int WIDTH = LARGEUR_CARTE*(48)+3;
+	public static int HEIGHT = HAUTEUR_CARTE*(48) + 55 + 28; // + 55 pour l'affichage des FPS, etc
 	
 	public static int PROFONDEUR_ARBORESCENCE = 1;
 	

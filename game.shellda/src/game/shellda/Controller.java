@@ -1,5 +1,8 @@
 package game.shellda;
 
+import java.awt.Button;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,6 +16,9 @@ import interpreter.IKey;
 public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
+	
+	Button m_vitesseplus;
+	Button m_vitessemoins;
 	
 	Music m_player;
 	boolean m_music_on;
@@ -32,6 +38,19 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void notifyVisible() {
+		Container cont = new Container();
+	    cont.setLayout(new FlowLayout());
+	    
+	    m_vitesseplus= new Button("+");
+	    m_vitesseplus.addActionListener(this);
+	    m_vitessemoins = new Button ("-");
+	    m_vitessemoins.addActionListener(this);
+	    
+	    cont.add(m_vitesseplus);
+	    cont.add(m_vitessemoins);
+	    
+	    m_game.addSouth(cont);
+	    
 	}
 
 	@Override
@@ -198,6 +217,12 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		Object s = e.getSource();
+		if(s==m_vitesseplus && Options.PC_SPEED < 1500 ) {
+			Options.PC_SPEED -= 100;
+		}
+		else if(s== m_vitessemoins && Options.PC_SPEED >=0) {
+			Options.PC_SPEED +=100;
+		}
 	}
 }
