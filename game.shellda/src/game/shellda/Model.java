@@ -69,6 +69,9 @@ public class Model extends GameModel {
 	BufferedImage m_virus3Sprite;
 	BufferedImage m_virus4Sprite;
 
+//	BufferedImage m_boutonYesSprite;
+//	BufferedImage m_boutonFinSprite;
+	
 	IAutomaton[] m_automate = new IAutomaton[6];
 	int[] m_autoChoix = { 0, 1, 2, 3, 4, 5 };
 
@@ -295,6 +298,20 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+//		imageFile = new File("ressources/End.png");
+//		try {
+//			m_boutonYesSprite = ImageIO.read(imageFile);
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//			System.exit(-1);
+//		}
+//		imageFile = new File("ressources/rplay.png");
+//		try {
+//			m_boutonFinSprite = ImageIO.read(imageFile);
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//			System.exit(-1);
+//		}
 		for (i = 1; i < 7; i++) {
 			imageFile = new File("ressources/code_" + i + ".png");
 			try {
