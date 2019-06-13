@@ -112,16 +112,23 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) && m_model.gameStart == false)
+
+		if (m_model.m_boutonplay.inside(e.getX(), e.getY()) ) {
 			m_model.gameStart = true;
-		if (m_model.m_boutonexit.inside(e.getX(), e.getY()))
+    	}
+		else if (m_model.m_boutonexit.inside(e.getX(), e.getY())||(m_model.m_boutonexit1.inside(e.getX(), e.getY()))) {
 			m_model.shutdown();
+		}
+		else if (m_model.m_boutonreplay.inside(e.getX(), e.getY())) {
+			m_model.replay();
+			m_view=new View(m_model);
+		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// explosion quand on clique sur le fantome
-
+		
 	}
 
 	@Override

@@ -12,8 +12,12 @@ public class Options {
 	
 	public static int PC_SPEED = 1000;
 	
-	public static float BoutonPlayScale=0.1F;
+	public static float BoutonPlayScale=0.2F;
 	public static float BoutonExitScale=0.05F;
+	
+	public static float BoutonExitScale1=0.2F;
+	
+	public static float BoutonReplayScale=5F;
 	
 	public static int DEGATS_VIRUS = 25;
 	public static int CORROMPU_DEFAITE = 20;

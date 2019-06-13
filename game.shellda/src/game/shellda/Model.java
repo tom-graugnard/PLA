@@ -36,6 +36,9 @@ public class Model extends GameModel {
 	BoutonPlay m_boutonplay;
 	BufferedImage m_boutonexitSprite;
 	BoutonExit m_boutonexit;
+	BoutonExit m_boutonexit1;
+	Boutonreplay m_boutonreplay;
+	BufferedImage m_boutonreplaySprite;
 	boolean gameStart = false;
 
 	Font m_font;
@@ -64,8 +67,8 @@ public class Model extends GameModel {
 	IAutomaton m_automateJoueur2;
 	IAutomaton m_automateFichier;
 	IAutomaton m_automateBalle;
-
-
+	boolean m_defaite = false;
+	
 	public LinkedList<IKey> m_keys;
 
 	NameGenerator m_generator;
@@ -107,6 +110,14 @@ public class Model extends GameModel {
 				Options.BoutonPlayScale);
 		m_boutonexit = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH - 40, 0,
 				Options.BoutonExitScale);
+		
+		m_boutonreplay = new Boutonreplay(this, 0, m_boutonreplaySprite, 1, 1,Options.WIDTH / 2 - (int) (m_boutonreplaySprite.getWidth()) / 2 -200,
+				Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()) / 2-100, Options.BoutonReplayScale);
+		
+		m_boutonexit1 = new BoutonExit(this, 0, m_boutonexitSprite, 1, 1, Options.WIDTH / 2 - (int) (m_boutonreplaySprite.getWidth()) / 2+100, Options.HEIGHT / 2 - (int) (m_boutonreplaySprite.getHeight()) / 2-100,
+				Options.BoutonExitScale1);
+		
+		
 	}
 
 	public boolean removeKey(String key) {
@@ -123,7 +134,7 @@ public class Model extends GameModel {
 		m_pourcentage_defaite = m_nb_fichier_corbeille * (100/Options.CORROMPU_DEFAITE);
 		
 	}
-
+	
 	private void loadSprites() {
 		m_font = new Font("Arial", 0, 9);
 		File imageFile;
@@ -266,11 +277,20 @@ public class Model extends GameModel {
 		
 		imageFile = new File("ressources/flamme.jpg");
 		try {
-			m_projectileSprite = ImageIO.read(imageFile);
+			m_balleSprite = ImageIO.read(imageFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
+		imageFile = new File("ressources/Boutonreplay.png");
+		try {
+			m_boutonreplaySprite = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		
 		
 	}
 
@@ -342,7 +362,7 @@ public class Model extends GameModel {
 
 		pourcentageDefaite();
 		if(m_pourcentage_defaite >= 100) {
-			shutdown();
+			this.m_defaite=true;
 		}
 	}
 
@@ -350,6 +370,26 @@ public class Model extends GameModel {
 	public void shutdown() {
 		System.out.println("Perdu");
 		System.exit(0);
+	}
+	
+	public void replay() {
+		m_virus=new LinkedList<Virus>();
+		m_corbeille=new Noeud(this, "Corbeille");
+		m_joueur= new ClinkNorm(null,this,3,3);
+		m_tree=new Tree(this);
+		m_courant=m_tree.m_root;
+		m_joueur.m_courant=m_courant;
+		m_defaite=false;
+		gameStart=false;
+		m_keys=new LinkedList<IKey>();
+		m_pourcentage_defaite=0;
+		m_nb_fichier_corbeille=0;
+		
+		
+		
+		
+		
+		
 	}
 
 }

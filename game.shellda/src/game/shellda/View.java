@@ -5,6 +5,10 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import edu.ricm3.game.GameView;
 
 public class View extends GameView {
@@ -42,11 +46,15 @@ public class View extends GameView {
 		g.setColor(m_background);
 		g.fillRect(0, 0, Options.WIDTH, Options.HEIGHT);
 
-		if (!m_model.gameStart)
+		if (!m_model.gameStart) {
 			_menuPrincipal(g);
-		else
+		}
+		else if(m_model.m_defaite) {
+			_FenetreDefaite(g);
+		}
+		else if(m_model.gameStart){
 			_FenetreJeu(g);
-
+		}
 	}
 
 	protected void _menuPrincipal(Graphics g) {
@@ -66,6 +74,15 @@ public class View extends GameView {
 		g.setColor(Color.MAGENTA);
 		g.fillRect(0, 0, m_model.m_pourcentage_defaite * Options.WIDTH / 100, 10);
 	}
+	
+	protected void _FenetreDefaite(Graphics g) {
+		g.setColor(Color.BLACK);
+		g = g.create(0, 0, Options.WIDTH, Options.HEIGHT);
+		m_model.m_boutonreplay.paint(g);
+		m_model.m_boutonexit1.paint(g);
+
+	}
+
 
 	public void step(long now) {
 	}
