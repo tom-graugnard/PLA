@@ -5,6 +5,7 @@ Joueur1(Init){
   | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Init)
   | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Init)
   | (Key(h)) ? Hit :(Init)
+  | Key(e)   ? Egg :(Init)
   | Key(w) & Cell(E,P,0) ? Wizz : (Attrap)
   | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Init)
   * (Attrap)
