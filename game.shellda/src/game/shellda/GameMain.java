@@ -7,9 +7,15 @@ import edu.ricm3.game.GameUI;
 public class GameMain {
 
 	public static void main(String[] args) {
-
+		Model model;
 		// construct the game elements: model, controller, and view.
-		Model model = new Model();
+		if(args.length >= 1) {
+			model = new Model(args[0]);
+		}
+		else {
+			model = new Model("shellda.txt");
+		}
+		
 		View view = new View(model);
 		Controller controller = new Controller(model, view);
 

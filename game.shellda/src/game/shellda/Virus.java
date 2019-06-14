@@ -108,9 +108,11 @@ public class Virus extends Element {
 		if (e instanceof Dossier && !(e instanceof Corbeille)) {
 			Dossier d = (Dossier) e;
 			if (d.m_contenu.m_carte[8][8] == null) {
+				m_courant.m_carte[m_x][m_y] = null;
 				m_x = 8;
 				m_y = 8;
 				m_courant = d.m_contenu;
+				m_courant.m_carte[m_x][m_y] = this;
 				// m_decouvert = false; // A VOIR
 			}
 		}

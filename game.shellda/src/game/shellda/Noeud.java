@@ -92,9 +92,20 @@ public class Noeud {
 		String s;
 		Random rand = new Random();
 		if (profondeur > 0) {
-			int nombre_dossier = rand.nextInt(2);
+			int nombre_dossier = rand.nextInt(3) - 1 + profondeur - 1;//rand.nextInt(4);
+			if(Options.PROFONDEUR_ARBORESCENCE == profondeur) {
+				nombre_dossier = 3;
+			}
+			else if(Options.PROFONDEUR_ARBORESCENCE - 1 == profondeur) {
+				nombre_dossier = 1 + rand.nextInt(2);
+				if(rand.nextInt(5) == 0)
+					nombre_dossier += 1;
+			}
+			else {
+				nombre_dossier = 1;
+			}
 			Noeud tmp;
-			for (i = 1; i < profondeur + nombre_dossier + 1; i++) {
+			for (i = 1; i < nombre_dossier/*+ profondeur*/ + 1; i++) {
 				s = m_model.m_generator.generate_folder();
 				tmp = new Noeud(m_model, this, s);
 				x = i / Options.HAUTEUR_CARTE;
@@ -108,7 +119,7 @@ public class Noeud {
 		} else {
 			i = 0;
 		}
-		int nombre_FichNorm = rand.nextInt(4);
+		int nombre_FichNorm = rand.nextInt(6);
 		// On ajoute des FichNorms dans notre dossier
 		for (j = i + 1; j <= (profondeur + 1) * 2 + i + nombre_FichNorm + 1; j++) {
 			x = j / Options.HAUTEUR_CARTE;

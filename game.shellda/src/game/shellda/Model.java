@@ -83,7 +83,7 @@ public class Model extends GameModel {
 
 	NameGenerator m_generator;
 
-	public Model() {
+	public Model(String autoName) {
 		m_clink_cSprite = new BufferedImage[7];
 		m_fichierSprite = new BufferedImage[4];
 		m_balleSprite = new BufferedImage[6];
@@ -91,7 +91,7 @@ public class Model extends GameModel {
 		// Lecture d'automate
 		List<IAutomaton> automates = null;
 		try {
-			automates = AutomataParser.automatas_from_file("examples/shellda.txt");
+			automates = AutomataParser.automatas_from_file("examples/"+autoName);
 		} catch (Exception e) {
 			System.out.println("Erreur dans la récupération d'automates");
 		}

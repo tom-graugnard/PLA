@@ -1,0 +1,85 @@
+Joueur1(Init){
+  * (Init):
+  | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Init)
+  | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Init)
+  | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Init)
+  | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Init)
+  | (Key(h)) ? Hit :(Init)
+  | Key(w) & Cell(E,P,0) ? Wizz : (Attrap)
+  | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Init)
+  * (Attrap)
+  | ((!Cell(N,G)) & Key(FU)) ? Move(N) :(Attrap)
+  | ((!Cell(S,G)) & Key(FD)) ? Move(S) :(Attrap)
+  | ((!Cell(O,G)) & Key(FL)) ? Move(O) :(Attrap)
+  | ((!Cell(E,G)) & Key(FR)) ? Move(E) :(Attrap)
+  | (Key(h)) ? Hit :(Attrap)
+  | Key(w) & !Cell(E,_,0) ? Wizz : (Init)
+  | Key(p) & !Cell(F,_,2) & Cell(F,_)  ? Pop : (Attrap)
+}
+Joueur2(Init){
+* (Init):
+  | (Key(FU)) ? (Move(N)) :(Init)
+  | (Key(FD)) ? (Move(S)) :(Init)
+  | Key(h) ? Hit : (Init)
+  | Key(p) ? Pop : (Init)
+  | Key(w) ? Wizz : (Init)
+}
+
+Balle(Init){
+	*(Init):
+	| !Cell(E,_) ? Move(E): (Init)
+	| True ? Hit(E) : (Init)
+}
+
+Virus(Est){
+  *(Est):
+  | Cell(E,P)    ?  Hit(E)   :(Est)
+  | Cell(O,P)    ?  Hit(O)   :(Ouest)
+  | Cell(N,P)    ?  Hit(N)   :(Nord)
+  | Cell(S,P)    ?  Hit(S)   :(Sud)
+  | Cell(E,@)    ?  Hit(E)   :(Est)
+  | Cell(O,@)    ?  Hit(O)   :(Ouest)
+  | Cell(N,@)    ?  Hit(N)   :(Nord)
+  | Cell(S,@)    ?  Hit(S)   :(Sud)
+  | Cell(E,D)	 ?  Pop(E)  :(Est)
+  | Cell(O,D)	 ?  Pop(O)  :(Ouest)
+  | Cell(S,D)	 ?  Pop(S)  :(Sud)
+  | Cell(N,D)	 ?  Pop(N)  :(Nord)
+  | (Closest(@,N) & !Cell(N,@)) ? Move(N)   :(Nord)
+  | (Closest(@,S) & !Cell(S,@)) ? Move(S)   :(Sud)
+  | (Closest(@,O) & !Cell(O,@)) ? Move(O)   :(Ouest)
+  | (Closest(@,E) & !Cell(E,@)) ? Move(E)   :(Est)
+  | Closest(P,N) ? Move(N)   :(Nord)
+  | Closest(P,S) ? Move(S)   :(Sud)
+  | Closest(P,O) ? Move(O)   :(Ouest)
+  | Closest(P,E) ? Move(E)   :(Est)
+  | !(Cell(E,_)) ? (Move(E)) :(Est)
+  | !(Cell(O,_)) ? (Move(O)) :(Ouest)
+  | !(Cell(N,_)) ? (Move(N)) :(Nord)
+  | !(Cell(S,_)) ? (Move(S)) :(Sud)
+  | True ? Egg :(Ouest)
+  *(Ouest):
+  | True ? Egg :(Est)
+  *(Nord):
+  | True ? Egg :(Ouest)
+  *(Sud):
+  | True ? Egg :(Nord)
+}
+
+Fichier(Zero){
+	*(Zero):
+	| !Cell(N,_) ? Move(N) : (Un)
+	*(Un):
+	| !Cell(N,_) ? Move(N) : (Deux)
+	*(Deux):
+	| !(Cell(S,_)) ? Move(S) : (Trois)
+	*(Trois):
+	| !(Cell(S,_)) ? Move(S) : (Quatre)
+	*(Quatre):
+	| !(Cell(S,_)) ? Move(S) : (Zero)
+}
+
+Archive(Init){
+	*(Init):
+}
+

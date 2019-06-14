@@ -18,10 +18,13 @@ public class Tree {
 		Random rand = new Random();
 		m_root.generer_noeud(Options.PROFONDEUR_ARBORESCENCE);
 		Noeud shellda = m_root;
-		int position_shellda = rand.nextInt(6);
+		int position_shellda = rand.nextInt(2);
+		System.out.println("Shellda:");
 		while (shellda.m_enfants.size() > position_shellda) {
+			System.out.print( " " + shellda.m_name + " ->");
 			shellda = shellda.m_enfants.get(rand.nextInt(shellda.m_enfants.size()));
 		}
+		System.out.println(" " + shellda.m_name);
 		int x;
 		int y;
 		do {
@@ -29,22 +32,40 @@ public class Tree {
 			y = rand.nextInt(Options.HAUTEUR_CARTE);
 		} while (!generer_shellda(shellda, x, y));
 
-		Noeud AntiVirus = m_root;
-		int position_antivius = rand.nextInt(m_root.m_enfants.size());
+		Noeud AntiVirus;
+		System.out.println("Anti-Virus:");
+		String result = "";
+		do {
+			result = "";
+		AntiVirus = m_root;
+		int position_antivius = rand.nextInt(2);
+		
 		while (AntiVirus.m_enfants.size() > position_antivius) {
+			result +=" " + AntiVirus.m_name + " ->";
 			AntiVirus = AntiVirus.m_enfants.get(rand.nextInt(AntiVirus.m_enfants.size()));
 		}
+		result += " " + AntiVirus.m_name;
+		} while(AntiVirus == shellda);
+		System.out.println(result);
 		do {
 			x = rand.nextInt(Options.LARGEUR_CARTE);
 			y = rand.nextInt(Options.HAUTEUR_CARTE);
 		} while (AntiVirus.get_element(x, y) != null);
 		AntiVirus.set_element(new AntiVirus(AntiVirus, m_model, x, y));
 
-		Noeud decompresseur = m_root;
+		Noeud decompresseur;
+		System.out.println("Decompresseur:");
+		do {
+			result = "";
+		decompresseur = m_root;
 		int position_decompresseur = rand.nextInt(m_root.m_enfants.size());
 		while (decompresseur.m_enfants.size() > position_decompresseur) {
+			result +=  " " + decompresseur.m_name + " ->";
 			decompresseur = decompresseur.m_enfants.get(rand.nextInt(decompresseur.m_enfants.size()));
 		}
+		result += " " + decompresseur.m_name;
+		} while(decompresseur == shellda || decompresseur == AntiVirus);
+		System.out.println(result);
 		do {
 			x = rand.nextInt(Options.LARGEUR_CARTE);
 			y = rand.nextInt(Options.HAUTEUR_CARTE);
