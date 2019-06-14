@@ -133,6 +133,7 @@ public class View extends GameView {
 			g.fillRect(25, 15 + i * 70, 80, 40);
 		}
 		g.setColor(new Color(72, 72, 72));
+		 g.setFont(new Font("impact", Font.BOLD, 13)); 
 		g.drawString("Virus", 25 + 20, 15 + 25);
 		g.drawString("Joueur1", 45, 40 + 70);
 		g.drawString("Joueur2", 45, 40 + 140);
@@ -165,6 +166,7 @@ public class View extends GameView {
 				g.fillRect(150 + m_model.m_autoChoix[i] * 90, 15 + i * 70, 80, 40);
 			}
 			g.setColor(new Color(72, 72, 72));
+			 g.setFont(new Font("impact", Font.BOLD, 13)); 
 			g.drawString("Virus", 150 + 20, 15 + 25 + i * 70);
 			g.drawString("Joueur1", 170 + 90, 15 + 25 + i * 70);
 			g.drawString("Joueur2", 170 + 180, 15 + 25 + i * 70);
